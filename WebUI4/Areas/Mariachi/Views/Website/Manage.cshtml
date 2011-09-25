@@ -1,0 +1,12 @@
+﻿@model Dictionary<String,String>
+@using System.Collections.Generic
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>Manage your website</h2>
+
+@foreach (KeyValuePair<String, String> site in Model)
+{
+    @Html.ActionLink(site.Value, "Manage", new {area = "Mariachi", controller="Website", id=site.Key}, null)<br />
+}

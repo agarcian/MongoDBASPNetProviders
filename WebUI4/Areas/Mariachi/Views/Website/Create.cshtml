@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "Website";
+}
+
+ <div class="ui-helper-clearfix">
+    <div style="float:left;margin:10px;background-color:#eea;"><img style="vertical-align:middle;" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/48x48/minus.png" alt="" />
+    </div>
+    <div style="float:left;margin:10px;"><img style="vertical-align:middle;" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/48x48/plus.png" alt="" />
+    </div>
+    <div style="float:left;margin:10px;"><img style="vertical-align:middle;" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/48x48/play.png" alt="" />
+    </div>
+ </div>
+
+ <div class="editor" style="width:700px;">
+        <div class="editor-line ui-helper-clearfix">
+            <div class="editor-label">
+                @Html.Label("Website Name")
+            </div>
+            <div class="editor-field">
+                <div class="urlFrame">http:// @Html.TextBox("Username", null, new { placeholder="Name of your website"}) .mariacheros.com</div> 
+                @Html.ValidationMessage("Username") 
+            </div>
+        </div>
+        </div>
+
+
+@section Header{
+    <style type="text/css">
+        .urlFrame
+        {
+            padding:5px;
+            border:1px solid #ccc;
+            border-radius:6px;
+            width:600px;
+            font-family:Lucida Console;
+        }   
+        .urlFrame input
+        {
+            border-style:none;
+            margin:0px;
+            width:200px;
+        }
+    </style>
+}

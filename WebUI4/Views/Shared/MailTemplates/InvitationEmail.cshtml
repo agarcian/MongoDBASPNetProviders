@@ -1,0 +1,21 @@
+﻿@model WebUI4.Models.InvitationMessageModel
+@using System.Configuration;
+
+<body style="background-color: #002E55">
+    <div style="padding: 0px; margin: 0px; background-color: #002E55; text-align: center;
+        width: 100%; font-family: Trebuchet MS; font-size: 16px;">
+        <div style="background-color: #fff; width: 600px; margin: 0px auto; text-align: left;
+            border-radius: 6px; padding: 10px; font-family: ">
+            <p>@WebUI4.Resources.Referrals.Hi @Model.InviteeName,</p>
+            
+            @Html.Raw(String.Format(WebUI4.Resources.Referrals.IveBeenUsingXX, ConfigurationManager.AppSettings["ApplicationName"]))
+            
+            <p>@Html.Raw(String.Format(WebUI4.Resources.Referrals.RegisterHere, Model.Url))</p>
+
+            <p>@WebUI4.Resources.Referrals.IHopeYouEnjoyIt</p>
+
+            <p>- @Model.ReferrerFirstName (@Model.ReferrerEmail)</p>
+
+        </div>
+    </div>
+</body>

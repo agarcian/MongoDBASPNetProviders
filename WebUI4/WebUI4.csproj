@@ -1,0 +1,492 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{29013D30-3530-4DBC-AF67-BA87CC66D1C4}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WebUI4</RootNamespace>
+    <AssemblyName>WebUI4</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PublishDatabases>false</PublishDatabases>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <PublishDatabases>false</PublishDatabases>
+    <DeployIisAppPath>Default Web Site/WebUI4_deploy</DeployIisAppPath>
+    <PackageAsSingleFile>true</PackageAsSingleFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Library\JsonNet\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Routing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Areas\IPC\Controllers\APIController.cs" />
+    <Compile Include="Areas\IPC\Controllers\HomeController.cs" />
+    <Compile Include="Areas\IPC\Controllers\ProjectController.cs" />
+    <Compile Include="Areas\IPC\Controllers\PublisherController.cs" />
+    <Compile Include="Areas\IPC\Controllers\ViewerController.cs" />
+    <Compile Include="Areas\IPC\IPCAreaRegistration.cs" />
+    <Compile Include="Areas\Mariachi\Controllers\WebsiteController.cs" />
+    <Compile Include="Areas\Mariachi\MariachiAreaRegistration.cs" />
+    <Compile Include="Controllers\MariachiController.cs" />
+    <Compile Include="Controllers\ReferralsController.cs" />
+    <Compile Include="Models\AccountHelper.cs" />
+    <Compile Include="Models\NotificationsHelper.cs" />
+    <Compile Include="Models\NotificationsModel.cs" />
+    <Compile Include="Models\ReferralsModels.cs" />
+    <Compile Include="Resources\Account.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Account.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Common.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Common.es.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Account.es.designer.cs">
+      <DependentUpon>Account.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Notifications.es.Designer.cs">
+      <DependentUpon>Notifications.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Referrals.es.Designer.cs">
+      <DependentUpon>Referrals.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\MailTemplates.es.Designer.cs">
+      <DependentUpon>MailTemplates.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\MailTemplates.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MailTemplates.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Menus.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Menus.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Notifications.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Referrals.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Referrals.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="404.html" />
+    <Content Include="Areas\IPC\Content\css\style.css" />
+    <Content Include="Areas\IPC\Content\images\IPCViewer.png" />
+    <Content Include="Content\images\darkblue-gradient.png" />
+    <Content Include="Content\images\Maribel-Salinas-in-mariacheros2.com.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\adobe.com.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\advanced.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\changelog.txt" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\dropdown.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\dropdown.limited.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\dropdown.linear.columnar.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\dropdown.linear.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\dropdown.min.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\dropdown.upward.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\dropdown.vertical.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\dropdown.vertical.rtl.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\adobe.com\default.advanced.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\adobe.com\default.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\adobe.com\helper.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\default\default.advanced.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\default\default.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\default\default.linear.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\default\default.ultimate.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\default\default.ultimate.linear.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\default\helper.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\flickr.com\default.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\flickr.com\default.ultimate.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\flickr.com\default.ultimate.linear.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\flickr.com\default.ultimate.upward.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\flickr.com\helper.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\lwis.celebrity\default.advanced.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\lwis.celebrity\default.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\lwis.celebrity\helper.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\mtv.com\default.advanced.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\mtv.com\default.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\mtv.com\default.ultimate.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\mtv.com\helper.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\nvidia.com\default.advanced.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\nvidia.com\default.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\nvidia.com\helper.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\vimeo.com\default.advanced.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\vimeo.com\default.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\vimeo.com\helper.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\css\dropdown\themes\_template\default.css" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\flickr.com.horizontal.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\flickr.com.horizontal.upward.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\flickr.com.linear.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\flickr.com.vertical.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\flickr.com.vertical.rtl.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\GPL-LICENSE.txt" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\adobe.com\dropdown_pane.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\adobe.com\dropdown_pane_8bit.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\adobe.com\favicon.ico" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\adobe.com\grad1.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\adobe.com\icon.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\grad1.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\grad2.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\nav-arrow-down-white.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\nav-arrow-down.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\nav-arrow-left-white.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\nav-arrow-left.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\nav-arrow-right-white.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\nav-arrow-right.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\nav-arrow-top-white.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\nav-arrow-top.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\default\pattern1.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\favicon.ico" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\icon.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-down-on.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-down-open.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-down.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-left-on.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-left-open.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-left.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-right-on.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-right-open.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-right.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-up-on.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-up-open.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\nav-arrow-up.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\pattern1.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\pattern2.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\flickr.com\pattern3.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\grad1.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\grad2.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\logo_lwis.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\nav-arrow-down-white.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\nav-arrow-down.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\nav-arrow-left-white.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\nav-arrow-left.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\nav-arrow-right-white.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\nav-arrow-right.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\nav-arrow-top-white.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\nav-arrow-top.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\pattern1.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\lwis.celebrity\pattern2.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\comnav-arrowon.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\comnav-arrowover.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\comnav-arrowover2.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\favicon.ico" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\grad1.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\icon.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\nav-arrow-right.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\nav-arrow-right2.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\mtv.com\nav-sub-press.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\nvidia.com\favicon.ico" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\nvidia.com\grad1.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\nvidia.com\icon.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\bg_search-field.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\box1-bottom.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\box1-bottom2.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\box1-outwards-top-right.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\box1-top-left.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\box1-top-right.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\box1-top.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\btn_search.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\favicon.ico" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\icon.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\logo_lwis.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\nav-arrow-down-green.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\nav-arrow-down.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\nav-arrow-left.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\nav-arrow-right-green.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\nav-arrow-right.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\nav-arrow-top.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\images\vimeo.com\sun.png" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\js\csshover.htc" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\js\jquery\jquery.dropdown.js" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\js\jquery\jquery.js" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\js\mootools\mootools.dropdown.js" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\js\scriptaculous\scriptaculous.dropdown.js" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\js\swfobject.js" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\link.txt" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\lwis.celebrity.horizontal.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\MIT-LICENSE.txt" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\mtv.com.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\nvidia.com.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\nvidia.com.no-flash.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\simple.horizontal.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\simple.horizontal.upward.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\simple.limited.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\simple.linear.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\simple.vertical.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\simple.vertical.rtl.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\ultimate.horizontal.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\ultimate.horizontal.upward.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\ultimate.linear.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\ultimate.vertical.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\ultimate.vertical.rtl.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\vimeo.com.html" />
+    <Content Include="Content\plugins\free-css-drop-down-menu_v1.2\_template.html" />
+    <Content Include="Content\plugins\topbar\jquery.topbar.js" />
+    <Content Include="Content\scripts\Common.js" />
+    <Content Include="Content\scripts\backbone.0.5.3.js" />
+    <Content Include="Content\scripts\underscore.1.1.6-min.js" />
+    <Content Include="Content\scripts\modernizr2.custom.01930.js" />
+    <Content Include="Content\scripts\splitter.js" />
+    <Content Include="Content\scripts\underscore.1.1.7-min.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\css\Site.css" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\LogIn.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_AccountMenuPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\Referrals\Invitation.cshtml" />
+    <Content Include="Views\Shared\MailTemplates\InvitationEmail.cshtml" />
+    <Content Include="Areas\Mariachi\Views\Website\Index.cshtml" />
+    <Content Include="Areas\Mariachi\Views\Web.config" />
+    <Content Include="Areas\Mariachi\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Mariachi\Views\Website\Create.cshtml" />
+    <Content Include="Areas\Mariachi\Views\Website\Manage.cshtml" />
+    <Content Include="Areas\Mariachi\Views\Website\ManageSite.cshtml" />
+    <Content Include="Areas\IPC\Views\Web.config" />
+    <Content Include="Areas\IPC\Views\Shared\_Viewer.cshtml" />
+    <Content Include="Areas\IPC\Views\Viewer\Publication.cshtml" />
+    <Content Include="Areas\IPC\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\IPC\Views\Project\Index.cshtml" />
+    <Content Include="Areas\IPC\Views\Project\GetStarted.cshtml" />
+    <Content Include="Areas\IPC\Views\Shared\_IPCViewerMenu.cshtml" />
+    <Content Include="Areas\IPC\Views\Publisher\Index.cshtml" />
+    <Content Include="Areas\IPC\Views\Publisher\Generate.cshtml" />
+    <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.WebPages.Deployment.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Razor.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Helpers.dll" />
+    <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\IPC\Models\" />
+    <Folder Include="Areas\Mariachi\Models\" />
+    <Folder Include="Areas\Mariachi\Views\Shared\" />
+    <Folder Include="Content\plugins\jstree_pre1.0_fix_1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ASPNETProvidersForMongoDB\ASPNETProvidersForMongoDB\ASPNETProvidersForMongoDB.csproj">
+      <Project>{0972DFF9-1BEB-4599-99DB-5931D2EE950A}</Project>
+      <Name>ASPNETProvidersForMongoDB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltovientoSolutions.Common\AltovientoSolutions.Common.csproj">
+      <Project>{B433BB1A-B5E1-4F61-8922-A2E83AB3F552}</Project>
+      <Name>AltovientoSolutions.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltovientoSolutions.DAL\AltovientoSolutions.DAL.csproj">
+      <Project>{DDAB8792-3D96-4901-A959-E7A5B3B63678}</Project>
+      <Name>AltovientoSolutions.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AltovientoSolutions.Security\AltovientoSolutions.Security.csproj">
+      <Project>{F5FEC4E7-D0FB-4FDC-8574-B15D2359F8A0}</Project>
+      <Name>AltovientoSolutions.Security</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Account.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Account.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Common.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.es.designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Common.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Account.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Account.es.designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notifications.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notifications.es.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Referrals.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Referrals.es.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MailTemplates.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MailTemplates.es.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MailTemplates.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MailTemplates.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Menus.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Menus.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Notifications.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notifications.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Referrals.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Referrals.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Profile.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\MailTemplates\PasswordRetrievalEmail.cshtml" />
+    <Content Include="Views\Shared\MailTemplates\RegistrationEmail.cshtml" />
+    <Content Include="Views\Shared\MailTemplates\VerificationEmail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Validate.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\RetrievePassword.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\_AccountMenu.cshtml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49644</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

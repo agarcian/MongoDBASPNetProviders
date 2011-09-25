@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@section banner{
+    <h2>
+        Mariacheros</h2>
+    <h4 class="tagline">
+        A Site Exclusive for Mariachi Groups and Artists</h4>
+}
+@section Header{
+    <style type="text/css">
+        .marichi-home
+        {
+            font-family: Lucida Sans Unicode;
+        }
+        
+        .mariachi-home .banner h2
+        {
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .mariachi-home .banner .tagline
+        {
+            color: #eea;
+        }
+    </style>
+}
+<div class="ui-helper-clearfix">
+    <div style="float: left; margin: 20px; width: 400px;">
+        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros2.com.png")" alt="" />
+        <p style="text-align: center;">
+            Visit Maribel Salinas' website in Mariacheros.com. <a href="">http://maribelsalinas.mariacheros.com</a></p>
+    </div>
+    <div style="float: left; margin: 20px; width: 400px;">
+        <div style="height: 210px;">
+            <h2 style="padding-top: 0px; margin-top: 0px; color: #EEA">
+                Create a Website for your Mariachi</h2>
+            <p style="color: #eee; font-size: 1.2em;">
+                Create a website to promote your mariachi and reach thousands of potential customers
+                in your area.</p>
+            <br>
+            <div class="page ui-helper-clearfix">
+                <div class="buttons">
+                    @Html.ActionLink("Create your Website Now", "Create", "Website")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
