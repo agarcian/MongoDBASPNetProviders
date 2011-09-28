@@ -1,0 +1,2061 @@
+------------------------------------------------------------------------
+r914 | Jeremy.Skinner | 2009-03-25 03:20:35 -0500 (Wed, 25 Mar 2009) | 2 lines
+
+Patch #2614 -  Jonathan Conway
+Changes ModelStateToTempDataAttribute to work with RedirectResults in addition to RedirectToRouteResults
+------------------------------------------------------------------------
+r913 | Jeremy.Skinner | 2009-03-25 03:14:14 -0500 (Wed, 25 Mar 2009) | 2 lines
+
+Patch #2666 - Jon Kruger
+Modifies the RedirectToAction extension method that takes a lambda to store method arguments in TempData.
+------------------------------------------------------------------------
+r912 | tscott@lunaversesoftware.com | 2009-03-22 09:27:19 -0500 (Sun, 22 Mar 2009) | 1 line
+
+- Tweaked and corrected some misleading language in FluentHtml sample
+------------------------------------------------------------------------
+r911 | tscott@lunaversesoftware.com | 2009-03-21 21:39:54 -0500 (Sat, 21 Mar 2009) | 1 line
+
+- Enhanced FluentHtml sample to show more features, including validation.
+------------------------------------------------------------------------
+r910 | Jeremy.Skinner | 2009-03-18 12:19:49 -0500 (Wed, 18 Mar 2009) | 1 line
+
+MVC Futures for MVC 1.0
+------------------------------------------------------------------------
+r909 | Jeremy.Skinner | 2009-03-18 07:40:55 -0500 (Wed, 18 Mar 2009) | 1 line
+
+System.Web.Mvc 1.0
+------------------------------------------------------------------------
+r908 | subdigital | 2009-03-16 10:41:07 -0500 (Mon, 16 Mar 2009) | 1 line
+
+Changed RouteTestingExtensions to accomodate route values that aren't strings (does a ToString() instead).  Thanks DaveTheNinja!
+------------------------------------------------------------------------
+r907 | Jeremy.Skinner | 2009-03-15 12:50:50 -0500 (Sun, 15 Mar 2009) | 5 lines
+
+*Breaking changes to NVelocity*
+- Moving NVelocity into a separate assembly (MvcContrib.ViewEngines.NVelocity)
+- Renaming NVelocityViewFactory to NVelocityViewEngine 
+- Changed the root namespace for NVelocity to MvcContrib.ViewEngines 
+- Updated NVelocity sample. 
+------------------------------------------------------------------------
+r906 | Jeremy.Skinner | 2009-03-15 12:02:14 -0500 (Sun, 15 Mar 2009) | 1 line
+
+Moving MvcContrib.Spring into the 'Deprecated' solution folder. 
+------------------------------------------------------------------------
+r905 | Jeremy.Skinner | 2009-03-15 10:13:42 -0500 (Sun, 15 Mar 2009) | 3 lines
+
+Adding some initial FluentHtml examples. 
+Removing the ConventionModel* classes from FluentHtml. These are now available in the sample project. 
+Removed the ModelAttributes project. 
+------------------------------------------------------------------------
+r904 | Jeremy.Skinner | 2009-03-13 13:27:00 -0500 (Fri, 13 Mar 2009) | 1 line
+
+*Breaking Change* Removing ConventionController. All of its features (with the exception of the rarely-used DefaultAction) can be used with any regular Controller instead. 
+------------------------------------------------------------------------
+r902 | mvccontrib | 2009-03-06 08:17:28 -0600 (Fri, 06 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r901 | Jeremy.Skinner | 2009-03-06 08:15:23 -0600 (Fri, 06 Mar 2009) | 1 line
+
+Build was failing to recent changes to TestHelper. 
+------------------------------------------------------------------------
+r900 | Jeremy.Skinner | 2009-03-06 07:59:44 -0600 (Fri, 06 Mar 2009) | 1 line
+
+Adding an additional implementation of IPagination that can work with pre-paged data. 
+------------------------------------------------------------------------
+r899 | eric.hexter | 2009-03-04 23:13:56 -0600 (Wed, 04 Mar 2009) | 2 lines
+
+Added binaries used to create documentation.  
+Automated documentation creation in nant.
+------------------------------------------------------------------------
+r898 | eric.hexter | 2009-03-04 09:10:45 -0600 (Wed, 04 Mar 2009) | 1 line
+
+Generated Documentation on MvcContrib and MvcContrib.TestHelpers
+------------------------------------------------------------------------
+r897 | Jeremy.Skinner | 2009-03-04 02:33:33 -0600 (Wed, 04 Mar 2009) | 1 line
+
+MVC RC2 binaries 
+------------------------------------------------------------------------
+r895 | mvccontrib | 2009-03-03 19:36:15 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r893 | mvccontrib | 2009-03-03 17:35:31 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r891 | mvccontrib | 2009-03-03 17:32:37 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r889 | mvccontrib | 2009-03-03 17:29:48 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r887 | mvccontrib | 2009-03-03 17:26:57 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r885 | mvccontrib | 2009-03-03 17:24:02 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r883 | mvccontrib | 2009-03-03 17:21:06 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r881 | mvccontrib | 2009-03-03 17:18:20 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r879 | mvccontrib | 2009-03-03 17:15:29 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r877 | mvccontrib | 2009-03-03 17:12:37 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r875 | mvccontrib | 2009-03-03 17:09:50 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r873 | mvccontrib | 2009-03-03 17:07:10 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r871 | mvccontrib | 2009-03-03 17:04:22 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r869 | mvccontrib | 2009-03-03 17:01:26 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r867 | mvccontrib | 2009-03-03 16:58:28 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r865 | mvccontrib | 2009-03-03 16:55:38 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r863 | mvccontrib | 2009-03-03 16:52:54 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r861 | mvccontrib | 2009-03-03 16:50:08 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r859 | mvccontrib | 2009-03-03 16:47:09 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r857 | mvccontrib | 2009-03-03 16:44:17 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r855 | mvccontrib | 2009-03-03 16:41:17 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r853 | mvccontrib | 2009-03-03 16:38:27 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r851 | mvccontrib | 2009-03-03 16:35:38 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r849 | mvccontrib | 2009-03-03 16:32:56 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r847 | mvccontrib | 2009-03-03 16:29:56 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r846 | eric.hexter | 2009-03-03 14:23:16 -0600 (Tue, 03 Mar 2009) | 4 lines
+
+modified release process.
+The change log is automatically uploaded to a release.
+There is a LatestVersion\ReleaseDescription.txt this file contains wiki markup that will be the description for the codeplex release.
+Modified the CreateRelease.exe to perform the previous two changes.
+------------------------------------------------------------------------
+r844 | mvccontrib | 2009-03-03 12:19:23 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r843 | eric.hexter | 2009-03-03 12:13:31 -0600 (Tue, 03 Mar 2009) | 1 line
+
+ignore failures to commit the latest version.  This is a problem on the CodeBetter TeamCity server.
+------------------------------------------------------------------------
+r842 | eric.hexter | 2009-03-03 12:03:53 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r841 | eric.hexter | 2009-03-03 11:50:07 -0600 (Tue, 03 Mar 2009) | 2 lines
+
+Added pulling the change log into the trunk for use in the packaging target. 
+The release files now include ChangeLog.txt which is the Subversion change log for the trunk.
+------------------------------------------------------------------------
+r839 | mvccontrib | 2009-03-03 11:29:08 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r838 | eric.hexter | 2009-03-03 11:27:29 -0600 (Tue, 03 Mar 2009) | 5 lines
+
+Added svn based revision number to the build.  The project will no longer use the CCNet label for its version
+Added new release file.  MvcContrib.Extras  This contains the view engines and controller factories.
+updated the codeplex release utility to upload the extras file.
+Modified the build to auto commit the latest version zips.
+
+------------------------------------------------------------------------
+r836 | eric.hexter | 2009-03-03 11:11:18 -0600 (Tue, 03 Mar 2009) | 1 line
+
+automatic check-in
+------------------------------------------------------------------------
+r834 | eric.hexter | 2009-03-03 09:46:55 -0600 (Tue, 03 Mar 2009) | 1 line
+
+Added a LatestVersion folder to store zips of the latest builds
+------------------------------------------------------------------------
+r833 | eric.hexter | 2009-03-03 09:01:30 -0600 (Tue, 03 Mar 2009) | 1 line
+
+Removed the nunit reference from the TestHelper library.  It is no longer needed.
+------------------------------------------------------------------------
+r832 | eric.hexter | 2009-03-03 08:58:55 -0600 (Tue, 03 Mar 2009) | 2 lines
+
+Added some solution folders to help with the solution restructuring
+Added Assertion Exception and made the Test Helper independent of nunit.  
+------------------------------------------------------------------------
+r831 | Jeremy.Skinner | 2009-03-02 06:39:26 -0600 (Mon, 02 Mar 2009) | 1 line
+
+RescueAttribute no longer needs to apply special handling to ThreadAbortExceptions. This is dealt with by the Action Invoker. 
+------------------------------------------------------------------------
+r830 | Jeremy.Skinner | 2009-02-28 11:21:33 -0600 (Sat, 28 Feb 2009) | 2 lines
+
+Removed the ability to render a partial view for RowStart/RowEnd. Use a lambda that returns a string instead:
+<%= Html.Grid(Model.People).Columns(/*column definition*/).RowStart(row => "<tr style='blah'") %>
+------------------------------------------------------------------------
+r829 | Jeremy.Skinner | 2009-02-27 06:49:34 -0600 (Fri, 27 Feb 2009) | 2 lines
+
+Removing the deprecated Ninject Controller Factory. Use the Controller Factory that is part of the Ninject trunk instead. 
+Removing obsolete binaries (nhaml/ninject)
+------------------------------------------------------------------------
+r828 | Jeremy.Skinner | 2009-02-27 05:59:08 -0600 (Fri, 27 Feb 2009) | 1 line
+
+Build script should delete samples/bin directory to prevent obsolete dlls from being packaged. 
+------------------------------------------------------------------------
+r827 | Jeremy.Skinner | 2009-02-27 05:49:23 -0600 (Fri, 27 Feb 2009) | 1 line
+
+Fixing samples. Most of them had incorrect reference paths meaning that they wouldn't work as part of the Release package. 
+------------------------------------------------------------------------
+r825 | Jeremy.Skinner | 2009-02-26 14:08:38 -0600 (Thu, 26 Feb 2009) | 1 line
+
+Custom attributes can now be specified for the header row. 
+------------------------------------------------------------------------
+r824 | Jeremy.Skinner | 2009-02-26 13:45:47 -0600 (Thu, 26 Feb 2009) | 2 lines
+
+Tweaking GridSections some more. This still needs some work.
+Adding support for Row Attributes. 
+------------------------------------------------------------------------
+r823 | Jeremy.Skinner | 2009-02-26 13:12:35 -0600 (Thu, 26 Feb 2009) | 2 lines
+
+Removed GridSection in favour of GridRow. 
+Rewrote GridSections
+------------------------------------------------------------------------
+r822 | Jeremy.Skinner | 2009-02-26 12:14:44 -0600 (Thu, 26 Feb 2009) | 1 line
+
+Refactoring Column Attributes. 
+------------------------------------------------------------------------
+r821 | Jeremy.Skinner | 2009-02-26 11:53:24 -0600 (Thu, 26 Feb 2009) | 1 line
+
+Allow custom attributes to be defined at the cell level 
+------------------------------------------------------------------------
+r820 | Jeremy.Skinner | 2009-02-25 14:08:42 -0600 (Wed, 25 Feb 2009) | 1 line
+
+Updating DocComments on ScriptInclude. Note: ScriptInclude now looks for scripts in the /Scripts/ directory rather than /content/js to match the default MVC template. This is a *breaking change*. 
+------------------------------------------------------------------------
+r819 | Jeremy.Skinner | 2009-02-25 12:15:10 -0600 (Wed, 25 Feb 2009) | 1 line
+
+Updating grid sample. 
+------------------------------------------------------------------------
+r818 | Jeremy.Skinner | 2009-02-25 12:07:48 -0600 (Wed, 25 Feb 2009) | 1 line
+
+Finishing moving the ActionSyntax into extension methods in a separate namespace.
+------------------------------------------------------------------------
+r817 | Jeremy.Skinner | 2009-02-25 11:39:14 -0600 (Wed, 25 Feb 2009) | 1 line
+
+Continuing to move the ActionSyntax into extension methods in a seperate namespace.
+------------------------------------------------------------------------
+r816 | Jeremy.Skinner | 2009-02-25 11:27:08 -0600 (Wed, 25 Feb 2009) | 1 line
+
+Continuing to move the ActionSyntax into extension methods in a seperate namespace.
+------------------------------------------------------------------------
+r815 | Jeremy.Skinner | 2009-02-25 11:19:44 -0600 (Wed, 25 Feb 2009) | 2 lines
+
+Beginning to move the ActionSyntax into extension methods in a seperate namespace.
+Changed the overload for RowStart that took a Action<T, bool> to one that takes an Action<T, GridRowViewData<T>>
+------------------------------------------------------------------------
+r814 | will.shaver | 2009-02-25 10:18:32 -0600 (Wed, 25 Feb 2009) | 1 line
+
+Adds action syntax to the grids so that actions can be used instead of partial pages for custom rendering of cells / headers. Updates samples to demonstrate usage.
+------------------------------------------------------------------------
+r813 | Jeremy.Skinner | 2009-02-25 03:14:53 -0600 (Wed, 25 Feb 2009) | 2 lines
+
+Issue #3853
+GridRendererTester.With_format fails running on non-english culture machines. Weekday in DK-da contains a "o" character that's htmlencoded in output.
+------------------------------------------------------------------------
+r812 | Jeremy.Skinner | 2009-02-24 14:44:50 -0600 (Tue, 24 Feb 2009) | 1 line
+
+Simplifying the GridSections implementation 
+------------------------------------------------------------------------
+r811 | Jeremy.Skinner | 2009-02-23 12:43:07 -0600 (Mon, 23 Feb 2009) | 1 line
+
+GridModel should allow GridRender to be overriden. 
+------------------------------------------------------------------------
+r810 | Jeremy.Skinner | 2009-02-22 05:01:57 -0600 (Sun, 22 Feb 2009) | 6 lines
+
+Patch #2503 - nickgieschen
+Currently when adding temp data to model state, if one of the keys in the temp data already exists in the model state, we get a duplicate key exception.
+
+Applied with modifications:
+- The patch only dealt with adding ModelState Values not ModelState Errors. Modified to handle errors correctly. 
+- Added unit tests as none were supplied.
+------------------------------------------------------------------------
+r809 | tscott@lunaversesoftware.com | 2009-02-21 15:48:04 -0600 (Sat, 21 Feb 2009) | 1 line
+
+Modified FluentHtml to support behaviors that are not associated with a model member.  Created new interfaces IBehavior and IBehaviorMarker.  In IViewModelContainer<T> replaced IEnumerable<IMemberBehavior> MemberBehaviors with IEnumerable<IBehaviorMarker> Behaviors.  Modified Element<T>.ApplyBehaviors() to execute IBehaviors and to check for null ForMember before executing IMemberBehaviors.
+------------------------------------------------------------------------
+r808 | Jeremy.Skinner | 2009-02-21 07:43:24 -0600 (Sat, 21 Feb 2009) | 1 line
+
+Removing the old FormHelper/Grid sample. 
+------------------------------------------------------------------------
+r807 | Jeremy.Skinner | 2009-02-21 07:25:06 -0600 (Sat, 21 Feb 2009) | 1 line
+
+Html.ScriptInclude now looks in the /Scripts/ directory rather than /Content/js for scripts. This matches the default MVC template. 
+------------------------------------------------------------------------
+r806 | Jeremy.Skinner | 2009-02-21 07:22:09 -0600 (Sat, 21 Feb 2009) | 2 lines
+
+Deleting the deprecated FormHelper. This has been marked as Obsolete since Preview 5. 
+Marking the ValidationHelper as obsolete. Consider using ModelState for validation and a javascript validation framework (eg jQuery validate) for clientside validation instead. 
+------------------------------------------------------------------------
+r805 | Jeremy.Skinner | 2009-02-21 07:09:04 -0600 (Sat, 21 Feb 2009) | 2 lines
+
+Renaming the old grid to LegacyGrid
+Marking the LegacyGrid as obsolete. 
+------------------------------------------------------------------------
+r804 | Jeremy.Skinner | 2009-02-21 06:55:03 -0600 (Sat, 21 Feb 2009) | 1 line
+
+Merging the RC1Grid branch back into the trunk.
+------------------------------------------------------------------------
+r802 | Jeremy.Skinner | 2009-02-21 06:01:33 -0600 (Sat, 21 Feb 2009) | 1 line
+
+Fixing ConventionModelViewUserControlTests
+------------------------------------------------------------------------
+r800 | subdigital | 2009-02-20 09:45:06 -0600 (Fri, 20 Feb 2009) | 3 lines
+
+renamed ConventionModelViewUserContol to ConventionModelViewUserControl (spelling)
+
+Thanks Jon Kruger!
+------------------------------------------------------------------------
+r798 | Jeremy.Skinner | 2009-02-19 11:08:27 -0600 (Thu, 19 Feb 2009) | 1 line
+
+Additional AttributeTargets on AbstractParameterBinderAttribute
+------------------------------------------------------------------------
+r797 | Jeremy.Skinner | 2009-02-19 11:03:14 -0600 (Thu, 19 Feb 2009) | 2 lines
+
+Patch #2493 - davidmohara
+Added ability to RescueAttribute to ignore ajax calls (this is ON by default) and ignore specific types of exceptions to help target exception handling better
+------------------------------------------------------------------------
+r796 | Jeremy.Skinner | 2009-02-19 10:30:08 -0600 (Thu, 19 Feb 2009) | 2 lines
+
+Patch #2476 - rlaneve
+One line change which fixes support for route testing of actions with int parameters (includes test to verify).
+------------------------------------------------------------------------
+r795 | Jeremy.Skinner | 2009-02-19 10:22:43 -0600 (Thu, 19 Feb 2009) | 2 lines
+
+Patch #2364 - BarryDahlberg
+Updated TestControllerBuilder to expose a Files property.
+------------------------------------------------------------------------
+r794 | Jeremy.Skinner | 2009-02-19 10:18:54 -0600 (Thu, 19 Feb 2009) | 2 lines
+
+Patch #2363 - BarryDahlberg
+Updated ActionResultHelper.WithViewData<> to better handle generic types. For example it now allows passing a List<string> when an IList<string> was requested.
+------------------------------------------------------------------------
+r793 | Jeremy.Skinner | 2009-02-19 10:15:09 -0600 (Thu, 19 Feb 2009) | 1 line
+
+New implementation of ToSelectList as discussed at http://groups.google.com/group/mvccontrib-discuss/browse_thread/thread/fab5d96117a6210
+------------------------------------------------------------------------
+r791 | tscott@lunaversesoftware.com | 2009-02-17 14:12:30 -0600 (Tue, 17 Feb 2009) | 1 line
+
+- Added c-tors for SubmitButton and FileUpload which take behavior lists.
+------------------------------------------------------------------------
+r790 | tscott@lunaversesoftware.com | 2009-02-17 10:30:53 -0600 (Tue, 17 Feb 2009) | 2 lines
+
+- Modified StringExtensions.FormatAsHtmlId to replace all characters not valid for ID attribute with underscore
+- Modofied RadioButtonBase.InferIdFromName to apply FormatAsHtmlId to element value as well.
+------------------------------------------------------------------------
+r788 | tscott@lunaversesoftware.com | 2009-02-17 09:23:36 -0600 (Tue, 17 Feb 2009) | 1 line
+
+- Added HtmTag.UnorderedList and HtmlTag.ListItem
+------------------------------------------------------------------------
+r786 | tscott@lunaversesoftware.com | 2009-02-17 08:54:51 -0600 (Tue, 17 Feb 2009) | 1 line
+
+- Pass forMemember and behaviors to Checkboxes of CheckBoxList and to RadioButtons of RadioSet.
+------------------------------------------------------------------------
+r785 | tscott@lunaversesoftware.com | 2009-02-17 08:46:01 -0600 (Tue, 17 Feb 2009) | 4 lines
+
+- Added ItemClass to RadioSet and CheckBoxListBase
+- Changed FormLiteral to derive from FormElement instead of LiteralBase
+- Renamed RadioSetBase.OptionFormat to ItemFormat to be consistent with CheckboxList
+- Fixed various issues in FluentHtml elements including member visibility, redundant inheritance of IElement, some base classes were not abstract, PreRender not called in overridden ToString
+------------------------------------------------------------------------
+r780 | tscott@lunaversesoftware.com | 2009-02-10 11:29:02 -0600 (Tue, 10 Feb 2009) | 3 lines
+
+- Added CheckBoxList functionality
+- Moved IMemberBehavior up from FormElement to Element, and modified other descendants of Element accordingly.
+- Created Index element.
+------------------------------------------------------------------------
+r777 | Jeremy.Skinner | 2009-02-08 07:19:05 -0600 (Sun, 08 Feb 2009) | 1 line
+
+Unity 1.2
+------------------------------------------------------------------------
+r774 | Jeremy.Skinner | 2009-02-07 09:14:00 -0600 (Sat, 07 Feb 2009) | 1 line
+
+Changing signature of EmailTemplateService.RenderMessage to reflect changes made to ViewContext 
+------------------------------------------------------------------------
+r773 | tscott@lunaversesoftware.com | 2009-02-06 11:39:20 -0600 (Fri, 06 Feb 2009) | 2 lines
+
+- Moved input outside of label for RadioButton
+- Added RadioButton.Format(string) and RadioSet.OptionFormat(string)
+------------------------------------------------------------------------
+r769 | subdigital | 2009-02-05 23:42:15 -0600 (Thu, 05 Feb 2009) | 5 lines
+
+applying patch #2446
+
+Adds "foo.gif".ShouldBeIgnored() testing method to the fluent route testing API.
+
+Thanks, Steve Harman!
+------------------------------------------------------------------------
+r767 | tscott@lunaversesoftware.com | 2009-02-05 19:12:01 -0600 (Thu, 05 Feb 2009) | 1 line
+
+- Added RadioButton and RadioSet to FluentHtml.  Refactored SelectBase to derive from OptionElementBase, which RadioSet also derives from.
+------------------------------------------------------------------------
+r756 | tscott@lunaversesoftware.com | 2009-02-04 20:59:04 -0600 (Wed, 04 Feb 2009) | 1 line
+
+- Added IViewModelContainer.IdFor and IViewModelContainer.NameFor, which are useful in eliminating magic strings from Javascript
+------------------------------------------------------------------------
+r753 | Jeremy.Skinner | 2009-02-01 09:02:14 -0600 (Sun, 01 Feb 2009) | 1 line
+
+Additional deletions
+------------------------------------------------------------------------
+r752 | Jeremy.Skinner | 2009-02-01 09:01:26 -0600 (Sun, 01 Feb 2009) | 2 lines
+
+Patch from Christiaan Van den Poel - fixing BrailViewFactory + samples.
+Re-enabled compilation of samples in the build script.
+------------------------------------------------------------------------
+r749 | Jeremy.Skinner | 2009-01-30 08:33:26 -0600 (Fri, 30 Jan 2009) | 1 line
+
+Binaries for ASP.NET MVC RC1 Refresh 
+------------------------------------------------------------------------
+r747 | Jeremy.Skinner | 2009-01-30 08:12:50 -0600 (Fri, 30 Jan 2009) | 1 line
+
+ExpressionExtensions now work with Expression<Func<T, TValue>> rather than Expression<Func<T, object>> 
+------------------------------------------------------------------------
+r741 | tscott@lunaversesoftware.com | 2009-01-29 14:42:45 -0600 (Thu, 29 Jan 2009) | 1 line
+
+- Added overload SelectBase.Options(IEnumerable<SelectListItem> value)
+------------------------------------------------------------------------
+r739 | eric.hexter | 2009-01-29 12:27:31 -0600 (Thu, 29 Jan 2009) | 1 line
+
+Does not fail on complex action parameters.
+------------------------------------------------------------------------
+r737 | eric.hexter | 2009-01-28 21:49:37 -0600 (Wed, 28 Jan 2009) | 1 line
+
+added version prerequisite for release in the nant build.
+------------------------------------------------------------------------
+r735 | eric.hexter | 2009-01-28 21:19:34 -0600 (Wed, 28 Jan 2009) | 1 line
+
+Added Codeplex release to the build.  This will be called from a dedicated CCnet project for releasing the code.
+------------------------------------------------------------------------
+r731 | eric.hexter | 2009-01-28 10:10:56 -0600 (Wed, 28 Jan 2009) | 22 lines
+
+All the unit tests are now passing but I haven't looked at the samples yet. This is a summary of the changes I've made:
+
+- Updated the ModelBinders to work with the new method signature for BindModel. This was probably the biggest change.
+- BinaryResult has been removed. The framework's FileResult does the same thing. 
+- Removed the entire metadata API. The framework now has an almost identical API built in.
+- The ModelStateToTempData filter no longer has to copy ModelState items to an intermediate serializable dictionary for storage in TempData as ModelStateDictionary and ModelState are now serializable.
+- Removed CastleSimpleBinder. This was a left over from the days before the DefaultModelBinder. 
+- Marked more of the FormHelper classes as obsolete. Following the RC release of MvcContrib, these classes will be removed from the project.
+- Other minor fixes
+
+Is it still worth keeping the RescueAttribute? It has a few additional features over the HandleErrorAttribute, but is largely a duplication. 
+
+The AbstractParameterBinder and its subclasses don't use the ValueProvider API for retrieving values from the Request, rather they use the HttpContext directly. I think it'd be worth switching to using the ValueProvider, but this will be a breaking change. Specifically, it will no longer be possible to supply the Request Store in the attribute declaration, but it will instead be necessary to provide a custom ValueProvider at the controller level if you want to extract values from a non-default location (eg TempData)
+
+A couple of observations about the RC that I think are worth noting:
+- AuthorizationFilters now execute before ModelBinders. This is a good thing as it fixes a possible security hole, but could have some implications if you're relying on when filter/binder execution occurs. 
+- The ViewLocationCache from Preview 5 has been re-introduced (it was missing from Beta 1) and no longer appears to be broken.
+- The DefaultViewEngine has been removed and its methods are now available on the ViewEngineCollection object.
+- The ValueProvider is now just a dictionary which makes testing Model Binders very easy.
+- IBuildManager is still internal :(
+- If you're upgrading from an older release and want to use codebehind-less strongly typed views, you will need to add the PageParserFilter to the <pages> section of your web.config:
+ <pages pageParserFilterType="System.Web.Mvc.ViewTypeParserFilter, System.Web.Mvc, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"></pages>
+------------------------------------------------------------------------
+r698 | tscott@lunaversesoftware.com | 2009-01-22 07:47:06 -0600 (Thu, 22 Jan 2009) | 1 line
+
+- Added CheckBoxBase ,FormLiteralBase, LiteralBase, SubmitButtonBase, TextAreaBase to allow for easier extension of FluentHtml.
+------------------------------------------------------------------------
+r696 | Jeremy.Skinner | 2009-01-14 03:15:45 -0600 (Wed, 14 Jan 2009) | 1 line
+
+Patch from Simone Chiaretta fixing some multicultural test issues. 
+------------------------------------------------------------------------
+r694 | tscott@lunaversesoftware.com | 2009-01-13 17:14:10 -0600 (Tue, 13 Jan 2009) | 4 lines
+
+- Modified ValidationMemberBehavior to set the element value back to the AttemptedValue; changed FormElement so that behaviors are executed in ToString instead of c-tor.
+- Added ValidationMemberBehavior to ModelViewMasterPage, ModelViewPage ad ModelViewUserControl.
+- Added HtmlNamePrefix to IViewModelContainer and modified helper methods to allow specifying a prefix for all FluentHtml elements.
+- Added new HTML helper method, Index, (2 overloads) to allow specifying special hidden input element used by the default model binder to deserialize enumerable properties.
+------------------------------------------------------------------------
+r692 | Jeremy.Skinner | 2009-01-06 02:30:07 -0600 (Tue, 06 Jan 2009) | 1 line
+
+ValidationMemberBehavior now uses a delegate to obtain the modelstate dictionary 
+------------------------------------------------------------------------
+r690 | tscott@lunaversesoftware.com | 2009-01-05 19:15:11 -0600 (Mon, 05 Jan 2009) | 3 lines
+
+Added ValidationMessage helper to FluentHtml.  (NOTE: To do this, made IViewModelContainer to implement IViewDataContainer, which required ModelViewMasterPage to directly implement IViewDataContainer.)
+Added ValidationMemberBehavior to FluentHtml, which adds a CSS class to elements when an error is found in ModelState.
+Added ValidationMemberBehavior as a default behavior for ConventionModelViewXxxx classes.
+------------------------------------------------------------------------
+r688 | Jeremy.Skinner | 2009-01-05 11:56:36 -0600 (Mon, 05 Jan 2009) | 1 line
+
+Minor typos in doc-comments
+------------------------------------------------------------------------
+r687 | tscott@lunaversesoftware.com | 2009-01-05 11:08:54 -0600 (Mon, 05 Jan 2009) | 1 line
+
+Added XML comments to fluent HTML elements and view extensions.
+------------------------------------------------------------------------
+r685 | Jeremy.Skinner | 2009-01-04 13:52:06 -0600 (Sun, 04 Jan 2009) | 1 line
+
+Fixing Spring.NET sample - controllers should not be singletons. 
+------------------------------------------------------------------------
+r683 | Jeremy.Skinner | 2009-01-04 13:47:27 -0600 (Sun, 04 Jan 2009) | 1 line
+
+Fixing ValidationHelper sample 
+------------------------------------------------------------------------
+r681 | Jeremy.Skinner | 2009-01-04 13:17:25 -0600 (Sun, 04 Jan 2009) | 3 lines
+
+Issue #3518 - WindsorExtensions.RegisterControllers should register using type.FullName
+
+This is a potentially breaking change if you are using a custom controller factory in conjunction with Windsor. MvcContrib's WindsorControllerFactory is unaffected. 
+------------------------------------------------------------------------
+r679 | Jeremy.Skinner | 2009-01-04 13:01:06 -0600 (Sun, 04 Jan 2009) | 3 lines
+
+Issue #3443 - CastleBindAttribute binding only from Form.
+
+Added additional ctor parameter to CastleBindAttribute to allow RequestStore to be specified. Default behaviour will still be to use Request.Form. 
+------------------------------------------------------------------------
+r677 | Jeremy.Skinner | 2009-01-04 07:47:10 -0600 (Sun, 04 Jan 2009) | 1 line
+
+Updating to the latest nant nightly build so that mvccontrib can be built on machines without the .NET 2.0 SDK. 
+------------------------------------------------------------------------
+r674 | Jeremy.Skinner | 2009-01-04 07:40:14 -0600 (Sun, 04 Jan 2009) | 2 lines
+
+Patch #2288 - dwhittaker 
+Allows for MemberExpressions in the Route Tester. 
+------------------------------------------------------------------------
+r673 | Jeremy.Skinner | 2009-01-04 07:39:19 -0600 (Sun, 04 Jan 2009) | 1 line
+
+Disabling warning in NinjectControllerFactory sample 
+------------------------------------------------------------------------
+r671 | Jeremy.Skinner | 2008-12-29 12:30:48 -0600 (Mon, 29 Dec 2008) | 1 line
+
+Issue #3291 - HtmlHelper.ActionLink(title, action, controller) doesn't work in NVelocity
+------------------------------------------------------------------------
+r669 | tscott@lunaversesoftware.com | 2008-12-22 15:30:13 -0600 (Mon, 22 Dec 2008) | 2 lines
+
+- Added test coverage too ensure proper HTML encoding for FluentHtml element.
+- Fixed where namespaces mismatched with file paths in UnitTests.FluentHtml.
+------------------------------------------------------------------------
+r667 | Jeremy.Skinner | 2008-12-16 05:55:06 -0600 (Tue, 16 Dec 2008) | 1 line
+
+Fixing the ID on the Checkbox's associated hidden field. Previously, both elements had the same ID (which is invalid). Now, the hidden field's ID is suffixed with "_Hidden". 
+------------------------------------------------------------------------
+r665 | Jeremy.Skinner | 2008-12-15 10:49:13 -0600 (Mon, 15 Dec 2008) | 1 line
+
+Introducing ISupportsMaxLength in order to tidy up DefaultMaxLengthMemberBehavior
+------------------------------------------------------------------------
+r663 | subdigital | 2008-12-14 15:45:14 -0600 (Sun, 14 Dec 2008) | 3 lines
+
+added another extension method for fluent route testing that allows you to test directly from a string.
+
+Usage:  "~/home/index".ShouldMapTo<HomeController>(x => x.Index());
+------------------------------------------------------------------------
+r653 | tscott@lunaversesoftware.com | 2008-12-13 12:54:35 -0600 (Sat, 13 Dec 2008) | 1 line
+
+Modified ExpressionExtensions.GetValueFrom to tolerate only NullReferenceException (and return null) instead of tolerating any type of exception.
+------------------------------------------------------------------------
+r647 | Jeremy.Skinner | 2008-12-13 08:10:51 -0600 (Sat, 13 Dec 2008) | 1 line
+
+Marking the NinjectControllerFactory as obsolete. This will be removed in a subsequent release. Please migrate to the official NinjectControllerFactory from http://www.ninject.org 
+------------------------------------------------------------------------
+r645 | tscott@lunaversesoftware.com | 2008-12-12 19:44:59 -0600 (Fri, 12 Dec 2008) | 1 line
+
+Addressed several issues with FluentHtml discovered when applying to existing app.  Changed ExpressionExtensions.GetValueFrom to return null when intermediate properties in a chain are null, instead of throwing.  Changed TextInput.Format to allow format placeholders like "{0:$0.00}" as well as formats like "$0.00".  Added overload to SelectBase.Options<TEnum> to take a firstOptionText and create a first option with empty string value. Fixed bug in SelectBase whereby selected values of enums were not being selected. Fixed typo in MultiSelect.
+------------------------------------------------------------------------
+r643 | Jeremy.Skinner | 2008-12-11 04:26:51 -0600 (Thu, 11 Dec 2008) | 1 line
+
+Introducing a protected virtual BuildOptions method to Selectbase. 
+------------------------------------------------------------------------
+r642 | Jeremy.Skinner | 2008-12-11 04:09:34 -0600 (Thu, 11 Dec 2008) | 2 lines
+
+Add support for using a lambda expression to specify text/value field for a Select
+<%= this.Select(m => m.Product.ProductId).Options(products, p => p.Id, p => p.Description) %>
+------------------------------------------------------------------------
+r641 | Jeremy.Skinner | 2008-12-10 14:29:00 -0600 (Wed, 10 Dec 2008) | 2 lines
+
+Patch #2236 - timtas
+Fluent HTML generator library.
+------------------------------------------------------------------------
+r634 | Jeremy.Skinner | 2008-12-02 11:00:40 -0600 (Tue, 02 Dec 2008) | 1 line
+
+Upgrading to Spring.NET 1.2 
+------------------------------------------------------------------------
+r632 | Jeremy.Skinner | 2008-11-29 06:48:30 -0600 (Sat, 29 Nov 2008) | 1 line
+
+Reverting patch #2126. Going to work on this on a branch instead. 
+------------------------------------------------------------------------
+r630 | Jeremy.Skinner | 2008-11-26 07:25:34 -0600 (Wed, 26 Nov 2008) | 1 line
+
+Updating UI Helpers sample 
+------------------------------------------------------------------------
+r628 | Jeremy.Skinner | 2008-11-26 07:12:48 -0600 (Wed, 26 Nov 2008) | 2 lines
+
+Patch #2126 - Woil
+Adds sorting to grids. 
+------------------------------------------------------------------------
+r627 | subdigital | 2008-11-25 23:27:37 -0600 (Tue, 25 Nov 2008) | 1 line
+
+added some fluent route testing extension methods.  Details here:  http://flux88.com/fluent-route-testing-in-asp-net-mvc
+------------------------------------------------------------------------
+r625 | Jeremy.Skinner | 2008-11-23 08:05:26 -0600 (Sun, 23 Nov 2008) | 4 lines
+
+Patch #1968 - Woil
+Implements castle ATM style transaction management for Mvc projects via Action Filters. Standard ATM implementation requires Dynamic Proxy which conflicts with parameter binding.
+
+See comments / tests for usage.
+------------------------------------------------------------------------
+r623 | Jeremy.Skinner | 2008-11-23 07:59:50 -0600 (Sun, 23 Nov 2008) | 7 lines
+
+Patch #1977 - MattXPO
+Adds support for specifying attributes that should be applied to the <th> element of a column header.
+
+Applied with modifications:
+- Grid should not have a dependency on MvcContrib.Hash. Changed to use IDictionary instead.
+- RenderHeaderCellStart takes a GridColumn<T> rather than the html attributes dictionary directly.
+
+------------------------------------------------------------------------
+r621 | Jeremy.Skinner | 2008-11-23 07:45:05 -0600 (Sun, 23 Nov 2008) | 2 lines
+
+Patch #2085 - levous
+TestControllerBuilder now mocks Response.Status
+------------------------------------------------------------------------
+r619 | Jeremy.Skinner | 2008-11-23 07:41:12 -0600 (Sun, 23 Nov 2008) | 2 lines
+
+Patch #2099 - Woil
+Updates the Sub Controller sample to MVC Beta 1. Removes the test project which did not contain anything relevant to the sample.
+------------------------------------------------------------------------
+r617 | mhinze | 2008-11-19 10:30:00 -0600 (Wed, 19 Nov 2008) | 1 line
+
+Bill Barry's RegexRoute
+------------------------------------------------------------------------
+r615 | Jeremy.Skinner | 2008-11-17 12:10:13 -0600 (Mon, 17 Nov 2008) | 1 line
+
+HtmlExtensionDuck now automatically imports RenderPartialExtensions 
+------------------------------------------------------------------------
+r613 | Jeremy.Skinner | 2008-11-16 15:12:49 -0600 (Sun, 16 Nov 2008) | 1 line
+
+Build script now includes reference DLLs in the release package 
+------------------------------------------------------------------------
+r611 | Jeremy.Skinner | 2008-11-16 14:02:50 -0600 (Sun, 16 Nov 2008) | 1 line
+
+XSLT View Engine works again (?)
+------------------------------------------------------------------------
+r609 | Jeremy.Skinner | 2008-11-15 06:32:45 -0600 (Sat, 15 Nov 2008) | 5 lines
+
+Patch #1846 - smason
+Adds a WindsorModelBinder
+
+Applied with modifications:
+- Upgraded to MVC Beta 1
+------------------------------------------------------------------------
+r607 | Jeremy.Skinner | 2008-11-01 10:34:52 -0500 (Sat, 01 Nov 2008) | 1 line
+
+Removing the NHaml View Engine - this has now been moved to a separate project and can be found at http://code.google.com/p/nhaml/
+------------------------------------------------------------------------
+r606 | Jeremy.Skinner | 2008-11-01 10:20:09 -0500 (Sat, 01 Nov 2008) | 1 line
+
+Removing ObjectBuilder integration 
+------------------------------------------------------------------------
+r605 | Jeremy.Skinner | 2008-10-27 15:57:03 -0500 (Mon, 27 Oct 2008) | 1 line
+
+ColumnCondition should be respected when using a custom renderer with the grid. 
+------------------------------------------------------------------------
+r603 | Jeremy.Skinner | 2008-10-23 02:39:47 -0500 (Thu, 23 Oct 2008) | 6 lines
+
+BooViewEngine now automatically imports System.Web.Mvc.Html namespace
+NVelocity/NHaml now import the appropriate extension methods
+NVelocity/Brail/NHaml no longer throw a NotImplementException in ReleaseView
+Fixing NVelocity sample.
+Fixing Brail sample.
+Fixing NHaml sample. 
+------------------------------------------------------------------------
+r601 | Jeremy.Skinner | 2008-10-22 06:41:14 -0500 (Wed, 22 Oct 2008) | 1 line
+
+Adding a filter for copying TempData to ViewData 
+------------------------------------------------------------------------
+r599 | Jeremy.Skinner | 2008-10-20 06:32:18 -0500 (Mon, 20 Oct 2008) | 1 line
+
+Cleaning up NinjectControllerFactoryTester (Patch #1970)
+------------------------------------------------------------------------
+r597 | Jeremy.Skinner | 2008-10-20 05:58:19 -0500 (Mon, 20 Oct 2008) | 1 line
+
+Fixing NinjectControllerFactory/SpringControllerFactory
+------------------------------------------------------------------------
+r595 | Jeremy.Skinner | 2008-10-19 07:43:30 -0500 (Sun, 19 Oct 2008) | 1 line
+
+Patch #1963 - DaveSolomon - Cache can now be used with TestControllerBuilder
+------------------------------------------------------------------------
+r594 | Jeremy.Skinner | 2008-10-19 05:54:18 -0500 (Sun, 19 Oct 2008) | 2 lines
+
+New version of Microsoft.Web.Mvc
+Adding missing using statement to NHaml's template compiler
+------------------------------------------------------------------------
+r593 | Jeremy.Skinner | 2008-10-18 10:21:07 -0500 (Sat, 18 Oct 2008) | 3 lines
+
+Adding ModelStateToTempData action filter for persisting ModelState in TempData. For details see: http://www.jeremyskinner.co.uk/2008/10/18/storing-modelstate-in-tempdata-with-aspnet-mvc/
+
+Adding an overload for MvcMockHelpers.DynamicHttpContextBase() that does not require a MockRepository. 
+------------------------------------------------------------------------
+r592 | Jeremy.Skinner | 2008-10-18 07:49:52 -0500 (Sat, 18 Oct 2008) | 1 line
+
+Merging the ActionFilters/Filters directories in the test project. 
+------------------------------------------------------------------------
+r590 | Jeremy.Skinner | 2008-10-18 03:52:36 -0500 (Sat, 18 Oct 2008) | 1 line
+
+New version of Spark. 
+------------------------------------------------------------------------
+r588 | eric.hexter | 2008-10-17 12:49:59 -0500 (Fri, 17 Oct 2008) | 1 line
+
+merged beta 1 mvc bits and update
+------------------------------------------------------------------------
+r567 | Jeremy.Skinner | 2008-10-11 10:23:14 -0500 (Sat, 11 Oct 2008) | 2 lines
+
+Patch #1878 - simone_b
+Fixes an issue with the TestControllerBuilder that didn't allow to set up AppRelativeCurrentExecutionFilePath, ApplicationPath and PathInfo and added RawUrl as per a request on the mailing list.
+------------------------------------------------------------------------
+r565 | Jeremy.Skinner | 2008-10-11 10:07:57 -0500 (Sat, 11 Oct 2008) | 2 lines
+
+Patch #1885 - Julion
+Adds support for the Reply-To header to EmailTemplateService.
+------------------------------------------------------------------------
+r563 | Jeremy.Skinner | 2008-10-11 10:00:00 -0500 (Sat, 11 Oct 2008) | 2 lines
+
+Patch #1913 - loudej
+Adds spark view engine.
+------------------------------------------------------------------------
+r561 | Jeremy.Skinner | 2008-10-11 09:33:57 -0500 (Sat, 11 Oct 2008) | 1 line
+
+Updating Rhino Mocks to v3.5 RTM. 
+------------------------------------------------------------------------
+r559 | subdigital | 2008-10-05 17:55:38 -0500 (Sun, 05 Oct 2008) | 2 lines
+
+added SubController demonstration to NVelocity samples.
+to see it, load up the NVelocity sample solution, and navigate to /main/index
+------------------------------------------------------------------------
+r557 | subdigital | 2008-10-05 17:19:40 -0500 (Sun, 05 Oct 2008) | 2 lines
+
+forgot to commit the related test for LayoutAttribute
+(it now overrides view selection within your actions)
+------------------------------------------------------------------------
+r556 | subdigital | 2008-10-05 16:16:18 -0500 (Sun, 05 Oct 2008) | 17 lines
+
+BREAKING CHANGE FOR NVelocityViewFactory
+
+The reason:
+The way NVelocityViewFactory merges templates together, it wasn't possible to use #parse("partial.vm") and have the output rendered in the right spot.  This made componentization difficult (if not impossible).  From Jeremy Skinner....
+
+    When you use a Layout with NVelocity, the view will no longer be
+    rendered directly to the response stream (Response.Output), but will
+    instead be buffered in an internal StringWriter. Once the view has
+    finished rendering, this buffered output is then merged into the
+    template for the masterpage which is then rendered to Response.Output.
+
+
+The change:
+We changed this behavior, so now the child template no longer gets buffered into it's own stringwriter.  This allows us to just merge the master page and all the #parse statements together in one go.  So $childContent no longer has the entire content of the child view, instead it contains the path to the child view template.  This means that you'll need to wrap $childContent with #parse() to get it to work.  Again, to fix your sites, replace $childContent with #parse( $childContent ).
+
+For more details, check the entire thread here:
+http://groups.google.com/group/mvccontrib-discuss/browse_thread/thread/fc84d69db708322
+------------------------------------------------------------------------
+r550 | Jeremy.Skinner | 2008-10-02 10:29:07 -0500 (Thu, 02 Oct 2008) | 2 lines
+
+Making ActionMetaData.Name virtual.
+Making AliasedActionMetaData.Name return the name of the alias.
+------------------------------------------------------------------------
+r544 | jeffreypalermo | 2008-09-23 11:19:18 -0500 (Tue, 23 Sep 2008) | 1 line
+
+- enhanced SubController to have a generic counterpart that has a Model property that can be used for passing an object from a parent controller to a child subcontroller.  If multiple objects are need, then pass an array or structure.
+------------------------------------------------------------------------
+r541 | Jeremy.Skinner | 2008-09-17 12:36:09 -0500 (Wed, 17 Sep 2008) | 1 line
+
+Patch from Torkel Ödegaard - Fluent interface for configuring routes. 
+------------------------------------------------------------------------
+r539 | Jeremy.Skinner | 2008-09-15 11:08:51 -0500 (Mon, 15 Sep 2008) | 1 line
+
+Fixing broken test 
+------------------------------------------------------------------------
+r538 | Jeremy.Skinner | 2008-09-15 07:32:10 -0500 (Mon, 15 Sep 2008) | 3 lines
+
+WindsorControllerFactory now inherits from DefaultControllerFactory.
+Removing WindsorControllerFactory's requirement that controllers be registered with lower case keys with the Container. 
+WindsorControllerFactory throws a 404 if the controller type could not be located (in keeping with the DefaultControllerFactory)
+------------------------------------------------------------------------
+r535 | Jeremy.Skinner | 2008-09-13 10:25:55 -0500 (Sat, 13 Sep 2008) | 3 lines
+
+Adding AcceptGetAttribute and AcceptPostAttribute - extensions of the framework's AcceptVerbsAttribute. 
+Deprecating PostOnlyAttribute by marking as obsolete (use AcceptPostAttribute instead)
+Disabling some warnings in ControllerDescriptorTester and FilterTester as PostOnlyAttribute is now obsolete. 
+------------------------------------------------------------------------
+r533 | wcpierce | 2008-09-09 12:59:11 -0500 (Tue, 09 Sep 2008) | 2 lines
+
+Patch #1801 - Woil
+Add support for deserializing from TempData
+------------------------------------------------------------------------
+r531 | Jeremy.Skinner | 2008-09-09 11:48:37 -0500 (Tue, 09 Sep 2008) | 2 lines
+
+Issue #2652 - Support isAlternate in gridSections.RowStart
+Applying patch from Loraderon
+------------------------------------------------------------------------
+r529 | Jeremy.Skinner | 2008-09-09 11:40:31 -0500 (Tue, 09 Sep 2008) | 2 lines
+
+Issue #2653 - Customisable page querystring for grid pagination
+Applying patch from Loraderon
+------------------------------------------------------------------------
+r528 | Jeremy.Skinner | 2008-09-09 11:32:19 -0500 (Tue, 09 Sep 2008) | 3 lines
+
+Fixing Issue #2649 - Grid pagination should not hard-code strings
+Applying patch from Loraderon.
+
+------------------------------------------------------------------------
+r527 | wcpierce | 2008-09-09 11:25:45 -0500 (Tue, 09 Sep 2008) | 4 lines
+
+The DeserializeAttribute now uses Request.Params when configured with RequestStore.Params rather than Form + QueryString, this includes Cookies and ServerVariables.
+Added RequestStore.RouteData
+Added RequestStore.All
+Made RequestStore.All the default
+------------------------------------------------------------------------
+r525 | Jeremy.Skinner | 2008-09-08 12:17:27 -0500 (Mon, 08 Sep 2008) | 2 lines
+
+Patch #1798 - Julion
+Add support for display name in the EmailTemplateService.
+------------------------------------------------------------------------
+r524 | Jeremy.Skinner | 2008-09-08 12:12:59 -0500 (Mon, 08 Sep 2008) | 1 line
+
+Upgrading the Spring.NET binaries to 1.2.0 M1
+------------------------------------------------------------------------
+r522 | Jeremy.Skinner | 2008-09-08 12:09:33 -0500 (Mon, 08 Sep 2008) | 1 line
+
+Removing most of the logic from DefaultDataBinder - ViewData.Eval should now suffice.
+------------------------------------------------------------------------
+r520 | Jeremy.Skinner | 2008-09-08 11:55:00 -0500 (Mon, 08 Sep 2008) | 4 lines
+
+Patch #1739 - timtas
+Fixes NullReferenceException in FormHelper when the datasource for a Select has an item with a null ValueField. 
+
+Note: The FormHelpers have now been deprecated and will be removed with the next MVC Preview. 
+------------------------------------------------------------------------
+r516 | Jeremy.Skinner | 2008-09-07 08:36:04 -0500 (Sun, 07 Sep 2008) | 2 lines
+
+Marking all the methods on IFormHelper as obsolete. IFormHelper will be removed for the next MVC Preview.
+Temporarily disabling obsolete warnings (CS0618 and CS0612) on SmartForm/SmartFormTester. These will be removed for the next MVC preview.  
+------------------------------------------------------------------------
+r514 | Jeremy.Skinner | 2008-09-07 08:11:47 -0500 (Sun, 07 Sep 2008) | 2 lines
+
+Fixing issue #2648
+The pagination section of the grid was still rendered even if the pagination was empty.
+------------------------------------------------------------------------
+r511 | Jeremy.Skinner | 2008-09-07 07:27:47 -0500 (Sun, 07 Sep 2008) | 1 line
+
+Adding a utility method for converting anonymous objects to Dictionary<string, object>
+------------------------------------------------------------------------
+r510 | Jeremy.Skinner | 2008-09-07 06:26:11 -0500 (Sun, 07 Sep 2008) | 3 lines
+
+- Removing the DefaultControllerFactory - the framework's implementation should now suffice
+- Decoupling the TestControllerBuilder from the IoCControllerFactory in order to facilitate the removal of DefaultControllerFactory
+- Added InitializeWithControllerTypes extension method on IControllerFactory in order to make testing controller factories that inherit from DefaultControllerFactory possible (using some refleciton hackery)
+------------------------------------------------------------------------
+r508 | jeffreypalermo | 2008-09-07 00:52:08 -0500 (Sun, 07 Sep 2008) | 3 lines
+
+- added SubController support.
+- Added sample in MvcContrib.Samples.SubControllers
+- Unlimited hierarchical nesting and actions work exactly the same as regular controllers.
+------------------------------------------------------------------------
+r506 | jeffreypalermo | 2008-09-06 23:01:50 -0500 (Sat, 06 Sep 2008) | 1 line
+
+- fixed error that apparently isn't happening on the build server.
+------------------------------------------------------------------------
+r504 | Jeremy.Skinner | 2008-09-06 06:48:44 -0500 (Sat, 06 Sep 2008) | 1 line
+
+Updating to the Castle Project's trunk (revision 5306).
+------------------------------------------------------------------------
+r502 | Jeremy.Skinner | 2008-09-05 10:59:36 -0500 (Fri, 05 Sep 2008) | 3 lines
+
+Patch #1723 - simone_b
+- NameValueDeserializer and DeserializeAttribute can deserialize objects even if the prefix is omitted.
+- Added overloads to NameValueDeserializer.Deserialize methods and DeserializeAttribute constructor.
+------------------------------------------------------------------------
+r500 | jeffreypalermo | 2008-09-05 07:22:25 -0500 (Fri, 05 Sep 2008) | 1 line
+
+- added credit information to two files identified by Hamilton that originated in the Castle project.
+------------------------------------------------------------------------
+r498 | Jeremy.Skinner | 2008-09-05 07:14:19 -0500 (Fri, 05 Sep 2008) | 4 lines
+
+Adding EnumerableExtensions. Contains extension methods for converting an IEnumerable<T> to a SelectList:
+customers.ToSelectList(c => c.Id, c => c.Name);
+customers.ToSelectList(c => c.Id, c => c.Name, /*customer id to select*/ 3);
+customers.ToSelectList(c => c.Id, c => c.Name, c => c.CreditLimit > 100);
+------------------------------------------------------------------------
+r496 | Jeremy.Skinner | 2008-09-03 11:12:59 -0500 (Wed, 03 Sep 2008) | 1 line
+
+Adding missing file to the ConventionController sample
+------------------------------------------------------------------------
+r494 | Jeremy.Skinner | 2008-09-02 13:53:43 -0500 (Tue, 02 Sep 2008) | 1 line
+
+Adding missing file
+------------------------------------------------------------------------
+r493 | Jeremy.Skinner | 2008-09-02 13:48:01 -0500 (Tue, 02 Sep 2008) | 10 lines
+
+Merging Preview 5 branch back into trunk. 
+
+Main changes:
+- View Engines updated to support changes to IViewEngine/IView
+- Removed IParameterBinder as IModelBinder does the same thing
+- Removed NHamlControllerFactory as this is now redundant
+- Upgraded the MetaData API (ControllerDescriptor/ControllerMetaData/ActionMetaData) to closely match the MVC framework's internal type cache.
+- Renamed Html.Form() extension method to Html.FormHelper() as there's now a Form() method in the framework.
+- ConventionControllerActionInvoker can now be injected into a controller via a container.
+
+------------------------------------------------------------------------
+r454 | Jeremy.Skinner | 2008-08-25 12:46:23 -0500 (Mon, 25 Aug 2008) | 1 line
+
+Issue #2605 - Move boolean "true,false" logic into DefaultConvertible
+------------------------------------------------------------------------
+r452 | eric.hexter | 2008-08-16 12:45:02 -0500 (Sat, 16 Aug 2008) | 2 lines
+
+Applied code clean up patch from SimonCropp
+Upgraded to Structure Map 2.4.9
+------------------------------------------------------------------------
+r450 | Jeremy.Skinner | 2008-08-13 08:54:21 -0500 (Wed, 13 Aug 2008) | 5 lines
+
+Patch #1660 - simone_b
+- Upgrading to Rhino Mocks 3.5
+
+Applied with modifications:
+- Changed spaces to tabs.
+------------------------------------------------------------------------
+r448 | Jeremy.Skinner | 2008-08-13 08:28:30 -0500 (Wed, 13 Aug 2008) | 5 lines
+
+Patch #1655 - SimonCropp
+- A few minor string format fixes.
+
+Applied with modifications:
+- Fixed failing test caused by the changes.
+------------------------------------------------------------------------
+r446 | Jeremy.Skinner | 2008-08-10 10:56:44 -0500 (Sun, 10 Aug 2008) | 1 line
+
+Removing obsolete MVCToolkit
+------------------------------------------------------------------------
+r445 | Jeremy.Skinner | 2008-08-10 07:19:58 -0500 (Sun, 10 Aug 2008) | 1 line
+
+Fixing possible NullReferenceException in NameValueDeserializer.CheckPrefixInRequest
+------------------------------------------------------------------------
+r443 | Jeremy.Skinner | 2008-08-10 06:29:55 -0500 (Sun, 10 Aug 2008) | 2 lines
+
+Fixing issue with SimpleParameterBinder/CastleSimpleBinder:
+If the value was being extracted from the routedata, and the value was already the same type as the target type then it would still attempt to do a string conversion. 
+------------------------------------------------------------------------
+r441 | Jeremy.Skinner | 2008-08-06 02:37:35 -0500 (Wed, 06 Aug 2008) | 4 lines
+
+Fixing issue #2452 and #2503:
+- Missing a slash from the url when calling validationHelper.ValidatorRegistrationScripts from within a virtual directory
+
+The test is currently ignored as although it passes when run by itself, the validationhelper's URL caching means that it fails when the entire fixture is run. 
+------------------------------------------------------------------------
+r440 | Jeremy.Skinner | 2008-08-05 13:39:14 -0500 (Tue, 05 Aug 2008) | 1 line
+
+TestControllerBuilder will now stub HttpContext.User 
+------------------------------------------------------------------------
+r438 | eric.hexter | 2008-08-04 23:45:06 -0500 (Mon, 04 Aug 2008) | 1 line
+
+Patch to clean up codebase.  Liberal use of var. remove orphaned namespace references.... ect.
+------------------------------------------------------------------------
+r436 | subdigital | 2008-07-27 21:31:33 -0500 (Sun, 27 Jul 2008) | 3 lines
+
+added:  ability to register custom extensions through HtmlExtensionDuck.AddExtension() -- this allows more helpers to be accessible from an NVelocity view
+
+added:  view helpers for css, javascript, and favicon tags.
+------------------------------------------------------------------------
+r435 | Jeremy.Skinner | 2008-07-23 02:28:20 -0500 (Wed, 23 Jul 2008) | 4 lines
+
+Patch #1550 - simone_b
+Improvements for expression based RedirectToAction.
+- Ability to redirect to same or other controller's actions in either the ConventionController and extension method flavors.
+- Centralized logic which uses the ExpressionHelper class in on of the the extension methods.
+------------------------------------------------------------------------
+r433 | Jeremy.Skinner | 2008-07-20 09:31:44 -0500 (Sun, 20 Jul 2008) | 1 line
+
+*Breaking Change* For consistency, moving LayoutAttribute and RescueAttribute into the MvcContrib.Filters namespace
+------------------------------------------------------------------------
+r431 | Jeremy.Skinner | 2008-07-19 09:03:10 -0500 (Sat, 19 Jul 2008) | 2 lines
+
+Patch #1541 - simone_b
+Adds an expression-based RedirectToAction both on the ConventionController and as an extension method.
+------------------------------------------------------------------------
+r430 | Jeremy.Skinner | 2008-07-18 17:02:13 -0500 (Fri, 18 Jul 2008) | 2 lines
+
+Removing ComponentController tests. 
+Re-adding the Filters property to ActionMetaData - now refactored to use FilterInfo.
+------------------------------------------------------------------------
+r428 | Jeremy.Skinner | 2008-07-18 03:01:00 -0500 (Fri, 18 Jul 2008) | 1 line
+
+Updating samples to work with Preview 4. 
+------------------------------------------------------------------------
+r426 | Jeremy.Skinner | 2008-07-17 13:36:38 -0500 (Thu, 17 Jul 2008) | 1 line
+
+Deleting ComponentController related files. 
+------------------------------------------------------------------------
+r424 | eric.hexter | 2008-07-17 12:50:08 -0500 (Thu, 17 Jul 2008) | 1 line
+
+Merged the preview 4 branch.
+------------------------------------------------------------------------
+r417 | Jeremy.Skinner | 2008-07-05 12:16:42 -0500 (Sat, 05 Jul 2008) | 1 line
+
+Breaking change to Grid - Moved the RowStart/RowEnd methods out of the IRootGridColumnBuilder and into IGridSections. 
+------------------------------------------------------------------------
+r416 | Jeremy.Skinner | 2008-07-05 11:55:25 -0500 (Sat, 05 Jul 2008) | 2 lines
+
+Added alternating row CSS class to the grid. 
+Updated UI helper sample.
+------------------------------------------------------------------------
+r414 | Jeremy.Skinner | 2008-07-05 10:51:31 -0500 (Sat, 05 Jul 2008) | 1 line
+
+Patch from Ben Scheirman that adds a LayoutAttribute. 
+------------------------------------------------------------------------
+r412 | Jeremy.Skinner | 2008-06-28 08:50:50 -0500 (Sat, 28 Jun 2008) | 2 lines
+
+Patch #1415 - alley
+Lets the ConventionControllerActionInvoker look for IRescue instead of RescueAttribute.
+------------------------------------------------------------------------
+r411 | Jeremy.Skinner | 2008-06-28 08:40:08 -0500 (Sat, 28 Jun 2008) | 2 lines
+
+Patch #1433 - Woil
+Updates TestControllerBuilder with two functions to allow creation of controllers that have arguments in the constructor.
+------------------------------------------------------------------------
+r409 | Jeremy.Skinner | 2008-06-28 08:15:22 -0500 (Sat, 28 Jun 2008) | 2 lines
+
+Patch #1434 - troydemonbreun
+Moves AttributeUsage attributes to the base class. 
+------------------------------------------------------------------------
+r407 | Jeremy.Skinner | 2008-06-21 14:54:49 -0500 (Sat, 21 Jun 2008) | 1 line
+
+Issue #2381 - CastleBinder now makes the IDataBinder available to the controller if it implements ICastleBindingContainer. 
+------------------------------------------------------------------------
+r406 | Jeremy.Skinner | 2008-06-21 11:29:19 -0500 (Sat, 21 Jun 2008) | 1 line
+
+Issue #2295 - ContainerXMLConfigElement.xsd - duplicated at line 93
+------------------------------------------------------------------------
+r405 | Jeremy.Skinner | 2008-06-21 05:37:50 -0500 (Sat, 21 Jun 2008) | 1 line
+
+Issue #2356 - TestControllerBuilder should return a NameValueCollection containing both QueryString and Form when Request.Params is invoked. 
+------------------------------------------------------------------------
+r404 | Jeremy.Skinner | 2008-06-20 09:39:44 -0500 (Fri, 20 Jun 2008) | 3 lines
+
+Patch #1327 - timtas
+- Added MvcContrib.ActionResults.BinaryResult which writes the specified byte array to the response stream.
+- Added MvcContrib.ConventionController.Binary method, which returns a BinaryResult.
+------------------------------------------------------------------------
+r403 | Jeremy.Skinner | 2008-06-20 09:20:42 -0500 (Fri, 20 Jun 2008) | 4 lines
+
+Patch #1416/1417 - simone_b
+- Makes RangeValidator culture invariant.
+- Fixes tests that fail on non-english machines. 
+
+------------------------------------------------------------------------
+r402 | jeremy.skinner@gmail.com | 2008-06-20 04:38:48 -0500 (Fri, 20 Jun 2008) | 1 line
+
+Adding missing IRescuable.cs
+------------------------------------------------------------------------
+r401 | jeremy.skinner@gmail.com | 2008-06-20 04:05:22 -0500 (Fri, 20 Jun 2008) | 1 line
+
+Removing NDepend from the Analyse target as it has expired. 
+------------------------------------------------------------------------
+r400 | jeremy.skinner@gmail.com | 2008-06-20 04:02:39 -0500 (Fri, 20 Jun 2008) | 6 lines
+
+Patch #1414 - alley
+- Moved most of the ConventionController code to ConventionConrollerActionInvoker
+- Modified RescueAttribute to look for IRescuable instead of ConventionController to call OnPreRescue
+
+Applied with modifications:
+- Left a minimal ConventionController in the project. 
+------------------------------------------------------------------------
+r399 | Jeremy.Skinner | 2008-06-14 08:24:59 -0500 (Sat, 14 Jun 2008) | 1 line
+
+Adding implementations of IParameterBinder that use Castle's Binder and DefaultConverter. 
+------------------------------------------------------------------------
+r398 | Jeremy.Skinner | 2008-06-13 12:59:03 -0500 (Fri, 13 Jun 2008) | 3 lines
+
+Modifying build script
+- Allows for a custom path to NCover to be specified on the command line.
+- Commenting out build-help target as SandcastleBuilderConsole.exe no longer seems to be in the repository.
+------------------------------------------------------------------------
+r397 | Jeremy.Skinner | 2008-06-13 12:57:17 -0500 (Fri, 13 Jun 2008) | 2 lines
+
+Hash now inherits from Hash<object> rather than HybridDictionary so it can be used with parameters that accept an IDictionary<string, object> as well as IDictionary.
+Fixing a test that fails under .NET 3.5 SP1.
+------------------------------------------------------------------------
+r396 | andrew.john.peters | 2008-06-13 04:45:36 -0500 (Fri, 13 Jun 2008) | 1 line
+
+Un-ignored test that fails locally.
+------------------------------------------------------------------------
+r395 | andrew.john.peters | 2008-06-13 04:22:21 -0500 (Fri, 13 Jun 2008) | 1 line
+
+Removed NHaml core - now hosted at http://code.google.com/p/nhaml/
+------------------------------------------------------------------------
+r394 | andrew.john.peters | 2008-06-04 21:56:34 -0500 (Wed, 04 Jun 2008) | 2 lines
+
+- NHaml: Improves tag attribute compilation performance based on feedback from Andrey Mereskin.
+- NHaml: Ran R# code cleanup.
+------------------------------------------------------------------------
+r392 | Jeremy.Skinner | 2008-05-31 05:37:07 -0500 (Sat, 31 May 2008) | 4 lines
+
+Patch #1320 - troydemonbreun
+- Adds PreconditionFilter, PredicatePreconditionFilter and RegExPreconditionFilter.
+
+This is an action attribute that defines a required RouteData "precondition" for the action. On precondition failure, the action will be redirected to a URL or a specified Exception type will be thrown.
+------------------------------------------------------------------------
+r390 | Jeremy.Skinner | 2008-05-30 11:18:33 -0500 (Fri, 30 May 2008) | 1 line
+
+Merging Preview 3 branch back into trunk.
+------------------------------------------------------------------------
+r371 | Jeremy.Skinner | 2008-05-21 08:18:25 -0500 (Wed, 21 May 2008) | 2 lines
+
+Patch #1268 and #1269 - alley
+Adds a JsonActionResult.
+------------------------------------------------------------------------
+r370 | Jeremy.Skinner | 2008-05-21 07:49:39 -0500 (Wed, 21 May 2008) | 2 lines
+
+Patch #1262 - katokay
+Updating Unity to version 1.1
+------------------------------------------------------------------------
+r368 | Jeremy.Skinner | 2008-05-17 03:17:01 -0500 (Sat, 17 May 2008) | 1 line
+
+Adding missing views from the ConventionController sample.
+------------------------------------------------------------------------
+r367 | andrew.john.peters | 2008-05-16 23:16:48 -0500 (Fri, 16 May 2008) | 12 lines
+
+NHaml: Introduces ^ (preamble) operator. This operator causes the target code statement to be inserted into the "preamble" of the complete compiled template. At runtime the preamble will be evaluated before any other output. The canonical use case for this is to be able to specify a page title from within the view partial when using layouts. i.e.
+
+// Application.haml
+%head
+  %title= title
+%body
+  _
+
+// MyView.haml
+^ var title = "My Title"
+<rest of view>
+
+------------------------------------------------------------------------
+r366 | Jeremy.Skinner | 2008-05-16 07:30:14 -0500 (Fri, 16 May 2008) | 11 lines
+
+Patch #1230 - Woil
+Newer version of the Convention Rescue patch, now merged into RescueAttribute. Includes an update to the ConventionController sample.
+
+[Rescue("DefaultRescue")] 
+public ActionResult ControllerAction {
+throw new CookieException();
+
+//this will look for CookieException.aspx
+//then call DefaultRescue.aspx if not found
+}
+
+------------------------------------------------------------------------
+r365 | Jeremy.Skinner | 2008-05-16 06:40:49 -0500 (Fri, 16 May 2008) | 2 lines
+
+2nd part of Patch #1218 - katokay
+Fixed bug for NameValueDeserializer cyclical reference bug. This will also prevent the instantiation of objects that are not part of the request.
+------------------------------------------------------------------------
+r364 | Jeremy.Skinner | 2008-05-16 06:24:36 -0500 (Fri, 16 May 2008) | 2 lines
+
+Patch #1196 - markhildreth
+Adds WithViewData method to ActionResultHelper.  
+------------------------------------------------------------------------
+r363 | Jeremy.Skinner | 2008-05-16 06:20:08 -0500 (Fri, 16 May 2008) | 2 lines
+
+Patch #1187 - stevenr12
+Removing external dependencies from the domain model in the Ninject sample.
+------------------------------------------------------------------------
+r361 | andrew.john.peters | 2008-05-15 18:32:05 -0500 (Thu, 15 May 2008) | 1 line
+
+Fixes NHaml bug #2192
+------------------------------------------------------------------------
+r359 | Jeremy.Skinner | 2008-05-07 13:45:31 -0500 (Wed, 07 May 2008) | 4 lines
+
+Added pagination support to Grid.
+Added AsPagination() extension method.
+Fixed member names in HtmlGridTester.
+Updated sample application.
+------------------------------------------------------------------------
+r357 | Jeremy.Skinner | 2008-05-06 15:09:38 -0500 (Tue, 06 May 2008) | 1 line
+
+Fixing test that relied on UK date formatting. 
+------------------------------------------------------------------------
+r356 | Jeremy.Skinner | 2008-05-06 14:56:50 -0500 (Tue, 06 May 2008) | 1 line
+
+Initial Smart Grid implementation.
+------------------------------------------------------------------------
+r354 | Jeremy.Skinner | 2008-05-06 11:25:58 -0500 (Tue, 06 May 2008) | 1 line
+
+Bumping coverage of ValidationHelper. 
+------------------------------------------------------------------------
+r353 | Jeremy.Skinner | 2008-05-06 11:25:33 -0500 (Tue, 06 May 2008) | 7 lines
+
+Patch #1179 - timtas
+- Support deserializing multi-value keys to simple array list properties.
+- Fix bug where individual checkbox controls are not deserialized properly
+- Fix Select<T> problem whereby options are ordered haphazardly instead of by enum value
+- Add support to Select -- can set selected values of from complex types
+- Add support to Select -- can set "selectedValue" attribute as complex type and/or collection
+- Interpret a selected value of null as and empty string (instead of doing nothing). This is useful in conjunction with the firstOption feature
+------------------------------------------------------------------------
+r351 | Jeremy.Skinner | 2008-05-05 06:12:56 -0500 (Mon, 05 May 2008) | 5 lines
+
+Renamed FormHelperExtensions to HtmlHelperExtensions.
+*Breaking change* Moved the validation helper methods out of FormHelper and in to ValidationHelper.
+Updated tests and sample.
+
+The validaiton helper methods can now be accessed via <%= Html.Validation().ValidatorMethod(...) %> rather than <%= Html.Form().ValidatorMethod(...) %>
+------------------------------------------------------------------------
+r349 | Jeremy.Skinner | 2008-05-05 05:45:00 -0500 (Mon, 05 May 2008) | 3 lines
+
+Patch #1141 - squeak
+UI Validation changes - includes new FormHelper.ElementValidation which will take a collection of validators to render in that space. Also added Validate methods off of all but custom validator for server-side validation. Finally, added static Validate method from BaseValidator for doing form validation on the server side in an entire chunk.
+
+------------------------------------------------------------------------
+r347 | Jeremy.Skinner | 2008-05-05 05:24:36 -0500 (Mon, 05 May 2008) | 5 lines
+
+Patch #1128 - sentiadave
+Making WindsorControllerFactory.CreateController virtual.
+
+Applied with modifications:
+- Made DisposeController virtual too.
+------------------------------------------------------------------------
+r345 | Jeremy.Skinner | 2008-05-05 05:17:46 -0500 (Mon, 05 May 2008) | 6 lines
+
+Patch #1168 - CVertex 
+Includes Phil Haack's route debugger. Applied with permission.
+
+Applied with modifications: 
+- Added tests to keep coverage up.
+- Added an overload for DebugHttpHandler.ProcessRequest that accepts an HttpContextBase and a RouteCollection. 
+------------------------------------------------------------------------
+r344 | Jeremy.Skinner | 2008-05-03 12:09:23 -0500 (Sat, 03 May 2008) | 1 line
+
+Trying to force a build.
+------------------------------------------------------------------------
+r343 | Jeremy.Skinner | 2008-05-03 12:04:44 -0500 (Sat, 03 May 2008) | 11 lines
+
+Patch #1162 - timtas
+Adds support for:
+- Multiple selected values in FormHelper.Select
+- Using enums as the datasource for a Select.
+
+Applied with some modifications:
+- Made FormHelper.GetSelect protected and virtual.
+- Changed Select.SetSelectedValues to handle enums correctly if there is only one selected value.
+- Changed the behaviour of Select.SetSelectedValues to be more in line with the old SelectedValue property (it should take a collection of actual values to select rather than a collection of objects that have the selected values as properties).
+- Added extra test cases.
+- Updated sample application.
+------------------------------------------------------------------------
+r341 | Jeremy.Skinner | 2008-05-03 10:06:55 -0500 (Sat, 03 May 2008) | 8 lines
+
+Patch #1158 - joshuaflanagan
+Extends the ActionResultHelper to allow you to specify a strongly typed controller and action for ActionRedirectResults.
+
+Allows:
+controller.Index().AssertIsActionRedirect().ToAction<HomeController>(c => c.About())
+instead of:
+controller.Index().AssertIsActionRedirect().ToController("Home").ToAction("about")
+
+------------------------------------------------------------------------
+r339 | Jeremy.Skinner | 2008-05-03 09:54:46 -0500 (Sat, 03 May 2008) | 7 lines
+
+Several refactorings in order to fix memory leak issue when using Windsor to create controllers.
+- *breaking change* WindsorControllerFactory requires an instance of IWindsorContainer to be passed to its constructor so that it can be accessed from DisposeController.
+- WindsorControllerFactory now calls container.Release in DisposeController.
+- *breaking change* Added new method to IDependencyResolver called DisposeImplementation.
+- IoCControllerFactory now calls DependencyResolver.DisposeImplementation inside DisposeController.
+- WindsorDependencyResolver calls container.Release inside DisposeImplementation.
+- Updated samples to reflect these changes.
+------------------------------------------------------------------------
+r337 | andrew.john.peters | 2008-04-28 03:31:57 -0500 (Mon, 28 Apr 2008) | 1 line
+
+Trying again.
+------------------------------------------------------------------------
+r336 | andrew.john.peters | 2008-04-28 03:12:06 -0500 (Mon, 28 Apr 2008) | 1 line
+
+Touching to force build.
+------------------------------------------------------------------------
+r335 | andrew.john.peters | 2008-04-28 03:03:26 -0500 (Mon, 28 Apr 2008) | 1 line
+
+NHaml now ignores null attributes.
+------------------------------------------------------------------------
+r333 | Jeremy.Skinner | 2008-04-19 14:01:32 -0500 (Sat, 19 Apr 2008) | 1 line
+
+Adding missing tests which were somehow added to the Preview0416 branch.
+------------------------------------------------------------------------
+r331 | Jeremy.Skinner | 2008-04-19 13:44:19 -0500 (Sat, 19 Apr 2008) | 6 lines
+
+Added helper methods for testing ActionResult objects returned from controller actions.
+For example:
+
+var controller = new HomeController();
+ActionResult result = controller.Index();
+result.AssertActionRedirect().ToController("Home").ToAction("About");
+------------------------------------------------------------------------
+r329 | Jeremy.Skinner | 2008-04-19 05:12:45 -0500 (Sat, 19 Apr 2008) | 11 lines
+
+Merging Preview-0416 branch back into trunk.
+
+Summary of main changes:
+- Upgraded to the 0416 Source Code drop of ASP.NET MVC.
+- Moved most of ConventionController's logic into ConventionControllerActionInvoker.
+- ControllerDescriptor now only treats methods that return an ActionResult as a valid action.
+- Moved the filters implementation more in line with the implementation in ControllerActionInvoker.
+- Removed the ReturnBinders implementation. The same result can be achieved by using custom ActionResults.
+- Introduced XmlResult to replace XmlReturnBinder.
+- Added RenderText and RenderXML methods to ConventionController.
+- TestControllerBuilder no longer proxies controllers or captures renderview/redirect calls.
+------------------------------------------------------------------------
+r310 | andrew.john.peters | 2008-04-17 22:50:20 -0500 (Thu, 17 Apr 2008) | 9 lines
+
+- Changed the behaviour of the multiline operator '|' so that it now behaves like a proper line continuation character. This is a possible breaking change but enables much nicer output scenarios. In particular, this:
+
+Foo |
+%a{href = '#'} Bar |
+Baz
+
+which results in this output:
+
+Foo <a href="#">Bar</a> Baz
+------------------------------------------------------------------------
+r308 | andrew.john.peters | 2008-04-17 17:21:33 -0500 (Thu, 17 Apr 2008) | 1 line
+
+FEATURE: NHamlViewEngine will now look for partials in the parent folder.
+------------------------------------------------------------------------
+r298 | eric.hexter | 2008-04-15 22:21:52 -0500 (Tue, 15 Apr 2008) | 1 line
+
+deleted html help
+------------------------------------------------------------------------
+r297 | jeffreypalermo | 2008-04-15 19:09:52 -0500 (Tue, 15 Apr 2008) | 1 line
+
+- refactored namespaces.
+------------------------------------------------------------------------
+r296 | Jeremy.Skinner | 2008-04-14 12:18:49 -0500 (Mon, 14 Apr 2008) | 1 line
+
+Fixing NVelocity sample - controllers need to be registered with Windsor with a lowercase key.
+------------------------------------------------------------------------
+r294 | eric.hexter | 2008-04-10 23:18:45 -0500 (Thu, 10 Apr 2008) | 1 line
+
+kicking off build
+------------------------------------------------------------------------
+r293 | eric.hexter | 2008-04-10 23:07:08 -0500 (Thu, 10 Apr 2008) | 1 line
+
+Fixed assembly references in the ninject sample application.
+------------------------------------------------------------------------
+r292 | eric.hexter | 2008-04-10 22:52:10 -0500 (Thu, 10 Apr 2008) | 2 lines
+
+Patch 1084 Added support for the ninject IoC container. Added support for the IoCControllerFactory & the NinjectControllerFactory.  Sample is included for this container. 
+
+------------------------------------------------------------------------
+r287 | eric.hexter | 2008-04-02 22:54:23 -0500 (Wed, 02 Apr 2008) | 2 lines
+
+Applied patch 1063 & 1068 -Added Validation UI Helpers - contributed by matthaw
+
+------------------------------------------------------------------------
+r285 | andrew.john.peters | 2008-03-31 20:38:32 -0500 (Mon, 31 Mar 2008) | 1 line
+
+Forcing build - Bad Gateway!
+------------------------------------------------------------------------
+r284 | andrew.john.peters | 2008-03-31 20:32:39 -0500 (Mon, 31 Mar 2008) | 1 line
+
+Forcing build - Bad Gateway!
+------------------------------------------------------------------------
+r283 | andrew.john.peters | 2008-03-31 20:24:56 -0500 (Mon, 31 Mar 2008) | 1 line
+
+Forcing build - Bad Gateway!
+------------------------------------------------------------------------
+r282 | andrew.john.peters | 2008-03-31 20:17:23 -0500 (Mon, 31 Mar 2008) | 3 lines
+
+Resolves #1915
+
+Uses doc types as described here: http://www.alistapart.com/articles/doctype
+------------------------------------------------------------------------
+r279 | eric.hexter | 2008-03-30 00:18:06 -0500 (Sun, 30 Mar 2008) | 1 line
+
+Generated help file and html help website using sandcastle and sandcastle help file builder.  This is the first manual build of the documentation. Once the process and dependencies are better understood, the generation process will be added to the automated build.
+------------------------------------------------------------------------
+r277 | eric.hexter | 2008-03-29 08:11:45 -0500 (Sat, 29 Mar 2008) | 1 line
+
+Tuned on doc generation settings.  Suppressed specific documentation does not exist on public method warnings.  This is in prep for generating api documentation via sandcastle.
+------------------------------------------------------------------------
+r275 | jeffreypalermo | 2008-03-26 15:29:31 -0500 (Wed, 26 Mar 2008) | 3 lines
+
+- corrected some warnings/errors.
+- added ViewDataExtensions.  This brings the functionality of the smartbag to ViewData.
+  - now, we have easy adding and getting to and from ViewData.  No more casting, and if you only put a single "Customer" in Viewdata using new Add() method, you just have to Get<Customer>(), and that's it.
+------------------------------------------------------------------------
+r273 | eric.hexter | 2008-03-25 22:38:11 -0500 (Tue, 25 Mar 2008) | 1 line
+
+Triggering the build after a server reboot.
+------------------------------------------------------------------------
+r272 | eric.hexter | 2008-03-25 22:27:57 -0500 (Tue, 25 Mar 2008) | 1 line
+
+Patch 1018 By:alley Added support for Unity as IoC container.
+------------------------------------------------------------------------
+r270 | Jeremy.Skinner | 2008-03-21 08:47:43 -0500 (Fri, 21 Mar 2008) | 1 line
+
+Replaced all remaining occurrences of the MVCContrib namespace with MvcContrib.    
+------------------------------------------------------------------------
+r267 | Jeremy.Skinner | 2008-03-19 13:43:29 -0500 (Wed, 19 Mar 2008) | 4 lines
+
+Patch #1003 - kbaley
+Patch includes:
+- the ability to use TestControllerBuilder with controllers that have constructor arguments
+- associated unit test
+------------------------------------------------------------------------
+r265 | Jeremy.Skinner | 2008-03-18 06:34:16 -0500 (Tue, 18 Mar 2008) | 1 line
+
+HtmlAttributes is now case insensitive. 
+------------------------------------------------------------------------
+r263 | Jeremy.Skinner | 2008-03-17 12:21:26 -0500 (Mon, 17 Mar 2008) | 1 line
+
+Patch #982 - tehlike - Previous patch didn't have full test coverage. This one increased the coverage to 100%
+------------------------------------------------------------------------
+r261 | eric.hexter | 2008-03-16 16:17:30 -0500 (Sun, 16 Mar 2008) | 1 line
+
+removed code coverage from cruise build.
+------------------------------------------------------------------------
+r259 | Jeremy.Skinner | 2008-03-16 08:49:09 -0500 (Sun, 16 Mar 2008) | 1 line
+
+Patch #967 - tehlike - Support for creating ComponentController instances using IoC. 
+------------------------------------------------------------------------
+r258 | Jeremy.Skinner | 2008-03-16 08:26:17 -0500 (Sun, 16 Mar 2008) | 2 lines
+
+Patch #918 - MrKurt
+This is a patch for the NHaml view engine that makes dealing with some whitespace sensitive tags (<textarea> and <pre>) easier. When the contents of one of these tags are specified on the same line as the tag itself, they're rendered without any linebreaks or indentation in the output.
+------------------------------------------------------------------------
+r257 | Jeremy.Skinner | 2008-03-16 08:07:03 -0500 (Sun, 16 Mar 2008) | 1 line
+
+Bumping FormHelper coverage.
+------------------------------------------------------------------------
+r255 | Jeremy.Skinner | 2008-03-16 07:53:17 -0500 (Sun, 16 Mar 2008) | 1 line
+
+PDB symbols weren't being generated meaning that NCover didn't analyse MvcContrib.dll.
+------------------------------------------------------------------------
+r253 | Jeremy.Skinner | 2008-03-16 07:14:37 -0500 (Sun, 16 Mar 2008) | 1 line
+
+Patch #896 - SteveSanderson - Support automatic type conversions in ViewPages.
+------------------------------------------------------------------------
+r251 | eric.hexter | 2008-03-13 23:50:32 -0500 (Thu, 13 Mar 2008) | 1 line
+
+Added the License to the source tree.  Modified the build to include the license in the release and source zip files.
+------------------------------------------------------------------------
+r250 | eric.hexter | 2008-03-13 22:51:31 -0500 (Thu, 13 Mar 2008) | 1 line
+
+Patch 965 | EmailTemplateService | Contributed by chadly http://groups.google.com/group/mvccontrib-discuss/browse_thread/thread/37fc38d7ae2b3bed 
+------------------------------------------------------------------------
+r248 | Jeremy.Skinner | 2008-03-13 14:29:41 -0500 (Thu, 13 Mar 2008) | 1 line
+
+Merging MvcPreview2 branch into trunk. 
+------------------------------------------------------------------------
+r195 | Jeremy.Skinner | 2008-03-01 10:54:40 -0600 (Sat, 01 Mar 2008) | 5 lines
+
+Added support for nested binding scopes to IDataBinder/DefaultDataBinder (needs further refactoring).
+Added preliminary implementation of FormHelper.For (currently C# only).
+Binder property is now exposed by the IFormHelper interface. 
+Form tag generator always generates a closing tag.
+Updated formhelper sample site.
+------------------------------------------------------------------------
+r193 | Jeremy.Skinner | 2008-02-29 13:43:50 -0600 (Fri, 29 Feb 2008) | 1 line
+
+Importing BlockRenderer from the ClientScript private branch in preparation for modifications to FormHelper. 
+------------------------------------------------------------------------
+r191 | Jeremy.Skinner | 2008-02-29 13:18:41 -0600 (Fri, 29 Feb 2008) | 1 line
+
+Did some refactoring to ElementRenderTool. Added RenderOpenTag and RenderCloseTag methods. 
+------------------------------------------------------------------------
+r189 | jhandel@ktomics.net | 2008-02-28 20:48:36 -0600 (Thu, 28 Feb 2008) | 4 lines
+
+* Added support for InputImage in FormHelper (new methods FormHelper.ImageButton())
+* Added Password Tag
+* Added support for Password tag in FormHelper (new methods FormHelper.PasswordField())
+* Updated test to maintain 100% on form helper and UI
+------------------------------------------------------------------------
+r187 | jhandel@ktomics.net | 2008-02-26 16:28:13 -0600 (Tue, 26 Feb 2008) | 2 lines
+
+* Changed TextArea to use a full Close tag when value is empty instead of a XML tag close ("/>").
+* Fixed UI.Html/FormHelperTester.cs tests to anticipate new results.
+------------------------------------------------------------------------
+r185 | Jeremy.Skinner | 2008-02-25 13:18:17 -0600 (Mon, 25 Feb 2008) | 2 lines
+
+Patch #882 - tehlike
+ReturnBinder implementation ported from MonoRail. Modified tests slightly to reach 100% coverage. 
+------------------------------------------------------------------------
+r183 | Jeremy.Skinner | 2008-02-21 07:02:27 -0600 (Thu, 21 Feb 2008) | 4 lines
+
+Patch #864 - Woil
+This patch cleans up some of the namespaces from the older MvcTestFramework to the new MvcContrib.TestHelper namespace. It also adds comments to all of the TestHelper classes which should make them easier to use.
+
+Applied with minor modification - Sample test project referenced the Debug directory of MvcContrib.TestHelper, which caused CommitterBuild to fail. Changed to use $(Configuration) instead. 
+------------------------------------------------------------------------
+r181 | Jeremy.Skinner | 2008-02-21 05:02:21 -0600 (Thu, 21 Feb 2008) | 2 lines
+
+Made methods on FormHelper virtual.
+Fixed the namespace for the ObjectFactoryDependencyResolver, SpringDependencyResolver and StructureMapDependencyResolver - they were under the UnitTests namespace. 
+------------------------------------------------------------------------
+r179 | Jeremy.Skinner | 2008-02-19 10:45:16 -0600 (Tue, 19 Feb 2008) | 1 line
+
+Updating FormHelper sample. 
+------------------------------------------------------------------------
+r178 | Jeremy.Skinner | 2008-02-19 03:52:00 -0600 (Tue, 19 Feb 2008) | 2 lines
+
+FormHelper will now be instantiated using the DependencyResolver if one is present.
+Only one FormHelper instance is now created per HTTP request.
+------------------------------------------------------------------------
+r177 | jhandel@ktomics.net | 2008-02-18 14:23:59 -0600 (Mon, 18 Feb 2008) | 6 lines
+
+Merging in Tag Generation and FormHelper functionality from branch TagHelper.
+* New Namespace MvcContrib.UI
+* New Tag Generation classes based on new Element and ScriptableElement base classes
+* New MvcContrib.UI.Tags namespace with many tags for Forms and other stuff
+* New MvcContrib.UI.Html with FormsHelper functionality
+* New Tests (100% coverage on all new functionality)
+------------------------------------------------------------------------
+r170 | eric.hexter | 2008-02-17 15:17:20 -0600 (Sun, 17 Feb 2008) | 2 lines
+
+Applied Patch 847
+contributed by BarryDahlberg
+------------------------------------------------------------------------
+r169 | eric.hexter | 2008-02-17 13:52:02 -0600 (Sun, 17 Feb 2008) | 4 lines
+
+Added TestHelper Example application and unit tests.  
+Added Sample subdirectory of src
+Modified the build script to copy sample solutions under the sample directory 
+Modified the build script to compile the sample solution for test helper.  This pattern will be used to remove the samples from the contrib solution so that the samples distributed with the release build can compile correctly. They currently do not compile in the released zip file.
+------------------------------------------------------------------------
+r168 | eric.hexter | 2008-02-17 11:35:36 -0600 (Sun, 17 Feb 2008) | 4 lines
+
+Patch 831
+Fixes Issues #1089 and #1206
+contributed by MrKurt.
+
+------------------------------------------------------------------------
+r166 | eric.hexter | 2008-02-17 11:04:07 -0600 (Sun, 17 Feb 2008) | 1 line
+
+Set failonerror = false on the ncover analysis  task.  We are fighting an issue where ncover is causing nunit to fail after the first successful run after a server reboot.  
+------------------------------------------------------------------------
+r165 | eric.hexter | 2008-02-17 10:51:38 -0600 (Sun, 17 Feb 2008) | 3 lines
+
+Applied patch 757 
+Contributed by byronwalker
+Adds extension methods to the TextInput.
+------------------------------------------------------------------------
+r163 | eric.hexter | 2008-02-17 08:31:45 -0600 (Sun, 17 Feb 2008) | 1 line
+
+Added contrib assemblies to the nDepend project configuration.
+------------------------------------------------------------------------
+r161 | eric.hexter | 2008-02-16 19:31:34 -0600 (Sat, 16 Feb 2008) | 3 lines
+
+Added the TestHelper ( Test Framework)
+Contributed by Will Shaver.
+Samples to come in next commit.
+------------------------------------------------------------------------
+r159 | eric.hexter | 2008-02-14 21:20:57 -0600 (Thu, 14 Feb 2008) | 1 line
+
+Updated ncover to 2.0.4
+------------------------------------------------------------------------
+r156 | Jeremy.Skinner | 2008-02-14 08:38:03 -0600 (Thu, 14 Feb 2008) | 4 lines
+
+Patch #836 - alley
+- The dependencycontainer now has every method as a virtual one so that you can easily derive your own
+- The policies & lifetimecontainers are now accessible as protected members
+- The dependencycontainer now has methods to easily add propertysetters & methodinjectors
+------------------------------------------------------------------------
+r154 | Jeremy.Skinner | 2008-02-14 07:46:04 -0600 (Thu, 14 Feb 2008) | 3 lines
+
+Patch #770 - alley
+Fixes issue #819 - RedirectToAction does not work with rescue attribute.
+Applied with modifications. 
+------------------------------------------------------------------------
+r152 | wcpierce | 2008-02-09 15:03:40 -0600 (Sat, 09 Feb 2008) | 1 line
+
+Streamlined DependencyResolver.
+------------------------------------------------------------------------
+r150 | wcpierce | 2008-02-09 14:19:01 -0600 (Sat, 09 Feb 2008) | 1 line
+
+Removed MvcToolkit dependency from MvcContrib project.
+------------------------------------------------------------------------
+r148 | Jeremy.Skinner | 2008-02-08 13:41:28 -0600 (Fri, 08 Feb 2008) | 2 lines
+
+Patch 755 -
+Added ViewContext property to BrailBase. Added the ability to define a custom base class for Brail views. 
+------------------------------------------------------------------------
+r146 | Jeremy.Skinner | 2008-02-08 11:43:15 -0600 (Fri, 08 Feb 2008) | 1 line
+
+Fixed an issue with BrailBase - InitProperties was resetting the properties collection, meaning that you could not pass custom viewdata to OutputSubView. 
+------------------------------------------------------------------------
+r141 | eric.hexter | 2008-01-28 14:00:40 -0600 (Mon, 28 Jan 2008) | 3 lines
+
+Patch 749 JeremyS 
+Includes custom build of Boo for use with the Brail view engine. Addresses issue #997 - Resources missing from Boo.Lang.dll
+
+------------------------------------------------------------------------
+r139 | eric.hexter | 2008-01-28 13:47:15 -0600 (Mon, 28 Jan 2008) | 3 lines
+
+Patch 742 - JeremyS 
+Changes to Brail view engine - siteRoot variable does not have a trailing slash when running in a virtual directory. 
+Changed the point at which the "url" and "html" properties are added to the properties collection - this allows for custom implementations of UrlHelper/HtmlHelper to be used instead of the standard ones. 
+------------------------------------------------------------------------
+r137 | eric.hexter | 2008-01-28 12:49:47 -0600 (Mon, 28 Jan 2008) | 4 lines
+
+Patch 686  JeremyS 
+Adds support for pre-action filters at both the controller level and the action level. 
+Also includes a sample "PostOnly" filter that requires actions to be accessed via HTTP Post
+Uses the DependencyResolver to create filter instances.  
+------------------------------------------------------------------------
+r136 | eric.hexter | 2008-01-28 12:47:19 -0600 (Mon, 28 Jan 2008) | 4 lines
+
+Patch 686  JeremyS 
+Adds support for pre-action filters at both the controller level and the action level. 
+Also includes a sample "PostOnly" filter that requires actions to be accessed via HTTP Post
+Uses the DependencyResolver to create filter instances.  
+------------------------------------------------------------------------
+r133 | mvccontrib | 2008-01-28 10:23:53 -0600 (Mon, 28 Jan 2008) | 2 lines
+
+adding ndepend project.
+
+------------------------------------------------------------------------
+r132 | eric.hexter | 2008-01-28 07:45:42 -0600 (Mon, 28 Jan 2008) | 1 line
+
+Added Spring IoC Controller Factory sample.
+------------------------------------------------------------------------
+r130 | eric.hexter | 2008-01-26 00:58:30 -0600 (Sat, 26 Jan 2008) | 1 line
+
+reverted build.  ncover is blowing up on cruise build.
+------------------------------------------------------------------------
+r129 | eric.hexter | 2008-01-26 00:42:16 -0600 (Sat, 26 Jan 2008) | 1 line
+
+Adding spring.net configuration file.
+------------------------------------------------------------------------
+r128 | eric.hexter | 2008-01-26 00:29:42 -0600 (Sat, 26 Jan 2008) | 1 line
+
+Updateing sample spring.net application.
+------------------------------------------------------------------------
+r127 | eric.hexter | 2008-01-26 00:18:21 -0600 (Sat, 26 Jan 2008) | 1 line
+
+Adding Sample to demonstrate using the Spring.Net IoC container.
+------------------------------------------------------------------------
+r125 | andrew.john.peters | 2008-01-25 17:16:43 -0600 (Fri, 25 Jan 2008) | 4 lines
+
+Patch#: 738
+Submitter: byronwalker
+
+NHaml: SCRIPT tag is no longer auto-closing. Closes #986
+------------------------------------------------------------------------
+r123 | eric.hexter | 2008-01-12 22:09:56 -0600 (Sat, 12 Jan 2008) | 2 lines
+
+Added IDependencyResolver implementation for structuremap, spring, windsor , and objectbuilder.
+Added ControlerFactory which uses the IDependencyResolver to create controllers.
+------------------------------------------------------------------------
+r121 | eric.hexter | 2008-01-10 12:40:28 -0600 (Thu, 10 Jan 2008) | 1 line
+
+Created folder structure for Ioc patch
+------------------------------------------------------------------------
+r119 | eric.hexter | 2008-01-10 12:37:55 -0600 (Thu, 10 Jan 2008) | 1 line
+
+changed MVCContrib namespace to MvcContrib 
+------------------------------------------------------------------------
+r117 | eric.hexter | 2008-01-10 12:33:34 -0600 (Thu, 10 Jan 2008) | 1 line
+
+adding ignore Properties
+------------------------------------------------------------------------
+r115 | wcpierce | 2008-01-09 00:58:53 -0600 (Wed, 09 Jan 2008) | 1 line
+
+Incorporated support for Extension Methods in Brail ViewEngine.
+------------------------------------------------------------------------
+r113 | wcpierce | 2008-01-08 00:18:09 -0600 (Tue, 08 Jan 2008) | 4 lines
+
+Patch#: 650
+Submitter: alley
+
+ObjectBuilder ControllerFactory implementation.
+------------------------------------------------------------------------
+r111 | wcpierce | 2008-01-07 23:05:32 -0600 (Mon, 07 Jan 2008) | 4 lines
+
+Patch#: 641
+Submitter: JeremyS
+
+Fixes a bug I just discovered was introduced in my previous patch. OnPreAction/OnPostAction were being called with the wrong action name when a DefaultAction is used.
+------------------------------------------------------------------------
+r109 | wcpierce | 2008-01-07 22:57:20 -0600 (Mon, 07 Jan 2008) | 3 lines
+
+Issue#: 785
+
+Ported Brail ViewEngine from MonoRail project.  This is the first step in helping teams interested in migrating existing investments in MonoRail to ASP.Net MVC.  The code was intentionally modified as little as possible to help with the porting of future bug fixes.  Two major omissions from MonoRail are ViewComponents and JavaScript partials.  Extension methods are not yet supported.
+------------------------------------------------------------------------
+r107 | andrew.john.peters | 2008-01-07 21:34:59 -0600 (Mon, 07 Jan 2008) | 4 lines
+
+Patch#: 669
+Submitter: gabe
+
+NHaml: Allow partials to be in other folders.
+------------------------------------------------------------------------
+r105 | andrew.john.peters | 2008-01-07 20:47:34 -0600 (Mon, 07 Jan 2008) | 1 line
+
+Adding ignore
+------------------------------------------------------------------------
+r103 | andrew.john.peters | 2008-01-07 20:27:24 -0600 (Mon, 07 Jan 2008) | 1 line
+
+Trying to fix build by deleting MvcContrib.xml
+------------------------------------------------------------------------
+r102 | andrew.john.peters | 2008-01-07 20:24:44 -0600 (Mon, 07 Jan 2008) | 1 line
+
+Reverting to fix build
+------------------------------------------------------------------------
+r101 | andrew.john.peters | 2008-01-07 20:16:04 -0600 (Mon, 07 Jan 2008) | 3 lines
+
+- Added ignores
+- Updated CommonAssemblyInfo for 2008
+- Restored required NDepend file
+------------------------------------------------------------------------
+r99 | andrew.john.peters | 2008-01-07 20:03:40 -0600 (Mon, 07 Jan 2008) | 2 lines
+
+- Fixed some NHaml code analysis warnings (not sure why the build is green)
+- Added some ignores and deleted some temp files from the repo
+------------------------------------------------------------------------
+r97 | wcpierce | 2008-01-01 14:57:11 -0600 (Tue, 01 Jan 2008) | 3 lines
+
+Issue#: 768
+
+Turned on Treat Warnings as Errors for StructureMap and XsltViewEngine projects.
+------------------------------------------------------------------------
+r95 | wcpierce | 2008-01-01 14:51:05 -0600 (Tue, 01 Jan 2008) | 4 lines
+
+Patch#: 640
+Submitter: JeremyS
+
+More enhancements to ConventionController and ControllerDescriptor. 1) Adds a HiddenAction attribute which can be used to prevent a public method on a controller from being made accessible as an Action (basically, the opposite of the ControllerAction attribute). 2) Adds a DefaultAction attribute which specifies an action to invoke if the action that was called does not exist. 3) Added a SelectedAction property to ConventionController. 4) Added example usage to the ConventionController Sample site.
+------------------------------------------------------------------------
+r93 | wcpierce | 2007-12-31 16:12:46 -0600 (Mon, 31 Dec 2007) | 4 lines
+
+Patch#: 634
+Submitter: andrew_m
+
+Support for configuring assemblies and namespaces for NHaml's views from app.config
+------------------------------------------------------------------------
+r91 | wcpierce | 2007-12-31 15:42:43 -0600 (Mon, 31 Dec 2007) | 4 lines
+
+Patch#: 632
+Submitter: JeremyS
+
+Several fixes and minor enhancements to ControllerDescriptor and ConventionController. 1) ConventionController.OnError now calls exception.GetBaseException() rather than exception.InnerException in case exception.InnerException is null. 2) Changed method signature for ControllerDescriptor.GetParameterBinder to take an ActionParameterMetaData instance 3) ControllerDescriptor.GetParameterBInder now returns a SimpleParameterBinder if no parameter binder was explicitly specified. 4) Added virtual method ControllerDescriptor.CreateParameterMetaData() 5) SimpleParameterBinder now checks for nulls in the routedata before calling ToString. 6) Split the ControllerDescriptorTester.ForCoverage test into separate test methods. 
+------------------------------------------------------------------------
+r89 | wcpierce | 2007-12-30 22:27:04 -0600 (Sun, 30 Dec 2007) | 1 line
+
+Added ExtensionDuck to support extension methods with NVelocity.  Added DescriptableDictionary to substitute anonymous type usage with MVCTookit extension methods.  NVelocityHtmlHelper needs some additional work to allow NVelocity to fully take advantage of all of the extension methods in the MVCToolkit.  Hopefully these classes will become obsolete as the framework matures.
+------------------------------------------------------------------------
+r87 | andrew.john.peters | 2007-12-29 08:13:16 -0600 (Sat, 29 Dec 2007) | 6 lines
+
+- Merged NHaml compiler and view engine.
+- Added main NHaml test suite - coverage up to 81%
+- Enabled all NHaml tests as part of build.
+- Fixed NHaml sample as it was broken after switch to ConventionController.
+- Enabled code analysis on Release build
+- Switched sample to use SqlCE
+------------------------------------------------------------------------
+r85 | wcpierce | 2007-12-28 14:45:05 -0600 (Fri, 28 Dec 2007) | 4 lines
+
+Patch#: 617
+Submitter: JeremyS
+
+ConventionController now calls OnPreAction before action is executed. ConventionControllerTester now provides a mock IHttpContext to TestController to prevent an exception being thrown in ActionParameterMetaData.Bind (previously, this exception was being silently ignored). This means that ConventionControllerTester can now test that actions were successfully called.
+------------------------------------------------------------------------
+r83 | wcpierce | 2007-12-24 15:35:59 -0600 (Mon, 24 Dec 2007) | 1 line
+
+Incorporated Andrew Peter's NHaml view engine.  Added the strangly familiar IViewSourceLoader to help with testing view related code.  Refactored the Xslt view engine tests to use IViewSourceLoader and solve the issues with code coverage.  Added Andrew's sample NHaml site.
+------------------------------------------------------------------------
+r81 | Eric.Hexter | 2007-12-24 07:00:09 -0600 (Mon, 24 Dec 2007) | 1 line
+
+Modified code coverage to allow the XSLT view engine to pass with 47.3% code coverage.  Once it it up there we can send a link to the code coverage link to the author or one of the the committers can work through the remaining untouched areas of that implementation.
+------------------------------------------------------------------------
+r80 | wcpierce | 2007-12-24 00:41:37 -0600 (Mon, 24 Dec 2007) | 1 line
+
+Attempting to fix the broken build.
+------------------------------------------------------------------------
+r79 | wcpierce | 2007-12-24 00:29:02 -0600 (Mon, 24 Dec 2007) | 4 lines
+
+Patch#: 612
+Submitter: casualjim
+
+An Xslt based view engine.  Placed into its own project.  I had to put four of the unit tests into an "Integration" category and tweak the build script to exclude these tests because they rely on an xslt file that is not present in the release folder.
+------------------------------------------------------------------------
+r77 | wcpierce | 2007-12-23 22:51:11 -0600 (Sun, 23 Dec 2007) | 4 lines
+
+Patch#: 613
+Submitter: JeremyS
+
+Modified IControllerDescriptor/ControllerDescriptor/CachedControllerDescriptor to support obtaining metadata by controller type (rather than an instance). Added two virtual methods to ControllerDescriptor (CreateControllerMetaData and CreateActionMetaData) to allow for easier customisation of the metadata construction process. Added tests to reflect changes.
+------------------------------------------------------------------------
+r75 | Eric.Hexter | 2007-12-23 21:38:07 -0600 (Sun, 23 Dec 2007) | 1 line
+
+Linked the projects to the common assembly info file.
+------------------------------------------------------------------------
+r73 | wcpierce | 2007-12-21 16:05:50 -0600 (Fri, 21 Dec 2007) | 1 line
+
+Moved to Views/Shared/
+------------------------------------------------------------------------
+r71 | wcpierce | 2007-12-21 16:01:21 -0600 (Fri, 21 Dec 2007) | 4 lines
+
+Patch#: 590
+Submitter: agilejoe
+
+Applied with modifications.  Adds a RescueAttribute for rendering a specified view when a specified exception is thrown when running an action.  Conventional location for Rescues changed to Views/Shared/Rescues/{view} Removed the .aspx extension to be nice to other ViewFactory implementations.  Added a sample to the ConventionController sample site.
+------------------------------------------------------------------------
+r69 | wcpierce | 2007-12-21 12:08:58 -0600 (Fri, 21 Dec 2007) | 1 line
+
+Added 'Track by Link' to demonstrate deserializing from QueryString.
+------------------------------------------------------------------------
+r67 | wcpierce | 2007-12-21 11:07:50 -0600 (Fri, 21 Dec 2007) | 1 line
+
+Added a sample that uses the new ConventionController and examples of how to use the DeserializeAttribute
+------------------------------------------------------------------------
+r65 | wcpierce | 2007-12-20 02:08:50 -0600 (Thu, 20 Dec 2007) | 1 line
+
+Added 'meta' classes that collection information about a Controller, actions, parameters, etc.  This model should work well for incorporating additional features (rescues, filters, transforms, etc).  First pass at the convention controller that uses the new meta data. 
+------------------------------------------------------------------------
+r63 | wcpierce | 2007-12-18 00:19:55 -0600 (Tue, 18 Dec 2007) | 1 line
+
+Moved the WindsorControllerFactory back into the MvcContrib.ControllerFactories namespace.  
+------------------------------------------------------------------------
+r61 | wcpierce | 2007-12-18 00:10:09 -0600 (Tue, 18 Dec 2007) | 4 lines
+
+Patch#: 583
+Submitted By: darrenstokes
+
+Patch to split StructureMapControllerFactory to separate project/assembly. 
+------------------------------------------------------------------------
+r59 | eric.hexter | 2007-12-16 22:51:49 -0600 (Sun, 16 Dec 2007) | 2 lines
+
+Modified analyze build target.
+Put xml poke to set the ndepend output directory. Must be an absolute path.
+------------------------------------------------------------------------
+r56 | eric.hexter | 2007-12-16 22:11:33 -0600 (Sun, 16 Dec 2007) | 1 line
+
+Added NDepend to the cruise control build.
+------------------------------------------------------------------------
+r54 | Eric.Hexter | 2007-12-16 16:26:49 -0600 (Sun, 16 Dec 2007) | 13 lines
+
+Changed:
+
+Turned on treat warnings as errors on all projects.
+Removed warnings in existing projects.
+
+Modified the package target in build.
+- Release build now includes 
+  bin - current binaries
+  Helpers  - for snippets and templates
+  Samples - sample apps
+
+- Change minimum code coverage to 95%
+- Added all binaries to the code coverage calculations.
+------------------------------------------------------------------------
+r52 | Eric.Hexter | 2007-12-16 15:11:43 -0600 (Sun, 16 Dec 2007) | 1 line
+
+Moving Snippets into a separate folder.
+------------------------------------------------------------------------
+r49 | jeffreypalermo | 2007-12-16 14:03:14 -0600 (Sun, 16 Dec 2007) | 4 lines
+
+- Fixed outstanding namespace errors. (when accepting patches, make sure files are in the correct namespace.  R# will help you fix the namespaces)
+- Renamed MVCContrib namespaces to MvcContrib.  At some point, we'll need to rename the projects, too.
+- Added SVN ignores to /bin, /obj, etc.
+- Removed some dead files.
+------------------------------------------------------------------------
+r47 | wcpierce | 2007-12-16 02:20:59 -0600 (Sun, 16 Dec 2007) | 1 line
+
+A ViewFactory that uses the NVelocity Template Engine.  Original code is from Hammett, http://hammett.castleproject.org/?p=229, adapted and covered with unit tests.
+------------------------------------------------------------------------
+r45 | wcpierce | 2007-12-15 23:17:35 -0600 (Sat, 15 Dec 2007) | 4 lines
+
+Patch#: 581
+Submitted by: mattotto
+
+Added Resharper File and Live Templates: File Templates: Controller Live Templates: ActionLink Controller Action New MVC Route RedirectToAction RenderView Url.Action 
+------------------------------------------------------------------------
+r43 | wcpierce | 2007-12-15 23:06:14 -0600 (Sat, 15 Dec 2007) | 1 line
+
+Bring NameValueDeserializer Coverage to 100%
+------------------------------------------------------------------------
+r41 | wcpierce | 2007-12-15 22:22:23 -0600 (Sat, 15 Dec 2007) | 3 lines
+
+Issue#: 629
+
+DefaultConvertible is now 100% covered.
+------------------------------------------------------------------------
+r40 | wcpierce | 2007-12-15 21:48:57 -0600 (Sat, 15 Dec 2007) | 4 lines
+
+Patch#: 580
+Submitted By: darrenstokes
+
+Split SpringControllerFactory to separate assembly.
+------------------------------------------------------------------------
+r38 | eric.hexter | 2007-12-15 13:06:56 -0600 (Sat, 15 Dec 2007) | 1 line
+
+Added the ncover task to the cruise build.
+------------------------------------------------------------------------
+r35 | eric.hexter | 2007-12-15 13:03:06 -0600 (Sat, 15 Dec 2007) | 1 line
+
+remove the output directory for ndepend 
+------------------------------------------------------------------------
+r34 | eric.hexter | 2007-12-15 13:01:29 -0600 (Sat, 15 Dec 2007) | 1 line
+
+Added nDepend tools into the bin.
+------------------------------------------------------------------------
+r32 | eric.hexter | 2007-12-15 08:58:33 -0600 (Sat, 15 Dec 2007) | 1 line
+
+Added ncover and a new commiter target to the build.  This is how we can integrate licensed tools into the build without breaking the build for people who do not have the tools.
+------------------------------------------------------------------------
+r31 | wcpierce | 2007-12-15 00:26:57 -0600 (Sat, 15 Dec 2007) | 3 lines
+
+Issue#: 625
+
+Moved WindsorControllerFactory to it's own assembly.  Bumped code coverage to 100%.
+------------------------------------------------------------------------
+r30 | wcpierce | 2007-12-14 23:02:17 -0600 (Fri, 14 Dec 2007) | 4 lines
+
+Patch#: 568
+Submitted by: chaliy
+
+Two code snippets.  Placed them into the Extras folder.  When R# Live Templates are added later, then can also be placed here.  Need to decide how/if to work them into a release.
+------------------------------------------------------------------------
+r29 | jeffreypalermo | 2007-12-13 15:33:22 -0600 (Thu, 13 Dec 2007) | 1 line
+
+- small change to test build publishing.
+------------------------------------------------------------------------
+r21 | mvccontrib | 2007-12-12 17:01:43 -0600 (Wed, 12 Dec 2007) | 1 line
+
+modified the net-3.5 config section to build without having vs2008 installed.
+------------------------------------------------------------------------
+r20 | jeffreypalermo | 2007-12-12 08:09:45 -0600 (Wed, 12 Dec 2007) | 1 line
+
+#518 - applied patch from abombss - increased test coverage on restful routes.
+------------------------------------------------------------------------
+r19 | jeffreypalermo | 2007-12-12 08:04:33 -0600 (Wed, 12 Dec 2007) | 2 lines
+
+#546 - applied patch from wcpierce with modifications.  Created a Samples solution folder for code samples of every feature.
+- Every feature should get a dedicated web application project.  In the future, we may break the samples out to a different solution, but this works for now.
+------------------------------------------------------------------------
+r18 | jeffreypalermo | 2007-12-11 23:14:13 -0600 (Tue, 11 Dec 2007) | 1 line
+
+#526- applied patch from darrenstokes - got test coverage up to 100%.  Way to go!!
+------------------------------------------------------------------------
+r17 | jeffreypalermo | 2007-12-11 23:08:38 -0600 (Tue, 11 Dec 2007) | 1 line
+
+#519 - applied patch from wcpierce.  Patch increased test coverage.  TD.Net with NCover is an easy way to guage test coverage.
+------------------------------------------------------------------------
+r16 | jeffreypalermo | 2007-12-11 08:11:22 -0600 (Tue, 11 Dec 2007) | 2 lines
+
+#526 - applied patch from darrenstokes 
+- SpringControllerFactory was added for IoC container support from Sprint.Net.
+------------------------------------------------------------------------
+r15 | jeffreypalermo | 2007-12-11 08:04:57 -0600 (Tue, 11 Dec 2007) | 1 line
+
+- changed current files to tabs instead of spaces.
+------------------------------------------------------------------------
+r14 | jeffreypalermo | 2007-12-11 07:44:16 -0600 (Tue, 11 Dec 2007) | 2 lines
+
+#518 - applied patch from abombss regarding Simply restful routing.
+- The tests use a different convention, so we need to work out what it is going to be.
+------------------------------------------------------------------------
+r13 | eric.hexter | 2007-12-11 06:58:57 -0600 (Tue, 11 Dec 2007) | 1 line
+
+Modified the package target to build a source and binary release zips.
+------------------------------------------------------------------------
+r12 | jeffreypalermo | 2007-12-11 00:10:55 -0600 (Tue, 11 Dec 2007) | 2 lines
+
+#519 - applied patch (551) from wcpierce - NameValueDeserializer.
+- We need some docs on this (how to use it).
+------------------------------------------------------------------------
+r11 | jeffreypalermo | 2007-12-10 23:58:15 -0600 (Mon, 10 Dec 2007) | 2 lines
+
+#454 - applied patch from wcpierce with WindsorControllerFactory
+- added 1.0.3 Castle distribution to /bin
+------------------------------------------------------------------------
+r10 | jeffreypalermo | 2007-12-10 23:36:00 -0600 (Mon, 10 Dec 2007) | 1 line
+
+- added Spring.Net to /bin in preparation of SpringControllerFactory patch.
+------------------------------------------------------------------------
+r9 | jeffreypalermo | 2007-12-09 21:14:20 -0600 (Sun, 09 Dec 2007) | 2 lines
+
+- added mvctoolkit binary and reference.
+- ensured trunk builds against public CTP of the MVC Framework.  All is well.
+------------------------------------------------------------------------
+r8 | jeffreypalermo | 2007-12-08 10:17:58 -0600 (Sat, 08 Dec 2007) | 1 line
+
+#475 - Added NAnt 0.86 beta 1 for full .Net 3.5 support (removed the config hack).
+------------------------------------------------------------------------
+r7 | jeffreypalermo | 2007-12-08 10:09:03 -0600 (Sat, 08 Dec 2007) | 1 line
+
+- removing nant 0.85 in preparation for 0.86 beta1
+------------------------------------------------------------------------
+r6 | jeffreypalermo | 2007-12-07 23:16:36 -0600 (Fri, 07 Dec 2007) | 3 lines
+
+#456 - added resharper solution settings so formatting, coding style, etc is same across contributors.
+#437 - added StructureMapControllerFactory implementation for using StructureMap as the container to manage controllers and their dependencies.  These are our first 2 unit tests.
+#436 - trunk is now complete with rhinomocks, nunit, nant, structuremap.  New dependencies will be added to the /bin folder as needed.
+------------------------------------------------------------------------
+r5 | jeffreypalermo | 2007-12-07 15:05:43 -0600 (Fri, 07 Dec 2007) | 2 lines
+
+Item 455
+- applied patch submitted by Bill Pierce regarding a deprecated nant property.
+------------------------------------------------------------------------
+r4 | jeffreypalermo | 2007-12-07 10:55:20 -0600 (Fri, 07 Dec 2007) | 1 line
+
+- ignoring the appropriate files/folders
+------------------------------------------------------------------------
+r3 | jeffreypalermo | 2007-12-07 10:52:03 -0600 (Fri, 07 Dec 2007) | 1 line
+
+- Added basic structure of trunk with automated build.
+------------------------------------------------------------------------
+r2 | jeffreypalermo | 2007-12-07 10:47:03 -0600 (Fri, 07 Dec 2007) | 1 line
+
+- Added basic structure of trunk with automated build.
+------------------------------------------------------------------------
+r1 | (no author) | 2007-12-07 06:53:15 -0600 (Fri, 07 Dec 2007) | 1 line
+
+Initial directory structure.
+------------------------------------------------------------------------

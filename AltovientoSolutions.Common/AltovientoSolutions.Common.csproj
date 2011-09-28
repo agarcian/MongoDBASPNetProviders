@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MvcContrib">
-      <HintPath>..\..\Library\MVCContrib\MvcContrib.dll</HintPath>
+      <HintPath>..\Library\MVCContrib\MvcContrib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
