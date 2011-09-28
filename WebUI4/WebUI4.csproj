@@ -365,10 +365,6 @@
     <Folder Include="Content\plugins\jstree_pre1.0_fix_1\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ASPNETProvidersForMongoDB\ASPNETProvidersForMongoDB\ASPNETProvidersForMongoDB.csproj">
-      <Project>{0972DFF9-1BEB-4599-99DB-5931D2EE950A}</Project>
-      <Name>ASPNETProvidersForMongoDB</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AltovientoSolutions.Common\AltovientoSolutions.Common.csproj">
       <Project>{B433BB1A-B5E1-4F61-8922-A2E83AB3F552}</Project>
       <Name>AltovientoSolutions.Common</Name>
