@@ -28,7 +28,7 @@ namespace AltovientoSolutions.DAL.IPC
         public IPCMediatorMongoDB(string MongoCollectionName)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MongoIPCViewerConnStr"].ConnectionString;
-            string mongoCollectionName = MongoCollectionName;
+            mongoCollectionName = MongoCollectionName;
 
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             db = server.GetDatabase(MONGO_DATABASE_NAME);

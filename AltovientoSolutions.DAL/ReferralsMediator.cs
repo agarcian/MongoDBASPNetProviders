@@ -12,7 +12,6 @@ namespace AltovientoSolutions.DAL
     public class ReferralsMediator
     {
         private string connectionString;
-        private MongoServer server;
         private MongoDatabase db;
         private string MongoCollectionName = "Referrals";
         private string MongoDatabaseName = "";
