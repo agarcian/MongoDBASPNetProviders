@@ -25,9 +25,12 @@ namespace WebUI4.Tests.Spaces
                 spacesProvider.DeleteSpace(name);
 
 
-            spacesProvider.DeleteGroup("MyGroup", false);
-            spacesProvider.DeleteGroup("SubGroupA", false);
-            spacesProvider.DeleteGroup("SubGroupB", false);
+            if (spacesProvider.GroupExists("MyGroup"))
+                spacesProvider.DeleteGroup("MyGroup", false);
+            if (spacesProvider.GroupExists("SubGroupA"))
+                spacesProvider.DeleteGroup("SubGroupA", false);
+            if (spacesProvider.GroupExists("SubGroupB"))
+                spacesProvider.DeleteGroup("SubGroupB", false);
         }
 
 
@@ -60,7 +63,7 @@ namespace WebUI4.Tests.Spaces
             space = spacesProvider.CreateSpace(name);
             Assert.AreEqual(applicationName, space.ApplicationName);
             Assert.IsNotNull(space.ApiSecret);
-            Assert.AreEqual(name, space.Name);
+            Assert.AreEqual(name, space.SpaceName);
             ////////////////////////////////////////////////////////////////
 
             exists = spacesProvider.NameExists(name);
@@ -69,11 +72,11 @@ namespace WebUI4.Tests.Spaces
             space = spacesProvider.GetSpace(name);
             Assert.AreEqual(applicationName, space.ApplicationName);
             Assert.IsNotNull(space.ApiSecret);
-            Assert.AreEqual(name, space.Name);
+            Assert.AreEqual(name, space.SpaceName);
             ////////////////////////////////////////////////////////////////
 
 
-            bool success = spacesProvider.DeleteSpace(space.Name);
+            bool success = spacesProvider.DeleteSpace(space.SpaceName);
             Assert.IsTrue(success);
 
         }
@@ -153,7 +156,6 @@ namespace WebUI4.Tests.Spaces
         [TestMethod]
         public void GroupHierarchyTest()
         {
-
             MongoDBSpacesProvider provider = new MongoDBSpacesProvider();
 
             provider.CreateGroup("MyGroup");
@@ -189,9 +191,6 @@ namespace WebUI4.Tests.Spaces
             {
                 Assert.IsTrue(exc is SpaceProviderException);
             }
-
-
-
 
 
             if (provider.GroupExists("SubGroupA"))
@@ -230,7 +229,7 @@ namespace WebUI4.Tests.Spaces
             Assert.IsTrue(provider.IsUserInGroup("MyGroup", "User1"));
             Assert.IsTrue(provider.IsUserInGroup("MyGroup", "User2"));
             Assert.IsFalse(provider.IsUserInGroup("SubGroupB", "User1"));
-            Assert.IsFalse(provider.IsUserInGroup("SubGroupA", "User1"));
+
 
             try
             {

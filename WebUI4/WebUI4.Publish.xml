@@ -1,222 +1,71 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="C:\inetpub\wwwroot\WebUI4" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="Default Web Site/WebUI4" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="False" msdeployMarkAsApp="True" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/nvidia.com/icon.png" publishTime="09/04/2011 18:16:03" />
+  <publishProfile publishUrl="C:\inetpub\wwwroot\WebUI4" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="Default Web Site/WebUI4" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="False" msdeployMarkAsApp="True" profileName="Profile1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/AltovientoSolutions.Security.dll" publishTime="09/29/2011 21:13:23" />
     <file relUrl="bin/System.Web.WebPages.dll" publishTime="01/05/2011 14:45:38" />
     <file relUrl="Areas/Mariachi/Views/Website/Create.cshtml" publishTime="09/13/2011 06:38:18" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/js/swfobject.js" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/changelog.txt" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/flickr.com/helper.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/lwis.celebrity/default.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/sun.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="bin/WebUI4.dll" publishTime="09/18/2011 15:42:22" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/default/helper.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/pattern2.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/adobe.com/icon.png" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/nav-arrow-right.png" publishTime="09/04/2011 18:16:03" />
+    <file relUrl="bin/WebUI4.dll" publishTime="09/30/2011 17:14:43" />
     <file relUrl="Views/Shared/MailTemplates/RegistrationEmail.cshtml" publishTime="09/06/2011 20:53:56" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/flickr.com/default.ultimate.css" publishTime="09/04/2011 18:16:02" />
     <file relUrl="Content/scripts/splitter.js" publishTime="09/16/2011 22:11:25" />
     <file relUrl="bin/Microsoft.Web.Infrastructure.dll" publishTime="01/05/2011 14:45:38" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/nvidia.com/favicon.ico" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/comnav-arrowover.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/nav-arrow-down-white.png" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.vertical.rtl.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/box1-bottom.png" publishTime="09/04/2011 18:16:03" />
     <file relUrl="Views/Web.config" publishTime="08/25/2011 21:35:39" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/simple.limited.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/js/csshover.htc" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/box1-top-left.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-up-open.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/js/scriptaculous/scriptaculous.dropdown.js" publishTime="09/04/2011 18:16:03" />
     <file relUrl="bin/System.Web.Abstractions.dll" publishTime="03/18/2010 19:31:26" />
     <file relUrl="Views/Referrals/Invitation.cshtml" publishTime="09/11/2011 16:58:36" />
     <file relUrl="bin/System.Web.Razor.dll" publishTime="01/05/2011 14:45:38" />
     <file relUrl="Views/Account/Validate.cshtml" publishTime="09/07/2011 20:28:46" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/icon.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Views/Home/Index.cshtml" publishTime="09/18/2011 10:14:05" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-up-on.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/default/default.linear.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/simple.horizontal.upward.html" publishTime="09/04/2011 18:16:03" />
     <file relUrl="Areas/IPC/Views/Project/GetStarted.cshtml" publishTime="09/18/2011 11:05:59" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/box1-top-right.png" publishTime="09/04/2011 18:16:03" />
     <file relUrl="Views/Shared/Error.cshtml" publishTime="08/23/2011 02:23:38" />
+    <file relUrl="Areas/IPC/Views/Viewer/Publication.cshtml" publishTime="09/18/2011 22:12:43" />
     <file relUrl="Content/css/Site.css" publishTime="09/15/2011 20:59:52" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/box1-bottom2.png" publishTime="09/04/2011 18:16:03" />
     <file relUrl="Areas/IPC/Views/Web.config" publishTime="09/16/2011 16:06:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/nav-arrow-down.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/simple.horizontal.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/nav-arrow-right-white.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/nvidia.com.no-flash.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/vimeo.com/default.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/nav-arrow-right.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/logo_lwis.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/ultimate.vertical.rtl.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="bin/AltovientoSolutions.Common.dll" publishTime="09/18/2011 15:42:20" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/default/default.css" publishTime="09/04/2011 18:16:02" />
+    <file relUrl="Areas/IPC/Views/Project/Index.cshtml" publishTime="09/18/2011 19:06:29" />
     <file relUrl="bin/MongoDB.Driver.xml" publishTime="06/16/2011 14:56:08" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/simple.linear.html" publishTime="09/04/2011 18:16:03" />
     <file relUrl="bin/MongoDB.Driver.dll" publishTime="06/16/2011 14:56:08" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/mtv.com.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/lwis.celebrity.horizontal.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/nav-arrow-down.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/flickr.com.horizontal.html" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/nav-arrow-left.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-down.png" publishTime="09/04/2011 18:16:03" />
     <file relUrl="bin/System.Web.WebPages.Deployment.dll" publishTime="01/05/2011 14:45:38" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/adobe.com/dropdown_pane.png" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="09/16/2011 23:15:01" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/nvidia.com/helper.css" publishTime="09/04/2011 18:16:02" />
+    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="09/28/2011 21:21:50" />
     <file relUrl="Views/Account/LogIn.cshtml" publishTime="09/08/2011 06:21:37" />
-    <file relUrl="bin/EntityFramework.dll" publishTime="08/17/2011 22:30:53" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/lwis.celebrity/default.advanced.css" publishTime="09/04/2011 18:16:02" />
     <file relUrl="Areas/Mariachi/Views/Website/Index.cshtml" publishTime="09/13/2011 07:30:36" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/ultimate.linear.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-down-on.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/advanced.html" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Global.asax" publishTime="08/23/2011 02:23:38" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/nvidia.com/default.advanced.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/flickr.com/default.ultimate.linear.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="bin/Newtonsoft.Json.xml" publishTime="09/16/2011 23:15:01" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-up.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/vimeo.com/default.advanced.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/flickr.com.horizontal.upward.html" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/scripts/underscore.1.1.7-min.js" publishTime="09/17/2011 07:31:49" />
-    <file relUrl="Web.config" publishTime="09/18/2011 15:42:24" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/favicon.ico" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/nvidia.com.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/bg_search-field.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/icon.png" publishTime="09/04/2011 18:16:03" />
+    <file relUrl="Areas/IPC/Views/Shared/_Viewer.cshtml" publishTime="09/29/2011 20:56:14" />
+    <file relUrl="Web.config" publishTime="09/30/2011 17:18:15" />
     <file relUrl="bin/System.Web.Mvc.dll" publishTime="01/05/2011 16:42:16" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/adobe.com/favicon.ico" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/MIT-LICENSE.txt" publishTime="09/04/2011 18:16:03" />
     <file relUrl="Views/Account/RetrievePassword.cshtml" publishTime="09/11/2011 09:09:43" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/simple.vertical.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/scripts/modernizr2.custom.01930.js" publishTime="09/03/2011 12:47:09" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/mtv.com/helper.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.limited.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/pattern1.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="bin/MvcContrib.xml" publishTime="11/12/2010 13:38:35" />
-    <file relUrl="Areas/IPC/Content/images/IPCViewer.png" publishTime="09/18/2011 10:48:25" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/nav-arrow-top-white.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/mtv.com/default.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/adobe.com/default.advanced.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Views/Shared/_AccountMenuPartial.cshtml" publishTime="09/12/2011 22:17:05" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/comnav-arrowover2.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/_template.html" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Areas/Mariachi/Views/Website/ManageSite.cshtml" publishTime="09/13/2011 07:53:36" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/nav-arrow-right.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Views/Account/ResetPassword.cshtml" publishTime="09/07/2011 20:13:15" />
-    <file relUrl="Views/_ViewStart.cshtml" publishTime="08/23/2011 02:23:38" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.min.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/GPL-LICENSE.txt" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/pattern1.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/link.txt" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/flickr.com.vertical.rtl.html" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/mtv.com/default.advanced.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/vimeo.com.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/btn_search.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Areas/IPC/Views/Shared/_IPCViewerMenu.cshtml" publishTime="09/18/2011 10:26:24" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/pattern2.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/js/jquery/jquery.dropdown.js" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Views/Home/About.cshtml" publishTime="08/23/2011 02:23:38" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/ultimate.horizontal.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="404.html" publishTime="09/16/2011 15:48:34" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/nav-arrow-left-white.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/scripts/backbone.0.5.3.js" publishTime="09/17/2011 09:44:24" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/comnav-arrowon.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/nav-arrow-down.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Views/Account/ChangePassword.cshtml" publishTime="09/07/2011 20:28:46" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/nav-arrow-left.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="bin/MongoDB.Bson.dll" publishTime="06/16/2011 14:56:08" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/nav-arrow-down-green.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/lwis.celebrity/helper.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/grad1.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/nav-arrow-top.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="bin/es/WebUI4.resources.dll" publishTime="09/18/2011 15:42:23" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/js/mootools/mootools.dropdown.js" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Views/Shared/MailTemplates/InvitationEmail.cshtml" publishTime="09/15/2011 22:10:06" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/nav-arrow-top.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/nav-sub-press.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/nav-arrow-top-white.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/adobe.com/helper.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="09/12/2011 22:17:05" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/nvidia.com/default.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/js/jquery/jquery.js" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/nav-arrow-right2.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/scripts/underscore.1.1.6-min.js" publishTime="09/17/2011 09:26:32" />
-    <file relUrl="Areas/IPC/Views/_ViewStart.cshtml" publishTime="09/18/2011 09:12:25" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/_template/default.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Areas/Mariachi/Views/Web.config" publishTime="09/11/2011 20:28:39" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/ultimate.horizontal.upward.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/adobe.com.html" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/grad1.png" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="bin/AltovientoSolutions.DAL.dll" publishTime="09/18/2011 15:42:21" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/vimeo.com/helper.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/flickr.com/default.ultimate.upward.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Views/Account/Profile.cshtml" publishTime="09/07/2011 20:28:46" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-down-open.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/adobe.com/dropdown_pane_8bit.png" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/flickr.com.linear.html" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/pattern3.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/pattern1.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/flickr.com/default.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-right.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/box1-outwards-top-right.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.linear.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/scripts/Common.js" publishTime="09/07/2011 07:56:26" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/icon.png" publishTime="09/04/2011 18:16:03" />
+    <file relUrl="bin/MvcContrib.xml" publishTime="09/28/2011 21:21:50" />
     <file relUrl="Areas/Mariachi/Views/_ViewStart.cshtml" publishTime="09/11/2011 20:47:29" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/default/default.ultimate.linear.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/default/default.ultimate.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/adobe.com/grad1.png" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/favicon.ico" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/nav-arrow-left.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-left-on.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-left.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/simple.vertical.rtl.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Areas/IPC/Views/Shared/_Viewer.cshtml" publishTime="09/18/2011 21:58:01" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/nav-arrow-right.png" publishTime="09/04/2011 18:16:03" />
+    <file relUrl="Areas/IPC/Content/images/IPCViewer.png" publishTime="09/18/2011 10:48:25" />
+    <file relUrl="Views/Shared/_AccountMenuPartial.cshtml" publishTime="09/12/2011 22:17:05" />
+    <file relUrl="Views/Account/ResetPassword.cshtml" publishTime="09/07/2011 20:13:15" />
+    <file relUrl="Areas/IPC/Views/Publisher/Index.cshtml" publishTime="09/19/2011 21:39:51" />
+    <file relUrl="Global.asax" publishTime="08/23/2011 02:23:38" />
+    <file relUrl="Views/_ViewStart.cshtml" publishTime="08/23/2011 02:23:38" />
+    <file relUrl="Areas/IPC/Views/Shared/_IPCViewerMenu.cshtml" publishTime="09/18/2011 10:26:24" />
+    <file relUrl="404.html" publishTime="09/16/2011 15:48:34" />
+    <file relUrl="Views/Account/ChangePassword.cshtml" publishTime="09/07/2011 20:28:46" />
+    <file relUrl="bin/MongoDB.Bson.dll" publishTime="06/16/2011 14:56:08" />
+    <file relUrl="bin/es/WebUI4.resources.dll" publishTime="09/30/2011 17:14:43" />
+    <file relUrl="Views/Shared/MailTemplates/InvitationEmail.cshtml" publishTime="09/15/2011 22:10:06" />
+    <file relUrl="Views/Shared/_Layout.cshtml" publishTime="09/29/2011 20:40:51" />
+    <file relUrl="Areas/IPC/Views/_ViewStart.cshtml" publishTime="09/18/2011 09:12:25" />
+    <file relUrl="Areas/Mariachi/Views/Web.config" publishTime="09/11/2011 20:28:39" />
+    <file relUrl="bin/AltovientoSolutions.DAL.dll" publishTime="09/29/2011 21:13:26" />
+    <file relUrl="Views/Account/Profile.cshtml" publishTime="09/07/2011 20:28:46" />
+    <file relUrl="Areas/Mariachi/Views/Website/Manage.cshtml" publishTime="09/13/2011 07:41:13" />
+    <file relUrl="Content/scripts/Common.js" publishTime="09/07/2011 07:56:26" />
+    <file relUrl="bin/Newtonsoft.Json.xml" publishTime="09/28/2011 21:21:50" />
     <file relUrl="Views/Shared/MailTemplates/VerificationEmail.cshtml" publishTime="09/06/2011 20:55:52" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/default/default.advanced.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/nav-arrow-right-white.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.linear.columnar.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/nav-arrow-left-white.png" publishTime="09/04/2011 18:16:03" />
     <file relUrl="Content/images/Maribel-Salinas-in-mariacheros2.com.png" publishTime="09/11/2011 20:13:49" />
     <file relUrl="Views/Shared/MailTemplates/PasswordRetrievalEmail.cshtml" publishTime="09/06/2011 20:46:20" />
-    <file relUrl="bin/ASPNETProvidersForMongoDB.dll" publishTime="09/18/2011 15:42:17" />
+    <file relUrl="bin/ASPNETProvidersForMongoDB.dll" publishTime="09/29/2011 21:13:25" />
     <file relUrl="Areas/IPC/Content/css/style.css" publishTime="09/18/2011 10:31:55" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/nav-arrow-down-white.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-left-open.png" publishTime="09/04/2011 18:16:03" />
     <file relUrl="bin/System.Web.Routing.dll" publishTime="03/18/2010 19:31:26" />
-    <file relUrl="Areas/Mariachi/Views/Website/Manage.cshtml" publishTime="09/13/2011 07:41:13" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/favicon.ico" publishTime="09/04/2011 18:16:03" />
     <file relUrl="Content/images/darkblue-gradient.png" publishTime="09/11/2011 19:47:06" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/flickr.com.vertical.html" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/mtv.com/grad1.png" publishTime="09/04/2011 18:16:03" />
     <file relUrl="bin/System.Web.Helpers.dll" publishTime="01/05/2011 14:45:38" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/box1-top.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/nvidia.com/grad1.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/topbar/jquery.topbar.js" publishTime="09/06/2011 19:55:18" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/grad2.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/grad2.png" publishTime="09/04/2011 18:16:02" />
     <file relUrl="bin/MongoDB.Bson.xml" publishTime="06/16/2011 14:56:08" />
-    <file relUrl="Views/Account/_AccountMenu.cshtml" publishTime="09/11/2011 18:11:48" />
+    <file relUrl="Areas/IPC/Views/Publisher/Generate.cshtml" publishTime="09/20/2011 20:07:08" />
     <file relUrl="bin/System.Web.WebPages.Razor.dll" publishTime="01/05/2011 14:45:38" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-right-open.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/lwis.celebrity/logo_lwis.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/flickr.com/nav-arrow-right-on.png" publishTime="09/04/2011 18:16:03" />
     <file relUrl="Views/Account/Register.cshtml" publishTime="09/08/2011 07:50:24" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/adobe.com/default.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.upward.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Areas/IPC/Views/Project/Index.cshtml" publishTime="09/18/2011 19:06:29" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/default/nav-arrow-top.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="bin/MvcContrib.dll" publishTime="11/12/2010 13:38:33" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.vertical.css" publishTime="09/04/2011 18:16:02" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/ultimate.vertical.html" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/images/vimeo.com/nav-arrow-right-green.png" publishTime="09/04/2011 18:16:03" />
-    <file relUrl="Areas/IPC/Views/Viewer/Publication.cshtml" publishTime="09/18/2011 22:12:43" />
-    <file relUrl="Content/plugins/free-css-drop-down-menu_v1.2/css/dropdown/themes/mtv.com/default.ultimate.css" publishTime="09/04/2011 18:16:02" />
+    <file relUrl="Areas/Mariachi/Views/Website/ManageSite.cshtml" publishTime="09/13/2011 07:53:36" />
+    <file relUrl="bin/MvcContrib.dll" publishTime="09/28/2011 21:21:50" />
+    <file relUrl="bin/AltovientoSolutions.Common.dll" publishTime="09/29/2011 21:13:24" />
+    <file relUrl="Views/Account/_AccountMenu.cshtml" publishTime="09/11/2011 18:11:48" />
   </publishProfile>
 </publishData>

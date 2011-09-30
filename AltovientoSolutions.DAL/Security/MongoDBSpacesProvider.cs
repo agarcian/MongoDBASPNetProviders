@@ -93,7 +93,7 @@ namespace AltovientoSolutions.DAL.Security
                 throw new SpaceProviderException(String.Format("A Space with name '{0}' for the ApplicationName '{1}' already exists.", Name, this.applicationName));
             }
 
-            space.Name = Name;
+            space.SpaceName = Name;
             space.ApplicationName = this.applicationName;
             space.ApiSecret = Guid.NewGuid().ToString();
 

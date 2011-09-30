@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,17 +21,9 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult Index()
         {
-            string nameInProfile = WebUI4.Models.AccountHelper.GetProfileName(Models.AccountHelper.ProfileNameFormat.FirstNameOnly);
+            //string nameInProfile = WebUI4.Models.AccountHelper.GetProfileName(Models.AccountHelper.ProfileNameFormat.FirstNameOnly);
 
-            ViewBag.WelcomeMessage = String.Format(Resources.Common.Welcome, nameInProfile);
-
-            return View();
-        }
-
-        [CompressFilter]
-        public ActionResult About()
-        {
-            return View();
+            return RedirectPermanent(ConfigurationManager.AppSettings["StartUrl"]);
         }
     }
 }

@@ -118,7 +118,7 @@ namespace AltovientoSolutions.Security.Spaces
 
         public string ApplicationName { get; set; }
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string SpaceName { get; set; }
         public string ApiSecret { get; set; }
         public string RecordType
         {

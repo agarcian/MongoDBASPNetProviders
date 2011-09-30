@@ -76,5 +76,12 @@ namespace WebUI4
             System.Threading.Thread.CurrentThread.CurrentUICulture = uiCulture;
             System.Threading.Thread.CurrentThread.CurrentCulture = culture;
         }
+
+
+        public void Application_Error(object sender, EventArgs e)
+        {
+            Response.Filter.Dispose();
+        }
+    
     }
 }

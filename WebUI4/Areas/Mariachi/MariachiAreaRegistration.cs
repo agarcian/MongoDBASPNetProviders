@@ -17,7 +17,7 @@ namespace WebUI4.Areas.Mariachi
             context.MapRoute(
                 "Mariachi_default",
                 "Mariachi/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Areas.Mariachi.Controllers" }
+                new { controller="Home", action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Areas.Mariachi.Controllers" }
             );
         }
     }

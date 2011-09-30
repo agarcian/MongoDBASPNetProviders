@@ -129,9 +129,6 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="Tagline" xml:space="preserve">
-    <value>My application tagline</value>
-  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome {0}</value>
   </data>

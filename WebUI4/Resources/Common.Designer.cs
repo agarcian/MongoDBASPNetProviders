@@ -97,15 +97,6 @@ namespace WebUI4.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to My application tagline.
-        /// </summary>
-        public static string Tagline {
-            get {
-                return ResourceManager.GetString("Tagline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Welcome {0}.
         /// </summary>
         public static string Welcome {
