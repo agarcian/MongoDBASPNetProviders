@@ -37,6 +37,7 @@ namespace AltovientoSolutions.Security.Spaces
                 }
             }
         }
+
         public override string Name
         {
             get
@@ -92,34 +93,42 @@ namespace AltovientoSolutions.Security.Spaces
         public abstract string[] GetSubgroupsInGroup(string groupName);
 
         public abstract void GetMembersInGroup(string groupName, out string[] usernames, out string[] subgroups);
-        public abstract bool IsUserInGroup(string groupName, string username);
+        public bool IsUserInGroup(string groupName, string username)
+        {
+            return IsUserInGroup(groupName, username, false);
+        }
         public abstract bool IsUserInGroup(string groupName, string username, bool multipleLevels);
-        
+
         public abstract bool DeleteGroup(string groupName, bool throwOnPopulatedRole);
-        
-        public abstract bool CanBecomeSubgroup(string ParentGroup, string SubGroup);
+
+        protected abstract bool CanBecomeSubgroup(string ParentGroup, string SubGroup);
 
         public abstract string[] GetParentGroups(string groupName);
 
         public abstract void AddMembersToGroup(string groupName, string[] usernames, string[] subgroups);
-        public abstract void AddUsernamesToGroup(string groupName, string[] usernames);
-        public abstract void AddSubgroupsToGroup(string groupName, string[] subgroups);
         
+        public void AddUsernamesToGroup(string groupName, string[] usernames)
+        {
+            AddMembersToGroup(groupName, usernames, new string[] { });
+        }
+        public void AddSubgroupsToGroup(string groupName, string[] subgroups)
+        {
+            AddMembersToGroup(groupName, new string[] { }, subgroups);
+        }
+
         public abstract void GetSecurityTokensFromGroupsForUser(string userName);
 
         #endregion
     }
 
-
-
     public class Space
     {
         public static string RECORD_TYPE = "Space";
-
         public string ApplicationName { get; set; }
         public Guid Id { get; set; }
         public string SpaceName { get; set; }
         public string ApiSecret { get; set; }
+        public List<string> AssignableTokens { get; set; }
         public string RecordType
         {
             get
@@ -131,7 +140,6 @@ namespace AltovientoSolutions.Security.Spaces
             }
         }
     }
-
 
     public class Group
     {
@@ -151,6 +159,7 @@ namespace AltovientoSolutions.Security.Spaces
         }
         [ContextualSecurity]
         public List<string> SecurityTokens { get; set; }
+        public List<string> AssignableTokens { get; set; }
     }
 
     public class GroupHierarchy
@@ -207,7 +216,6 @@ namespace AltovientoSolutions.Security.Spaces
         {
         }
     }
-
 
     public class SpacesConfiguration : ConfigurationSection
     {

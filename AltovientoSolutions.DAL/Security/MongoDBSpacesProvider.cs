@@ -285,11 +285,7 @@ namespace AltovientoSolutions.DAL.Security
             subgroups = lstSubgroups.ToArray();
             return;
         }
-
-        public override bool IsUserInGroup(string groupName, string username)
-        {
-            return IsUserInGroup(groupName, username, false);
-        }
+        
         public override bool IsUserInGroup(string groupName, string username, bool multipleLevels)
         {
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
@@ -314,6 +310,7 @@ namespace AltovientoSolutions.DAL.Security
                 throw;
             }
         }
+        
         public override string[] GetParentGroups(string groupName)
         {
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
@@ -343,16 +340,6 @@ namespace AltovientoSolutions.DAL.Security
             }
 
             return parentGroups.ToArray();
-        }
-
-        public override void AddUsernamesToGroup(string groupName, string[] usernames)
-        {
-            AddMembersToGroup(groupName, usernames, new string[] { });
-        }
-
-        public override void AddSubgroupsToGroup(string groupName, string[] subgroups)
-        {
-            AddMembersToGroup(groupName, new string[] { }, subgroups);
         }
 
         public override void AddMembersToGroup(string groupName, string[] usernames, string[] subgroups)
@@ -422,7 +409,7 @@ namespace AltovientoSolutions.DAL.Security
             }
         }
 
-        public override bool CanBecomeSubgroup(string ParentGroup, string SubGroup)
+        protected override bool CanBecomeSubgroup(string ParentGroup, string SubGroup)
         {
             //return false;  // if want to disable group hierarchies, return false.
 
