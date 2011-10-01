@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Drawing2D;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,17 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.GridFS;
+using MongoDB.Bson.Serialization.IdGenerators;
 using AltovientoSolutions.DAL.IPC;
 using AltovientoSolutions.DAL.IPC.Model;
 using System.IO;
+using System.Drawing;
 
 namespace AltovientoSolutions.DAL.IPC
 {
     public class IPCMediatorMongoDB : IIPCMediator
     {
-        private const string MONGO_DATABASE_NAME = "IllustratedPartsCatalogs";
+        private const string MONGO_DATABASE_NAME = "illustrated_parts_catalogs";
         private MongoDatabase db;
         private string mongoCollectionName;
 
@@ -50,14 +53,14 @@ namespace AltovientoSolutions.DAL.IPC
 
         public void SaveCatalog(Catalog catalog, string spaceId, string catalogId, string langCode, bool overwrite)
         {
-            MongoCollection<BsonDocument> mdbcolIPCs = db.GetCollection(mongoCollectionName);
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
             var query = Query.And(Query.EQ("SpaceId", spaceId),
                     Query.EQ("CatalogId", catalogId),
                     Query.EQ("LangCode", langCode));
 
 
-            BsonDocument ipcRecord = mdbcolIPCs.FindOne(query);
+            BsonDocument ipcRecord = collection.FindOne(query);
             
             if (ipcRecord == null)
             {
@@ -72,27 +75,16 @@ namespace AltovientoSolutions.DAL.IPC
 
 
             ipcRecord.Set("SpaceId", spaceId)
-                .Set("CatalogId", spaceId)
+                .Set("CatalogId", catalogId)
                 .Set("LangCode", langCode)
                 .Set("Catalog", bsonDocCatalog);
 
+            collection.Save(ipcRecord);
 
             return;
         }
 
-        public void SaveIllustration(byte[] buffer, string spaceId, string md5, string fileName)
-        {
-            MemoryStream ms = new MemoryStream(buffer);
-            
-
-            MongoGridFS gridFS = new MongoGridFS(db);
-            MongoGridFSFileInfo fileInfo = gridFS.Upload(ms, fileName); 
-           
-            //gridFS.SetMetadata(fileInfo, 
-            // to do:  how to add metadata to the file.
-
-        }
-
+     
         public Catalog GetCatalog(string spaceId, string catalogId, string langCode)
         {
             Catalog catalog;
@@ -113,9 +105,23 @@ namespace AltovientoSolutions.DAL.IPC
             }
             else
             {
-                BsonDocument bsonDocCatalog = new BsonDocument();
-                BsonWriter bsonWriter = BsonWriter.Create(bsonDocCatalog, BsonDocumentWriterSettings.Defaults);
-                catalog = BsonSerializer.Deserialize<Catalog>(bsonDocCatalog);
+
+                BsonElement elCatalog = ipcRecord.GetElement("Catalog");
+
+
+
+                //if (!BsonClassMap.IsClassMapRegistered(typeof(Catalog)))
+                //{
+                //    BsonClassMap.RegisterClassMap<Catalog>(cm =>
+                //    {
+                //        cm.AutoMap();
+                //        var idMember = cm.GetMemberMap(c => c.ID);
+                //        cm.SetIdMember(idMember);
+                //        idMember.SetRepresentation(BsonType.String);
+                //    });
+                //}
+
+               catalog = BsonSerializer.Deserialize<Catalog>(new BsonDocument((BsonDocument)elCatalog.Value));
 
                //To DO: Could keep track of reads to see what documents are the most visited.  Incrementing a counter of reads.
             }
@@ -123,5 +129,57 @@ namespace AltovientoSolutions.DAL.IPC
             return catalog;
         }
 
+
+        public void SaveIllustration(byte[] buffer, string spaceId, string md5, string fileName)
+        {
+            MemoryStream ms = new MemoryStream(buffer);
+
+
+            MongoGridFS gridFS = new MongoGridFS(db);
+            MongoGridFSFileInfo fileInfo = gridFS.Upload(ms, fileName);
+
+            //gridFS.SetMetadata(fileInfo, 
+            // to do:  how to add metadata to the file.
+
+        }
+
+        public Bitmap GetIllustration(string id)
+        {
+            MongoGridFS gridFS = new MongoGridFS(db);
+
+            MongoGridFSFileInfo fileInfo = gridFS.FindOne(id);
+
+            if (fileInfo == null || !fileInfo.Exists)
+                return null;
+
+            MongoGridFSStream stream = fileInfo.OpenRead();
+
+            //// Read the source file into a byte array.
+            //byte[] buffer = new byte[stream.Length];
+            //int numBytesToRead = (int)stream.Length;
+            //int numBytesRead = 0;
+
+            //while (numBytesToRead > 0)
+            //{
+            //    // Read may return anything from 0 to numBytesToRead.
+            //    int n = stream.Read(buffer, numBytesRead, numBytesToRead);
+
+            //    // Break when the end of the file is reached.
+            //    if (n == 0)
+            //        break;
+
+            //    numBytesRead += n;
+            //    numBytesToRead -= n;
+            //}
+            //numBytesToRead = buffer.Length;
+
+            if (stream == null || stream.Length == 0)
+                return null;
+            else
+            {
+                Bitmap bitmap = new Bitmap(stream);
+                return bitmap;
+            }
+        }
     }
 }

@@ -25,10 +25,19 @@ namespace AltovientoSolutions.Common.MVC
             set;
         }
 
+        public HttpCacheability Cacheability
+        {
+            get;
+            set;
+        }
+
         public CacheFilterAttribute()
         {
             Duration = 10;
+            Cacheability = HttpCacheability.Public;
         }
+
+     
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
@@ -37,7 +46,7 @@ namespace AltovientoSolutions.Common.MVC
             HttpCachePolicyBase cache = filterContext.HttpContext.Response.Cache;
             TimeSpan cacheDuration = TimeSpan.FromSeconds(Duration);
 
-            cache.SetCacheability(HttpCacheability.Public);
+            cache.SetCacheability(Cacheability);
             cache.SetExpires(DateTime.Now.Add(cacheDuration));
             cache.SetMaxAge(cacheDuration);
             cache.AppendCacheExtension("must-revalidate, proxy-revalidate");

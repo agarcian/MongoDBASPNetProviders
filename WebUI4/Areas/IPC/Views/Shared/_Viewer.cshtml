@@ -27,10 +27,9 @@
     @* ------------------------------------------------- *@
     <link href="@Url.Content("~/Content/css/site.css")" rel="stylesheet" type="text/css" />
     @RenderSection("Header", false)
-    <!-- Change the UA-XXXXX-X to be your site's ID  -->
     <script type="text/javascript">
         var _gaq = _gaq || [];
-        //_gaq.push(['_setAccount', 'UA-XXXXX-X']);
+        _gaq.push(['_setAccount', '@ConfigurationManager.AppSettings["GoogleAnalyticsKey"]']);
         _gaq.push(['_trackPageview']);
         _gaq.push(['_trackPageLoadTime']);
     </script>
@@ -70,9 +69,9 @@
     @* Google Analytics Async Script *@
     <script type="text/javascript">
         (function () {
-            //var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            //ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            //var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
     </script>
 </body>

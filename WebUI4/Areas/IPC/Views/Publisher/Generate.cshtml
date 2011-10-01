@@ -12,59 +12,85 @@
     @{using (Html.BeginForm())
       {
           
-          <div>
-          <label for="id">Name your book:</label>
+        <div>
+            <label for="id">
+                Name your book:</label>
             <input type="text" name="id" />
-<br />
-    <div style="font-size:x-small;color:#888;">If the book code exists, nothing will be done</div>
-          </div>
+            <br />
+            <div style="font-size: x-small; color: #888;">
+                If the book code exists, nothing will be done</div>
+        </div>
           
-    <div class="ui-helper-clearfix">
-        <div style="width:200px;float:left;">
-        <h4>
-        Languages</h4>
-            <input type="checkbox" id="langEN" name="language" value="en" />
-            <label for="langEN">
-                English</label><br />
-            <input type="checkbox" id="langFR" name="language" value="fr" />
-            <label for="langFR">
-                French</label><br />
-            <input type="checkbox" id="langDE" name="language" value="de" />
-            <label for="langDE">
-                German</label><br />
-            <input type="checkbox" id="langES" name="language" value="es" />
-            <label for="langES">
-                Spanish</label><br />
-            <input type="checkbox" id="langPT" name="language" value="pt" />
-            <label for="langPT">
-                Portuguese</label><br />
+        <div class="ui-helper-clearfix">
+            <div style="width: 200px; float: left;">
+                <h4>
+                    Languages</h4>
+                <input type="checkbox" id="langEN" name="language" value="en" />
+                <label for="langEN">
+                    English</label><br />
+                <input type="checkbox" id="langFR" name="language" value="fr" />
+                <label for="langFR">
+                    French</label><br />
+                <input type="checkbox" id="langDE" name="language" value="de" />
+                <label for="langDE">
+                    German</label><br />
+                <input type="checkbox" id="langES" name="language" value="es" />
+                <label for="langES">
+                    Spanish</label><br />
+                <input type="checkbox" id="langPT" name="language" value="pt" />
+                <label for="langPT">
+                    Portuguese</label><br />
+                <input type="checkbox" id="langDU" name="language" value="du" />
+                <label for="langDU">
+                    Dutch</label><br />
+                <input type="checkbox" id="langAR" name="language" value="ar" />
+                <label for="langAR">
+                    Arabic</label><br />
+                <input type="checkbox" id="langHB" name="language" value="hb" />
+                <label for="langHB">
+                    Hebrew</label><br />
+                <input type="checkbox" id="langZN" name="language" value="zn" />
+                <label for="langZN">
+                    Chineese</label><br />
+                <input type="checkbox" id="langRU" name="language" value="ru" />
+                <label for="langRU">
+                    Russian</label><br />
+                    <p></p>
+            </div>
+            <div style="width: 400px; float: left;">
+                <h4>
+                    Size of the publication</h4>
+                <label>
+                    Number of Chapters:</label>
+                <select name="NoOfChapters">
+                    @for (int i = 5; i < 16; i++)
+                    {
+                        <option>@i</option>
+                    }
+                </select><br />
+                <br />
+                <label>
+                    Average Number of Pages per chapter:</label>
+                <select name="MaxNoOfPages">
+                    @for (int i = 5; i <= 35; i++)
+                    {
+                        <option>@i</option>
+                    }
+                </select><br />
+                <br />
+                <label>
+                    Average Number of Entries per page:</label>
+                <select name="MaxNoOfEntries">
+                    @for (int i = 10; i < 50; i++)
+                    {
+                        <option>@i</option>
+                    }
+                </select><br />
+                <br />
+            </div>
         </div>
-        <div style="width:400px;float:left;">
-        <h4>Size of the publication</h4>
-        <label>Number of Chapters:</label> 
-        <select name="NoOfChapters">
-            @for (int i = 5; i < 16; i++)
-            {
-                <option>@i</option>
-            }
-        </select><br /><br />
-        <label>Average Number of Pages per chapter:</label>
-        <select name="MaxNoOfPages">
-            @for (int i = 5; i <= 35; i++)
-            {
-                <option>@i</option>
-            }
-        </select><br /><br />
-        <label>Average Number of Entries per page:</label>
-        <select name="MaxNoOfEntries">
-            @for (int i = 10; i < 50; i++)
-            {
-                <option>@i</option>
-            }
-        </select><br /><br />
-        </div>
-    </div>
-        <div><input type="submit" value="submit"/></div>
+        <div>
+            <input type="submit" value="submit" /></div>
       }
     }
 </div>

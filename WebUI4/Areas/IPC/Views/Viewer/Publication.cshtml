@@ -18,58 +18,63 @@
         
         #toc, #illustrationHolder, #partsList
         {
-            font-size:14px;
+            font-size: 14px;
         }
         
         #CenterAndRight
         {
-            background-color:#eee;
+            background-color: #eee;
         }
         /* sets the style for the illustration management. */
-        #illustrationHolder{ border: 4px solid #eee; padding:0 !important; margin: 0 auto; overflow: hidden; } 
+        #illustrationHolder
+        {
+            border: 4px solid #eee;
+            padding: 0 !important;
+            margin: 0 auto;
+            overflow: hidden;
+        }
         
         
         #tocUL, #tocUL ul
         {
-            margin:0px 0px 0px 0px;
+            margin: 0px 0px 0px 0px;
             display: block;
             list-style-type: none;
-            list-style-position:inside;
-            padding:3px;
+            list-style-position: inside;
+            padding: 3px;
         }
         #tocUL li
         {
-            margin:0px;
+            margin: 0px;
             display: block;
-            padding:3px 3px 3px 15px;
+            padding: 3px 3px 3px 15px;
         }
         #tocUL ul li:hover
         {
-            background-color:#eee;
+            background-color: #eee;
         }
         
         .RTL #tocUL li
         {
-            direction:rtl;
+            direction: rtl;
         }
         
         
         #tocUL a, #tocUL a:visited, #tocUL a.link, #tocUL a:hover
         {
-            color:#333;
-            text-decoration:none;
-            
+            color: #333;
+            text-decoration: none;
         }
         
         #tocUL > li.chapter > a
         {
-            font-weight:bold;
+            font-weight: bold;
         }
         
         
         #tocUL li.selected
         {
-            background-color:#eef;
+            background-color: #eef;
         }
         
         
@@ -78,46 +83,46 @@
         
         #partsListTable
         {
-            width:100%;
+            width: 100%;
         }
         #partsListTable tr td
         {
-            padding:4px;
+            padding: 4px;
         }
         #partsListTable tr:hover
         {
-            background-color:#eee;
+            background-color: #eee;
         }
         
         #partsListTable tr.selected
         {
-            background-color:#eef;
+            background-color: #eef;
         }
         
         
         
         #partsListTable tr.break
         {
-            border-bottom:1px solid #ccc;
-            margin-bottom:15px;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 15px;
         }
         
         
         
         .RTL #partsListTable td.txt
         {
-            direction:rtl;
+            direction: rtl;
         }
         /******* Sytles for toolbar **************/
         
         #toolbar
         {
-            padding:5px;
-            height:35px;
+            padding: 5px;
+            height: 35px;
         }
         #toolbar .spacer
         {
-            width:50px;
+            width: 50px;
         }
         
         
@@ -133,12 +138,11 @@
         .SplitterPane
         {
             background: #fff;
-            overflow:scroll;
+            overflow: scroll;
         }
         .vsplitbar
         {
-            width: 6px;
-            /*background: #669 url(img/vgrabber.gif) no-repeat center;*/
+            width: 6px; /*background: #669 url(img/vgrabber.gif) no-repeat center;*/
             background: #669;
         }
         .vsplitbar.active, .vsplitbar:hover
@@ -151,43 +155,81 @@
         
         /**********************************************/
         
-        .menutab > * { margin: 0; padding: 0;font-family: Arial, Verdana;font-size:14px;letter-spacing:0.1em;font-weight:normal;}
-.menutab{ margin:0px; padding:0px; list-style-type:none; color:#fff; line-height:24px; display:inline-block; float:left; z-index:1000; }
-.menutab a { color:#4c4c4c;display: block; width:100%;text-align:center;line-height:2em;cursor:pointer;text-decoration:none; }
-.menutab a img {vertical-align:middle;}
-.menutab > li {border-radius: 5px;
-               float: left;
-               padding:3px 15px;
-               text-align:center;
-               background-color:transparent;
-               margin-left:3px;
-               margin-right:3px;
-               background: #F3F3F3;
-                background: -webkit-gradient(linear,left top,left bottom,from(whiteSmoke),to(#F1F1F1));
-                background: -moz-linear-gradient(top,whiteSmoke,#F1F1F1);
-                background: -o-linear-gradient(top,whiteSmoke,#F1F1F1);
-                border: 1px solid #D9D9D9;
-                vertical-align: middle;
-                float: left;
-               }
-.menutab > li.selected {background: -o-linear-gradient(top,#EEE,#E0E0E0);
-                        background: -webkit-gradient(linear,left top,left bottom,from(#EEE),to(#E0E0E0));
-                        background: -moz-linear-gradient(top,#EEE,#E0E0E0);
-                        background: -o-linear-gradient(top,#EEE,#E0E0E0);
-                        border-color: #BBB;
-                        box-shadow: inset 0 1px 5px #ccc;
-                        -moz-box-shadow: inset 0 1px 5px #ccc;
-                        -webkit-box-shadow: inset 0 1px 5px #ccc;
-               }
-.menutab > li:hover {background-color:#FFF3C8;background:none;
-                    -moz-box-shadow: inset 0 0 2px #ccc;
-                    -webkit-box-shadow:inset 0 0 2px #ccc;
-                    box-shadow:inset 0 0 2px #ccc;}
-
-.menutab > li:hover a {color: #c50;}
+        .menutab > *
+        {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Verdana;
+            font-size: 14px;
+            letter-spacing: 0.1em;
+            font-weight: normal;
+        }
+        .menutab
+        {
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
+            color: #fff;
+            line-height: 24px;
+            display: inline-block;
+            float: left;
+            z-index: 1000;
+        }
+        .menutab a
+        {
+            color: #4c4c4c;
+            display: block;
+            width: 100%;
+            text-align: center;
+            line-height: 2em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .menutab a img
+        {
+            vertical-align: middle;
+        }
+        .menutab > li
+        {
+            border-radius: 5px;
+            float: left;
+            padding: 3px 15px;
+            text-align: center;
+            background-color: transparent;
+            margin-left: 3px;
+            margin-right: 3px;
+            background: #F3F3F3;
+            background: -webkit-gradient(linear,left top,left bottom,from(whiteSmoke),to(#F1F1F1));
+            background: -moz-linear-gradient(top,whiteSmoke,#F1F1F1);
+            background: -o-linear-gradient(top,whiteSmoke,#F1F1F1);
+            border: 1px solid #D9D9D9;
+            vertical-align: middle;
+            float: left;
+        }
+        .menutab > li.selected
+        {
+            background: -o-linear-gradient(top,#EEE,#E0E0E0);
+            background: -webkit-gradient(linear,left top,left bottom,from(#EEE),to(#E0E0E0));
+            background: -moz-linear-gradient(top,#EEE,#E0E0E0);
+            background: -o-linear-gradient(top,#EEE,#E0E0E0);
+            border-color: #BBB;
+            box-shadow: inset 0 1px 5px #ccc;
+            -moz-box-shadow: inset 0 1px 5px #ccc;
+            -webkit-box-shadow: inset 0 1px 5px #ccc;
+        }
+        .menutab > li:hover
+        {
+            background-color: #FFF3C8;
+            background: none;
+            -moz-box-shadow: inset 0 0 2px #ccc;
+            -webkit-box-shadow: inset 0 0 2px #ccc;
+            box-shadow: inset 0 0 2px #ccc;
+        }
         
-        
-        
+        .menutab > li:hover a
+        {
+            color: #c50;
+        }
     </style>
 }
 <div id="viewer">
@@ -200,40 +242,44 @@
         </div>
     </div>
     <div id="toolbar" class="ui-helper-clearfix">
-        <div style="float:left">
-         <input id="search"  placeholder="Type book code"/>
-         <select id="langCode">
-            <option value="en">English</option>
-            <option value="fr">French</option>
-            <option value="de">German</option>
-            <option value="es">Spanish</option>
-            <option value="pt">Portuguese</option>
-            <option value="du">Dutch</option>
-            <option value="ru">Russian</option>
-            <option value="hb">Hebrew</option>
-            <option value="ar">Arabic</option>
-            <option value="zn">Chineese</option>
-         </select>
-         <button id="loadBook">Load Book</button>
+        <div style="float: left">
+            <input id="search" placeholder="Type book code" />
+            <select id="langCode">
+                <option value="en">English</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="es">Spanish</option>
+                <option value="pt">Portuguese</option>
+                <option value="du">Dutch</option>
+                <option value="ru">Russian</option>
+                <option value="hb">Hebrew</option>
+                <option value="ar">Arabic</option>
+                <option value="zn">Chineese</option>
+            </select>
+            <button id="loadBook">
+                Load Book</button>
         </div>
         <ul class="menutab">
-             <li><a id="prev"><img border="0" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/left_arrow.png" /></a></li>
-             <li><a id="next"><img border="0" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/right_arrow.png" /></a></li>
+            <li><a id="prev">
+                <img border="0" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/left_arrow.png" /></a></li>
+            <li><a id="next">
+                <img border="0" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/right_arrow.png" /></a></li>
         </ul>
-
-        <div style="float:left">Search <input placeholder="search"/></div>
-        
+        <div style="float: left">
+            Search
+            <input placeholder="search" /></div>
     </div>
-    
     <div id="MySplitter">
         <div id="toc" class="SplitterPane">
-        <ul id="tocUL"></ul>
+            <ul id="tocUL">
+            </ul>
         </div>
         <div id="CenterAndRight">
             <div id="illustrationHolder" class="SplitterPane">
             </div>
             <div id="partsList" class="SplitterPane">
-                <table id='partsListTable'></table>
+                <table id='partsListTable'>
+                </table>
             </div>
         </div>
         <!-- #CenterAndRight -->
@@ -384,7 +430,7 @@
                                         $('#partslistTemplate').tmpl(page.Entry).appendTo('#partsListTable');
 
                                         //Draw illustration and hotpoints.
-                                        renderIllustration(pageId, 800, 600);
+                                        renderIllustration(page.IllustrationID, 800, 600);
 
                                     }
                                 }
@@ -552,7 +598,7 @@
                 var mapZoom = 1;
 
                 var lastX = 0,
-        lastY = baseLineY;
+                lastY = baseLineY;
                 var clicking = false;
 
                 $('#illustrationHolder').css('width', mapWidth);
@@ -560,7 +606,7 @@
 
                 var paper = Raphael("illustrationHolder", mapWidth, mapHeight);
                 paper.clear();
-                var mapImage = paper.image("http://challenge2033.com/IPC/API/Illustration/" + illustrationId, 0, baseLineY, mapWidth, mapHeight);
+                var mapImage = paper.image("@Url.Content("~/IPC/API/Illustration/")" + illustrationId, 0, baseLineY, mapWidth, mapHeight);
 
 
                 /* map menu */

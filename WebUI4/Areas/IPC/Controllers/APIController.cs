@@ -76,13 +76,17 @@ namespace WebUI4.Areas.IPC.Controllers
 
         [HttpGet]
         [CompressFilter]
-        public ActionResult Illustration(string id, string width, string height)
+        public ActionResult RandomIllustration(string id, string width, string height)
         {
             int nWidth = 800;
             int nHeight = 600;
 
-            Int32.TryParse(width, out nWidth);
-            Int32.TryParse(height, out nHeight);
+
+            if (!String.IsNullOrWhiteSpace(width))
+                Int32.TryParse(width, out nWidth);
+            
+            if (!String.IsNullOrWhiteSpace(height))
+                Int32.TryParse(height, out nHeight);
 
             List<Callout> callouts = new List<Callout>();
 
@@ -97,6 +101,40 @@ namespace WebUI4.Areas.IPC.Controllers
 
                 FileContentResult result = new FileContentResult(buffer, "image/png");
                 result.FileDownloadName = id+ ".png";
+                return result;
+            }
+
+        }
+
+
+        [HttpGet]
+        [CompressFilter]
+        [CacheFilter(Duration=3600, Cacheability=HttpCacheability.Public)]
+        public ActionResult Illustration(string id, string width, string height)
+        {
+           
+            // To Do:  Handle requested width and height.
+
+
+
+            IPCMediatorMongoDB db = new IPCMediatorMongoDB("space_00010");
+            Bitmap bitmap = db.GetIllustration(id);
+
+            if (bitmap == null)
+            {
+                Response.StatusCode = 404;
+                return new ContentResult() { Content = "Resource not available" };
+            }
+            
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+
+                ms.Seek(0, SeekOrigin.Begin);
+                byte[] buffer = ms.ToArray();
+
+                FileContentResult result = new FileContentResult(buffer, "image/png");
+                result.FileDownloadName = id + ".png";
                 return result;
             }
 

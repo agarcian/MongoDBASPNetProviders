@@ -51,7 +51,7 @@ namespace AltovientoSolutions.DAL.IPC
             }
             
             // Generates a dummy catalog in English.
-            Catalog catalog = GenerateSingleCatalog(ID, NoOfChapters, MaxNoOfPages, "en", out Illustrations);
+            Catalog catalog = GenerateSingleCatalog(ID, NoOfChapters, MaxNoOfPages, NoOfEntries, "en", out Illustrations);
 
             Dictionary<String, Catalog> publishedCatalogs = new Dictionary<string, Catalog>();
             publishedCatalogs.Add("en", catalog);
@@ -82,7 +82,7 @@ namespace AltovientoSolutions.DAL.IPC
             return publishedCatalogs;
         }
 
-        private static Catalog GenerateSingleCatalog(string ID, int NoOfChapters, int MaxNoOfPages, string langCode, out Dictionary<string, byte[]> images)
+        private static Catalog GenerateSingleCatalog(string ID, int NoOfChapters, int MaxNoOfPages, int NoOfEntries, string langCode, out Dictionary<string, byte[]> images)
         {
             images = new Dictionary<string, byte[]>();
             Catalog catalog = new Catalog();
@@ -94,16 +94,16 @@ namespace AltovientoSolutions.DAL.IPC
             for (int i = 0; i < NoOfChapters; i++)
             {
                 Chapter chapter = new Chapter();
-                chapter.ID = rnd.Next(10000).ToString();
+                chapter.ID = Guid.NewGuid().ToString();
                 chapter.Title = GetRandomWords(3, langCode);
 
                 int numberOfPages = 5 + rnd.Next(MaxNoOfPages);
                 for (int j = 0; j < numberOfPages; j++)
                 {
-                    Page pg = new Page() { ID = rnd.Next(100000).ToString("000000") };
+                    Page pg = new Page() { ID = Guid.NewGuid().ToString() };
                     pg.Title = GetRandomWords(5, langCode);
 
-                    int numberOfEntries = 3 + rnd.Next(40);
+                    int numberOfEntries = 3 + rnd.Next(NoOfEntries);
                     for (int k = 1; k < numberOfEntries + 1; k++)
                     {
                         Entry entry = new Entry() { ID = "x_" + rnd.Next(1000000).ToString("0000000") };
@@ -135,6 +135,7 @@ namespace AltovientoSolutions.DAL.IPC
 
                     images.Add(pg.IllustrationID, imgBuffer);
 
+                    
                     chapter.Page.Add(pg);
                 }
 
