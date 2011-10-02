@@ -63,7 +63,7 @@ namespace AltovientoSolutions.Security.Spaces
         /// <returns>
         /// A unique id of the space just created
         /// </returns>
-        public abstract Space CreateSpace(string Name);
+        public abstract Space CreateSpace(string Name, string Owner);
 
         /// <summary>
         /// When implemented in a derived class, checks whether the name of the Space exists within the applicationName.
@@ -73,13 +73,16 @@ namespace AltovientoSolutions.Security.Spaces
         /// <returns></returns>
         public abstract bool NameExists(string Name);
 
-        public abstract Space GetSpace(string Name);
 
-        public abstract bool SaveSpace(Space Space);
+        public abstract List<Space> GetAllSpaces();
+        public abstract List<Space> GetSpacesByOwner(string Owner);
+        public abstract Space GetSpace(string Name, string Owner);
 
-        public abstract bool DeleteSpace(string Name);
+        public abstract bool SaveSpace(Space Space, string Owner);
 
-        public abstract void ResetApiSecret(string Name);
+        public abstract bool DeleteSpace(string Name, string Owner);
+
+        public abstract void ResetApiSecret(string Name, string Owner);
         #endregion
 
         #region Group management
@@ -127,6 +130,7 @@ namespace AltovientoSolutions.Security.Spaces
         public string ApplicationName { get; set; }
         public Guid Id { get; set; }
         public string SpaceName { get; set; }
+        public string Owner { get; set; }
         public string ApiSecret { get; set; }
         public List<string> AssignableTokens { get; set; }
         public string RecordType
@@ -160,6 +164,7 @@ namespace AltovientoSolutions.Security.Spaces
         [ContextualSecurity]
         public List<string> SecurityTokens { get; set; }
         public List<string> AssignableTokens { get; set; }
+        public Guid SpaceId { get; set; }
     }
 
     public class GroupHierarchy
@@ -271,5 +276,14 @@ namespace AltovientoSolutions.Security.Spaces
             get { return (string)this["description"]; }
             set { this["description"] = value; }
         }
+
+        [ConfigurationProperty("urlDomain", IsRequired = false)]
+        [RegexStringValidator(@"([a-z0-9][A-Z0-9])*")]
+        public string UrlDomain
+        {
+            get { return (string)this["urlDomain"]; }
+            set { this["urlDomain"] = value; }
+        }
+    
     }
 }

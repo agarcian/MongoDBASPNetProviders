@@ -16,13 +16,14 @@ namespace WebUI4.Tests.Spaces
         public void TestInitialize()
         {
             string name = "MyTestSpace";
+            string owner = "test@example.com";
             Space space;
 
             MongoDBSpacesProvider spacesProvider = new MongoDBSpacesProvider();
-            space = spacesProvider.GetSpace(name);
+            space = spacesProvider.GetSpace(name, owner);
 
             if (space != null)
-                spacesProvider.DeleteSpace(name);
+                spacesProvider.DeleteSpace(name, owner);
 
 
             if (spacesProvider.GroupExists("MyGroup"))
@@ -50,6 +51,7 @@ namespace WebUI4.Tests.Spaces
         {
             string applicationName = "/";
             string name = "MyTestSpace";
+            string owner = "test@example.com";
             bool exists;
             Space space;
 
@@ -60,7 +62,7 @@ namespace WebUI4.Tests.Spaces
 
             ////////////////////////////////////////////////////////////////
 
-            space = spacesProvider.CreateSpace(name);
+            space = spacesProvider.CreateSpace(name, owner);
             Assert.AreEqual(applicationName, space.ApplicationName);
             Assert.IsNotNull(space.ApiSecret);
             Assert.AreEqual(name, space.SpaceName);
@@ -69,14 +71,14 @@ namespace WebUI4.Tests.Spaces
             exists = spacesProvider.NameExists(name);
             Assert.IsTrue(exists, "This space name should exist");
 
-            space = spacesProvider.GetSpace(name);
+            space = spacesProvider.GetSpace(name, owner);
             Assert.AreEqual(applicationName, space.ApplicationName);
             Assert.IsNotNull(space.ApiSecret);
             Assert.AreEqual(name, space.SpaceName);
             ////////////////////////////////////////////////////////////////
 
 
-            bool success = spacesProvider.DeleteSpace(space.SpaceName);
+            bool success = spacesProvider.DeleteSpace(space.SpaceName, owner);
             Assert.IsTrue(success);
 
         }
@@ -85,21 +87,23 @@ namespace WebUI4.Tests.Spaces
         public void TestApiSecretReset()
         {
             string name = "MyTestSpace";
+
+            string owner = "test@example.com";
             Space space;
 
             MongoDBSpacesProvider spacesProvider = new MongoDBSpacesProvider();
 
-            space = spacesProvider.CreateSpace(name);
+            space = spacesProvider.CreateSpace(name, owner);
             string apiSecret = space.ApiSecret;
             ////////////////////////////////////////////////////////////////
 
-            spacesProvider.ResetApiSecret(name);
-            space = spacesProvider.GetSpace(name);
+            spacesProvider.ResetApiSecret(name, owner);
+            space = spacesProvider.GetSpace(name, owner);
 
             Assert.AreNotEqual(apiSecret, space.ApiSecret);
             ////////////////////////////////////////////////////////////////
 
-            bool success = spacesProvider.DeleteSpace(name);
+            bool success = spacesProvider.DeleteSpace(name, owner);
             Assert.IsTrue(success);
 
         }
@@ -108,7 +112,6 @@ namespace WebUI4.Tests.Spaces
         [TestMethod]
         public void GroupsTest()
         {
-
             MongoDBSpacesProvider provider = new MongoDBSpacesProvider();
 
             provider.CreateGroup("MyGroup");
@@ -125,12 +128,10 @@ namespace WebUI4.Tests.Spaces
 
             provider.AddMembersToGroup("MyGroup", new string[] { "User1", "User2" }, new string[] { "SubGroupA" });
 
-
             string[] userInGroup = provider.GetUsersInGroup("MyGroup");
             Assert.AreEqual(2, userInGroup.Length);
             Assert.IsTrue(userInGroup.Contains("User1"));
             Assert.IsTrue(userInGroup.Contains("User2"));
-
 
             string[] subgroupsInGroup =provider.GetSubgroupsInGroup("MyGroup");
             Assert.AreEqual(1, subgroupsInGroup.Length);
@@ -141,17 +142,24 @@ namespace WebUI4.Tests.Spaces
             Assert.AreEqual(1, parentGroups.Length);
             Assert.IsTrue(parentGroups.Contains("MyGroup"));
 
+            try
+            {
+                provider.AddSubgroupsToGroup("SubGroupA", new string[] { "SubGroupB" });
+                Assert.Fail("Should have raised an exception since not supporting multiple levels in the hierarchy.");
+            }
+            catch (SpaceProviderException)
+            {
 
-
-
+            }
+            
             provider.DeleteGroup("SubGroupA", false);
             subgroupsInGroup = provider.GetSubgroupsInGroup("MyGroup");
             Assert.AreEqual(0, subgroupsInGroup.Length);
 
             provider.DeleteGroup("MyGroup", false);
             Assert.IsFalse(provider.GroupExists("MyGroup"));
-
         }
+
 
         [TestMethod]
         public void GroupHierarchyTest()
@@ -208,7 +216,6 @@ namespace WebUI4.Tests.Spaces
         [TestMethod]
         public void GroupMembershipTest()
         {
-
             MongoDBSpacesProvider provider = new MongoDBSpacesProvider();
 
             provider.CreateGroup("MyGroup");
@@ -224,12 +231,10 @@ namespace WebUI4.Tests.Spaces
 
             provider.AddUsernamesToGroup("SubGroupA", new string[] {"User1"});
             Assert.IsTrue(provider.IsUserInGroup("SubGroupA", "User1"));
-            
 
             Assert.IsTrue(provider.IsUserInGroup("MyGroup", "User1"));
             Assert.IsTrue(provider.IsUserInGroup("MyGroup", "User2"));
             Assert.IsFalse(provider.IsUserInGroup("SubGroupB", "User1"));
-
 
             try
             {
@@ -239,11 +244,6 @@ namespace WebUI4.Tests.Spaces
             {
                 Assert.IsTrue(exc is SpaceProviderException);
             }
-
-
-
-
-
 
             provider.DeleteGroup("SubGroupA", false);
             provider.DeleteGroup("SubGroupB", false);

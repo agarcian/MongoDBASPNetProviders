@@ -65,11 +65,15 @@ namespace AltovientoSolutions.DAL.Security
 
         public override bool NameExists(string Name)
         {
+            if (String.IsNullOrWhiteSpace(Name))
+                return false;
+
+
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase db = server.GetDatabase(databaseName);
             MongoCollection collection = db.GetCollection(collectionName);
 
-            var query = Query.And(Query.EQ("SpaceName", Name),
+            var query = Query.And(Query.EQ("SpaceName", Name.ToLower()),
                 Query.EQ("ApplicationName", this.applicationName),
                 Query.EQ("RecordType", Space.RECORD_TYPE));
 
@@ -78,9 +82,62 @@ namespace AltovientoSolutions.DAL.Security
             return (doc != null);
         }
 
-        public override Space CreateSpace(string Name)
+        // Reserved for the administrator
+        public override List<Space> GetAllSpaces()
+        {
+            List<Space> spaces = new List<Space>();
+
+            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
+            MongoDatabase db = server.GetDatabase(databaseName);
+            MongoCollection collection = db.GetCollection(collectionName);
+
+            var query = Query.And(Query.EQ("SpaceName", Name.ToLower()),
+                Query.EQ("ApplicationName", this.applicationName),
+                Query.EQ("RecordType", Space.RECORD_TYPE));
+
+
+            var cursor = collection.FindAllAs<Space>();
+            foreach (Space space in cursor)
+            {
+                spaces.Add(space);
+            }
+
+            return spaces;
+        }
+
+
+        // Reserved for the administrator
+        public override List<Space> GetSpacesByOwner(string Owner)
+        {
+            List<Space> spaces = new List<Space>();
+
+            if (String.IsNullOrWhiteSpace(Owner))
+                return spaces;
+
+            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
+            MongoDatabase db = server.GetDatabase(databaseName);
+            MongoCollection collection = db.GetCollection(collectionName);
+
+            var query = Query.And(Query.EQ("Owner", Owner.ToLower()),
+                Query.EQ("ApplicationName", this.applicationName),
+                Query.EQ("RecordType", Space.RECORD_TYPE));
+
+
+            var cursor = collection.FindAllAs<Space>();
+            foreach (Space space in cursor)
+            {
+                spaces.Add(space);
+            }
+
+            return spaces;
+        }
+
+
+        public override Space CreateSpace(string Name, string Owner)
         {
             Space space = new Space();
+            if (String.IsNullOrWhiteSpace(Owner) || String.IsNullOrWhiteSpace(Name))
+                return space;
 
             // Create in the database the new space.
 
@@ -104,16 +161,21 @@ namespace AltovientoSolutions.DAL.Security
                 throw new SpaceProviderException();
             }
 
-            return GetSpace(Name);
+            return GetSpace(Name, Owner);
         }
 
-        public override Space GetSpace(string Name)
+        public override Space GetSpace(string Name, string Owner)
         {
+            if (String.IsNullOrWhiteSpace(Owner) || String.IsNullOrWhiteSpace(Name))
+                return null;
+
+
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase db = server.GetDatabase(databaseName);
             MongoCollection collection = db.GetCollection(collectionName);
 
-            var query = Query.And(Query.EQ("SpaceName", Name),
+            var query = Query.And(Query.EQ("SpaceName", Name.ToLower()),
+                Query.EQ("Owner", Owner.ToLower()),
                 Query.EQ("ApplicationName", this.applicationName),
                 Query.EQ("RecordType", Space.RECORD_TYPE));
 
@@ -123,8 +185,11 @@ namespace AltovientoSolutions.DAL.Security
 
         }
 
-        public override bool SaveSpace(Space Space)
+        public override bool SaveSpace(Space Space, string Owner)
         {
+            if (String.IsNullOrWhiteSpace(Owner))
+                return false;
+
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase db = server.GetDatabase(databaseName);
             MongoCollection collection = db.GetCollection(collectionName);
@@ -139,27 +204,36 @@ namespace AltovientoSolutions.DAL.Security
             return result.Ok;
         }
 
-        public override bool DeleteSpace(string Name)
+        public override bool DeleteSpace(string Name, string Owner)
         {
+            if (String.IsNullOrWhiteSpace(Owner) || String.IsNullOrWhiteSpace(Name))
+                return false;
+
+            
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase db = server.GetDatabase(databaseName);
             MongoCollection collection = db.GetCollection(collectionName);
 
-            var query = Query.EQ("SpaceName", Name);
+            var query = Query.And(Query.EQ("SpaceName", Name.ToLower()),
+                Query.EQ("Owner", Owner.ToLower()));
 
             SafeModeResult result = collection.Remove(query, RemoveFlags.None, SafeMode.True);
 
             return result.Ok;
         }
 
-        public override void ResetApiSecret(string Name)
+        public override void ResetApiSecret(string Name, string Owner)
         {
+            if (String.IsNullOrWhiteSpace(Owner) || String.IsNullOrWhiteSpace(Name))
+                return;
+
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase db = server.GetDatabase(databaseName);
             MongoCollection collection = db.GetCollection(collectionName);
 
-            var query = Query.And(Query.EQ("SpaceName", Name),
+            var query = Query.And(Query.EQ("SpaceName", Name.ToLower()),
                 Query.EQ("ApplicationName", this.applicationName),
+                Query.EQ("Owner", Owner.ToLower()),
                 Query.EQ("RecordType", Space.RECORD_TYPE));
 
             collection.FindAndModify(query, SortBy.Null, Update.Set("ApiSecret", Guid.NewGuid().ToString()), true, false);
@@ -536,6 +610,8 @@ namespace AltovientoSolutions.DAL.Security
                 {
                     // Keep track of the parent groups
                     ParentGroups.Add(hierarchy.ParentGroup);
+                    // Get Parents of the Parents...
+                    ParentGroups.AddRange(GetParentGroups(hierarchy.ParentGroup));
                 }
 
                 List<Group> groups = GetGroups(ParentGroups);
@@ -548,7 +624,7 @@ namespace AltovientoSolutions.DAL.Security
             }
             catch (ApplicationException e)
             {
-                (new SpacesProviderErrorEvent("DeleteGroup", this, WebEventCodes.WebExtendedBase + 1, e)).Raise();
+                (new SpacesProviderErrorEvent("GetSecurityTokensFromGroupsForUser", this, WebEventCodes.WebExtendedBase + 1, e)).Raise();
             }
         }
 

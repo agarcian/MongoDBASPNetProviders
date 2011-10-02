@@ -82,15 +82,20 @@ namespace WebUI4.Areas.IPC.Controllers
             // Implement Server side caching...   Ideally Memcached.
             Cache cache = this.HttpContext.Cache;
 
-            string cacheKey = String.Format("CATALOG_###_{0}", id);
+            string cacheKey = String.Format("CATALOG_###_{0}_###_{1}", id, LangCode);
 
             Catalog catalog = (Catalog)cache.Get(cacheKey);
             if (catalog == null || !String.IsNullOrWhiteSpace(ignoreCache) || !CACHE_ENABLED)
             {
+                this.HttpContext.Trace.Write("Caching", "Cache miss for key: " + cacheKey);
                 IPCMediatorMongoDB db = new IPCMediatorMongoDB("space_00010");
                 catalog = db.GetCatalog(id, LangCode);
 
                 cache.Add(cacheKey, catalog, null, Cache.NoAbsoluteExpiration, new TimeSpan(1, 0, 0), CacheItemPriority.Normal, null);
+            }
+            else
+            {
+                this.HttpContext.Trace.Write("Caching", "Cache hit for key: " + cacheKey);
             }
             return catalog;
         }

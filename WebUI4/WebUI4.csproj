@@ -99,10 +99,12 @@
     <Compile Include="Areas\Mariachi\MariachiAreaRegistration.cs" />
     <Compile Include="Controllers\MariachiController.cs" />
     <Compile Include="Controllers\ReferralsController.cs" />
+    <Compile Include="Controllers\SpacesController.cs" />
     <Compile Include="Models\AccountHelper.cs" />
     <Compile Include="Models\NotificationsHelper.cs" />
     <Compile Include="Models\NotificationsModel.cs" />
     <Compile Include="Models\ReferralsModels.cs" />
+    <Compile Include="Models\SpacesModel.cs" />
     <Compile Include="Resources\Account.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -211,6 +213,8 @@
     <Content Include="Web.IPC Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\Spaces\Index.cshtml" />
+    <Content Include="Views\Spaces\AllSpaces.cshtml" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />

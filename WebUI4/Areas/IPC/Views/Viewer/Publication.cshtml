@@ -382,14 +382,11 @@
                     }
                     }, { silent: true });
 
-                    //                    if (this.model.get("IpcMetadata").RTL) {
-                    //                        // This catalog requires RTL rendering.
-                    //                        $(this.el).addClass("RTL");
-                    //                        alert($(this.el).attr("class"));
-
-                    //                    }
-
-
+                    if (this.model.get("IpcMetadata").RTL) {
+                        // This catalog requires RTL rendering.
+                        $(this.el).addClass("RTL");
+                        //alert($(this.el).attr("class"));
+                    }
 
                     return this;
                 },
@@ -424,7 +421,7 @@
                                     // A page has been selected.  Build the parts list  in the partsListTable.
                                     var page = getElementFromArray(chapter.Page, pageId, "ID");  // Gets a page from the list of pages.
                                     if (page != undefined && page.Entry != undefined) {
-
+                                        
                                         //Build the content of the parts list with the selected partslist.
                                         $('#partsListTable').html('');
                                         $('#partslistTemplate').tmpl(page.Entry).appendTo('#partsListTable');
@@ -433,8 +430,11 @@
                                         renderIllustration(page.IllustrationID, 800, 600);
 
                                     }
+                                    else{
+                                    }
                                 }
                             }
+
                             else {
                                 alert("Oops, error.  Please refresh the page.");
                             }

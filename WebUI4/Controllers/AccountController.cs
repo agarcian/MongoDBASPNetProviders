@@ -65,7 +65,6 @@ namespace WebUI4.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 // Try to validate as if the input is the username.
                 bool success = Membership.ValidateUser(model.UserNameOrEmail, model.Password);
 
@@ -82,7 +81,6 @@ namespace WebUI4.Controllers
                             model.UserNameOrEmail = username;  // Use the actual username rather than the email for the authentication.
                     }
                 }
-
 
                 if (success)
                 {
