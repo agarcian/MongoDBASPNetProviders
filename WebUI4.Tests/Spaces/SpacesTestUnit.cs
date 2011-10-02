@@ -42,7 +42,7 @@ namespace WebUI4.Tests.Spaces
             Assert.AreEqual("MongoSpacesConnStr", SpacesConfiguration.Settings.ConnectionString);
             Assert.AreEqual("This is the implementation of Spaces for MongoDB", SpacesConfiguration.Settings.Description);
             Assert.AreEqual("Spaces_Unit_Test", SpacesConfiguration.Settings.CollectionName);
-            Assert.AreEqual("spacesdb", SpacesConfiguration.Settings.DatabaseName);
+            Assert.AreEqual("unit_test_db", SpacesConfiguration.Settings.DatabaseName);
         }
 
         [TestMethod]

@@ -29,7 +29,7 @@ namespace AltovientoSolutions.DAL.IPC
         /// The catalog object will make a reference internally to the Illustration unique identifier.</para>
         /// </remarks>
         /// <exception cref="InvalidOperationException">When trying to save a catalog that already exists and the <see cref="overwrite"/> attribute is set to false.</exception>
-        void SaveCatalog(Catalog catalog, string spaceId, string catalogId, string langCode, bool overwrite);
+        void SaveCatalog(Catalog catalog, string catalogId, string langCode, bool overwrite);
         /// <summary>
         /// Saves the illustration.
         /// </summary>
@@ -37,8 +37,8 @@ namespace AltovientoSolutions.DAL.IPC
         /// <param name="spaceId">The space id.</param>
         /// <param name="md5">The MD5.</param>
         /// <param name="fileName">Name of the file.</param>
-        void SaveIllustration(byte[] buffer, string spaceId, string md5, string fileName);
-        bool DoesCatalogExist(string spaceId, string catalogId, string langCode);
-        Catalog GetCatalog(string spaceId, string catalogId, string langCode);
+        void SaveIllustration(byte[] buffer, string md5, string fileName);
+        bool DoesCatalogExist(string catalogId, string langCode);
+        Catalog GetCatalog(string catalogId, string langCode);
     }
 }

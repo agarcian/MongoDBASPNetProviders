@@ -20,42 +20,55 @@ namespace AltovientoSolutions.DAL.IPC
 {
     public class IPCMediatorMongoDB : IIPCMediator
     {
-        private const string MONGO_DATABASE_NAME = "illustrated_parts_catalogs";
+        
         private MongoDatabase db;
+        private string mongoDatabaseName = "illustrated_parts_catalogs";
         private string mongoCollectionName;
 
         /// <summary>
         /// Creates an instance that connects to a specific MongoDB Collection.
         /// </summary>
         /// <param name="MongoCollectionName"></param>
+        /// <remarks>
+        /// mongoDatabaseName defaults to "illustrated_parts_catalogs"
+        /// </remarks>
         public IPCMediatorMongoDB(string MongoCollectionName)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MongoIPCViewerConnStr"].ConnectionString;
             mongoCollectionName = MongoCollectionName;
 
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            db = server.GetDatabase(MONGO_DATABASE_NAME);
+            db = server.GetDatabase(mongoDatabaseName);
         }
 
-        public bool DoesCatalogExist(string spaceId, string catalogId, string langCode)
+        public IPCMediatorMongoDB(string MongoCollectionName, string MongoDatabaseName)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MongoIPCViewerConnStr"].ConnectionString;
+            mongoCollectionName = MongoCollectionName;
+            mongoDatabaseName = MongoDatabaseName;
+
+            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
+            db = server.GetDatabase(mongoDatabaseName);
+        }
+
+        public bool DoesCatalogExist(string catalogId, string langCode)
         {
             MongoCollection<BsonDocument> mdbcolIPCs = db.GetCollection(mongoCollectionName);
 
-            var query = Query.And(Query.EQ("SpaceId", spaceId),
-                    Query.EQ("CatalogId", catalogId),
-                    Query.EQ("LangCode", langCode));
+            var query = Query.And(
+                    Query.EQ("CatalogId", catalogId));
 
 
-            BsonDocument ipcRecord = mdbcolIPCs.FindOne(query);
+            int count = mdbcolIPCs.Count();
 
-            return (ipcRecord != null);
+            return (count > 0);
         }
 
-        public void SaveCatalog(Catalog catalog, string spaceId, string catalogId, string langCode, bool overwrite)
+        public void SaveCatalog(Catalog catalog, string catalogId, string langCode, bool overwrite)
         {
             MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
-            var query = Query.And(Query.EQ("SpaceId", spaceId),
+            var query = Query.And(
                     Query.EQ("CatalogId", catalogId),
                     Query.EQ("LangCode", langCode));
 
@@ -74,8 +87,7 @@ namespace AltovientoSolutions.DAL.IPC
             BsonSerializer.Serialize<Catalog>(bsonWriter, catalog);
 
 
-            ipcRecord.Set("SpaceId", spaceId)
-                .Set("CatalogId", catalogId)
+            ipcRecord.Set("CatalogId", catalogId)
                 .Set("LangCode", langCode)
                 .Set("Catalog", bsonDocCatalog);
 
@@ -83,15 +95,14 @@ namespace AltovientoSolutions.DAL.IPC
 
             return;
         }
-
      
-        public Catalog GetCatalog(string spaceId, string catalogId, string langCode)
+        public Catalog GetCatalog(string catalogId, string langCode)
         {
             Catalog catalog;
 
             MongoCollection<BsonDocument> mdbcolIPCs = db.GetCollection(mongoCollectionName);
 
-            var query = Query.And(Query.EQ("SpaceId", spaceId),
+            var query = Query.And(
                     Query.EQ("CatalogId", catalogId),
                     Query.EQ("LangCode", langCode));
 
@@ -129,8 +140,7 @@ namespace AltovientoSolutions.DAL.IPC
             return catalog;
         }
 
-
-        public void SaveIllustration(byte[] buffer, string spaceId, string md5, string fileName)
+        public void SaveIllustration(byte[] buffer, string md5, string fileName)
         {
             MemoryStream ms = new MemoryStream(buffer);
 
@@ -181,5 +191,74 @@ namespace AltovientoSolutions.DAL.IPC
                 return bitmap;
             }
         }
+
+        public List<String> GetAvailableLanguagesForCatalog(string catalogId)
+        {
+            List<String> langCodes = new List<string>();
+
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
+
+            var query = Query.And(Query.EQ("CatalogId", catalogId));
+
+            var cursor = collection.Find(query).SetFields(new string[] {"LangCode"});
+
+            foreach (BsonDocument doc in cursor)
+            {
+                langCodes.Add(doc.GetElement("LangCode").Value.AsString);
+            }
+
+            return langCodes;
+
+        }
+
+        public void IndexCatalog(string catalogId, string langCode)
+        {
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
+
+
+//            // Index:  
+
+
+//            var map = @"
+//function() {
+//        var totalCount 
+//    this.Chapter.forEach(function(chapter){
+//        
+//    });
+//
+//
+//
+//    //emit( {catalogId: this.ID, langCode: this.LangCode}, {count: 1} );
+//  } ";
+
+//            var reduce = @"
+//function(key, values) {
+//    var result = {count: 0};
+//
+//    values.forEach(function(value) {
+//        result.count += value.count;
+//    });
+//
+//    return result;
+//  }";
+
+           
+
+//            var mr = collection.MapReduce(map, reduce);
+//            foreach (var document in mr.GetResults())
+//            {
+//                Console.WriteLine(document.ToJson());
+//            }
+
+
+
+        }
+
+
+
+        
+
+
+
     }
 }

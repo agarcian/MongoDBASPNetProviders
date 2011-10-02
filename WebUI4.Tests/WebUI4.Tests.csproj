@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessControlTestUnit.cs" />
-    <Compile Include="IPC\IPCDataAccess.cs" />
+    <Compile Include="IPC\IPCDataAccessTestUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spaces\SpacesTestUnit.cs" />
   </ItemGroup>

@@ -106,7 +106,7 @@ namespace AltovientoSolutions.DAL.IPC
                     int numberOfEntries = 3 + rnd.Next(NoOfEntries);
                     for (int k = 1; k < numberOfEntries + 1; k++)
                     {
-                        Entry entry = new Entry() { ID = "x_" + rnd.Next(1000000).ToString("0000000") };
+                        Entry entry = new Entry() { ID = Guid.NewGuid().ToString() };
                         entry.Sequence = k;
                         entry.Position = k.ToString();
                         entry.MaterialNumber = rnd.Next(15) < 1 ? String.Empty : Guid.NewGuid().ToString().Split('-')[0];
@@ -130,16 +130,23 @@ namespace AltovientoSolutions.DAL.IPC
                     MemoryStream ms = new MemoryStream(61440);
                     img.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
 
-                    byte[] imgBuffer =ms.ToArray();
+                    byte[] imgBuffer = ms.ToArray();
                     pg.IllustrationID = Password.EncodeBinary(imgBuffer);
 
-                    images.Add(pg.IllustrationID, imgBuffer);
+                    if (!images.ContainsKey(pg.IllustrationID))
+                        images.Add(pg.IllustrationID, imgBuffer);
 
-                    
-                    chapter.Page.Add(pg);
+                    try
+                    {
+                        chapter.Page.Add(pg);
+                    }
+                    catch (Exception e)
+                    {
+                        chapter.Page.Add(pg);
+                    }
                 }
 
-                catalog.Chapter.Add(chapter);
+                    catalog.Chapter.Add(chapter);
             }
 
 

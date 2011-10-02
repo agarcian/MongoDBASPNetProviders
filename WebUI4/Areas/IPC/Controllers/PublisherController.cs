@@ -51,14 +51,14 @@ namespace WebUI4.Areas.IPC.Controllers
                 {
                     string langCode = pair.Key;
                     Catalog catalog = pair.Value;
-                    db.SaveCatalog(catalog, "space_00010", catalog.ID, langCode, true);
+                    db.SaveCatalog(catalog,catalog.ID, langCode, true);
                 }
 
                 foreach (KeyValuePair<String, byte[]> pair in Illustrations)
                 {
                     string md5 = pair.Key;
                     byte[] buffer = pair.Value;
-                    db.SaveIllustration(buffer, "space_00010", md5, md5);
+                    db.SaveIllustration(buffer,md5, md5);
                 }
 
             }
