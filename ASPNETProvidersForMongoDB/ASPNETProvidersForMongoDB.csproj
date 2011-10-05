@@ -53,6 +53,7 @@
     <Compile Include="MongoDBMembershipProvider.cs" />
     <Compile Include="MongoDBProfileProvider.cs" />
     <Compile Include="MongoDBRolesProvider.cs" />
+    <Compile Include="ProfileCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
