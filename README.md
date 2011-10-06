@@ -31,6 +31,6 @@ If you are concerned about performance, set it to false, and change the code to 
 
 My recommendation is to leave it as the transactions in SafeMode won't significantly impact your application's performances (or so I believe).
 
-### Want to help 
+### Want to help?
 Please comment on anything you think can be improved.
 Also you can help adding more test cases to make sure the implementation is completely validated.  I will be providing more test cases over time.
