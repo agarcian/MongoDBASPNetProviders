@@ -24,7 +24,7 @@ In order to run the application you need to:
 - Define the `ProfileCommon` object for your needs.
 
 
-### Notes of SafeMode:
+### Notes on SafeMode:
 
 Note that we are using SafeMode for the transactions in order to be able to validate the results.  
 If you are concerned about performance, set it to false, and change the code to not make use of the Result object since it will be null.
