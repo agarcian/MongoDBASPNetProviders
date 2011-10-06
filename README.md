@@ -1,6 +1,6 @@
 #ASPNet Providers for Membership, Roles, and Profile using MongoDB
 
-This project is an implementation of the ASPNet Providers for Membership, Roles, and Profile using MongoDB.
+This project is an implementation of the ASPNet Providers for __Membership__, __Roles__, and __Profile__ using MongoDB.
 
 ##Instructions
 
@@ -8,8 +8,8 @@ This Visual Studio 2010 solution contains the implementation of the Membership, 
 
 Download the solution and compile to use in your own project.
 
-- ASPNetProvidersForMongoDB: This project contains the actual implementation in addition to a ProfileCommon implementation that you will need for the Membership provider.
-- TestProjectForMongoDBASPNETProviders: This project is an incomplete suite of tests against the project. 
+- __ASPNetProvidersForMongoDB__: This project contains the actual implementation in addition to a ProfileCommon implementation that you will need for the Membership provider.
+- __TestProjectForMongoDBASPNETProviders__: This project is an incomplete suite of tests against the project. 
 
 
 In order to run the application you need to:
