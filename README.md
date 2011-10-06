@@ -16,12 +16,12 @@ In order to run the application you need to:
 
 - Create a Mongo database and get the connection string.
 - Apply to the web.config the following elements:
- - configuration/connectionStrings
- - configuration/system.web/machinekey
- - configuration/system.web/membership
- - configuration/system.web/roleManager
- - configuration/system.web/profile  (Here you will use the ProfileCommon)
-- Define the ProfileCommon object for your needs.
+ - `configuration/connectionStrings`
+ - `configuration/system.web/machinekey`
+ - `configuration/system.web/membership`
+ - `configuration/system.web/roleManager`
+ - `configuration/system.web/profile`  (Here you will use the `ProfileCommon` custom class you will create)
+- Define the `ProfileCommon` object for your needs.
 
 
 ### Notes of SafeMode:
