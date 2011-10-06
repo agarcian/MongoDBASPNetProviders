@@ -355,7 +355,7 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 // Get the profile count.
-                totalRecords =profiles.Count(query);
+                totalRecords = (int) profiles.Count(query);
                 
                 // No profiles found.
                 if (totalRecords == 0) { return profilesCollection; }
@@ -463,9 +463,14 @@ namespace ASPNETProvidersForMongoDB
 
                     if (profile != null)
                     {
-                        //prop.PropertyType;
-                        var obj = profile[prop.Name];
+                        BsonValue obj = BsonNull.Value;
 
+                        // Make sure the element exists (In case of changes to the object, the element would not exist on old documents.)
+                        if (profile.Contains(prop.Name))
+                            obj = profile[prop.Name];
+                        else
+                            obj = BsonNull.Value;
+                        
                         object returnValue;
                         switch (obj.BsonType)
                         {

@@ -39,7 +39,7 @@ namespace TestProjectForMongoDBASPNETProviders
 
 
         [ClassCleanup]
-        public static void CleanupTestClass(TestContext context)
+        public static void CleanupTestClass()
         {
             // Use the App.config to set the properties of the MongoDB database.
             mongoProvider = (MongoDBMembershipProvider)Membership.Provider;

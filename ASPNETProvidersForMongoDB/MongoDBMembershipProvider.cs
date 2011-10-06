@@ -645,7 +645,7 @@ namespace ASPNETProvidersForMongoDB
 
             try
             {
-                totalRecords = cursor.Count();
+                totalRecords = (int) cursor.Count();
 
                 if (totalRecords <= 0) { return usersCollection; }
 
@@ -1583,7 +1583,7 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var cursor = users.Find(query);
-                totalRecords = users.Count();
+                totalRecords = (int) users.Count();
 
                 if (totalRecords == 0) { return usersCollection; }
 

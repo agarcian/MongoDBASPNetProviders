@@ -479,7 +479,7 @@ namespace ASPNETProvidersForMongoDB
                      Query.EQ("Username", username),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
-                int count = roles.Count(query);
+                int count = (int) roles.Count(query);
 
                 isUserinRole = count > 0;
                
@@ -570,7 +570,7 @@ namespace ASPNETProvidersForMongoDB
                      Query.EQ("Rolename", roleName),
                      Query.EQ("RecordType", RecordType.RoleDefinition.ToString()));
 
-                int count = roles.Count(query);
+                int count = (int) roles.Count(query);
 
                 return count > 0;
 
