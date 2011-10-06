@@ -1,6 +1,8 @@
 #ASPNet Providers for Membership, Roles, and Profile using MongoDB
 
-This project is an implementation of the ASPNet Providers for __Membership__, __Roles__, and __Profile__ using MongoDB.
+This project is an implementation of the ASPNet Providers for __Membership__, __Roles__, and __Profile__ using MongoDB.  
+
+Currently using the CSharp Driver 1.2 
 
 ##Instructions
 
