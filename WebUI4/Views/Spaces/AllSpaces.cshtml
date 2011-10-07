@@ -1,0 +1,20 @@
+﻿@model List<AltovientoSolutions.Security.Spaces.Space>
+@using AltovientoSolutions.Security.Spaces
+@{
+    ViewBag.Title = "AllSpaces";
+}
+
+<h2>Work Spaces</h2>
+
+@foreach (Space space in Model)
+{
+    
+    <div>
+    http://
+    @space.SpaceName
+    .
+    @SpacesConfiguration.Settings.UrlDomain
+    <br />
+    @space.Owner
+         </div>
+}

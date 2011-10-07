@@ -13,14 +13,22 @@ namespace WebUI4.Areas.IPC.Controllers
 
         public ActionResult Index()
         {
-            return RedirectToAction("Publication");
+            return RedirectToAction("Search");
         }
 
 
-        public ActionResult Publication(string id)
+        public ActionResult Catalog(string id)
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+
 
     }
 }

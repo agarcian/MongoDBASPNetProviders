@@ -132,7 +132,6 @@ namespace WebUI4.Areas.IPC.Controllers
 
         }
 
-
         [HttpGet]
         [CompressFilter]
         [CacheFilter(Duration=3600, Cacheability=HttpCacheability.Public)]
@@ -178,7 +177,6 @@ namespace WebUI4.Areas.IPC.Controllers
             return Json(langCodes, JsonRequestBehavior.AllowGet);
         }
 
-
         public ActionResult EnableCache()
         {
             CACHE_ENABLED = true;
@@ -190,8 +188,6 @@ namespace WebUI4.Areas.IPC.Controllers
             CACHE_ENABLED = false;
             return new ContentResult() { Content = "Caching is Disabled for the API" };
         }
-
-
 
         public ActionResult PrimeCacheForIllustration(string ID)
         {
@@ -233,6 +229,35 @@ namespace WebUI4.Areas.IPC.Controllers
 
 
         }
+
+        [HttpGet]
+        [CompressFilter]
+        [CacheFilter(Duration = 0, Cacheability = HttpCacheability.Private)]
+        public ActionResult SearchPartNumber(string searchTerm)
+        {
+            IPCMediatorMongoDB db = new IPCMediatorMongoDB("space_00010");
+
+            List<AltovientoSolutions.Common.Util.Hint> hints = db.SearchPartNumber(searchTerm);
+
+            return Json(hints, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        [CompressFilter]
+        [CacheFilter(Duration = 0, Cacheability = HttpCacheability.Private)]
+        public ActionResult SearchCatalog(string searchTerm, string langCode)
+        {
+            IPCMediatorMongoDB db = new IPCMediatorMongoDB("space_00010");
+
+            List<AltovientoSolutions.Common.Util.Hint> hints = db.SearchCatalog(searchTerm, langCode);
+
+            return Json(hints, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
 
     }
 }

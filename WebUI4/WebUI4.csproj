@@ -170,8 +170,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="404.html" />
+    <Content Include="Areas\IPC\Content\css\viewer.css" />
     <Content Include="Areas\IPC\Content\css\style.css" />
     <Content Include="Areas\IPC\Content\images\IPCViewer.png" />
+    <Content Include="Areas\IPC\Content\script\viewer.js" />
     <Content Include="Content\images\darkblue-gradient.png" />
     <Content Include="Content\images\Maribel-Salinas-in-mariacheros2.com.png" />
     <Content Include="Content\scripts\Common.js" />
@@ -203,7 +205,7 @@
     <Content Include="Areas\Mariachi\Views\Website\ManageSite.cshtml" />
     <Content Include="Areas\IPC\Views\Web.config" />
     <Content Include="Areas\IPC\Views\Shared\_Viewer.cshtml" />
-    <Content Include="Areas\IPC\Views\Viewer\Publication.cshtml" />
+    <Content Include="Areas\IPC\Views\Viewer\Catalog.cshtml" />
     <Content Include="Areas\IPC\Views\_ViewStart.cshtml" />
     <Content Include="Areas\IPC\Views\Project\Index.cshtml" />
     <Content Include="Areas\IPC\Views\Project\GetStarted.cshtml" />
@@ -215,6 +217,7 @@
     </Content>
     <Content Include="Views\Spaces\Index.cshtml" />
     <Content Include="Views\Spaces\AllSpaces.cshtml" />
+    <Content Include="Areas\IPC\Views\Viewer\Search.cshtml" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />

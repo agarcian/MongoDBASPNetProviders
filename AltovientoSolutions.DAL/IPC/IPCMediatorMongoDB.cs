@@ -15,6 +15,8 @@ using AltovientoSolutions.DAL.IPC;
 using AltovientoSolutions.DAL.IPC.Model;
 using System.IO;
 using System.Drawing;
+using AltovientoSolutions.Common.Util;
+
 
 namespace AltovientoSolutions.DAL.IPC
 {
@@ -214,51 +216,111 @@ namespace AltovientoSolutions.DAL.IPC
         public void IndexCatalog(string catalogId, string langCode)
         {
             MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
-
-
-//            // Index:  
-
-
 //            var map = @"
 //function() {
-//        var totalCount 
-//    this.Chapter.forEach(function(chapter){
-//        
-//    });
-//
-//
-//
-//    //emit( {catalogId: this.ID, langCode: this.LangCode}, {count: 1} );
-//  } ";
+//    emit({catalog:this.CatalogId,langCode:this.LangCode}, {count:1});
+//}";
 
 //            var reduce = @"
 //function(key, values) {
 //    var result = {count: 0};
 //
-//    values.forEach(function(value) {
-//        result.count += value.count;
-//    });
+//    for(value in values) {
+//        result.count +=1;
+//    }
 //
 //    return result;
-//  }";
+//}";
 
-           
+            var map = @"
+function() {
+  for(chapter in this.Catalog.Chapter){    
+//      for(page in chapter.Page){
+//          for(entry in page.Entry)
+               emit({catalog:this.CatalogId,partNumber:chapter.ID}, {count:1});
+//          }
+//      }
+   }
+}";
 
-//            var mr = collection.MapReduce(map, reduce);
-//            foreach (var document in mr.GetResults())
-//            {
-//                Console.WriteLine(document.ToJson());
-//            }
+            var reduce = @"
+function(key, values) {
+    var result = {count: 0};
 
+    for(value in values) {
+        result.count +=1;
+    }
 
+    return result;
+}";
 
+            var mr = collection.MapReduce(map, reduce);
+            foreach (var document in mr.GetResults())
+            {
+                var x = document;    
+            }
         }
 
+        public List<Hint> SearchPartNumber(string searchTerm)
+        {
+            List<Hint> hints = new List<Hint>();
+            int limit = 5;
 
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
+            var query = Query.Matches("Catalog.Chapter.Page.Entry.MaterialNumber", BsonRegularExpression.Create("^" + searchTerm, "i"));
 
-        
+            var cursor = collection.Find(query).SetLimit(limit).SetFields(new string[] { "LangCode", "CatalogId", "Catalog.Chapter.Page.Entry.MaterialNumber" });
 
+            foreach (BsonDocument doc in cursor)
+            {
+                BsonElement value;
 
+                if (doc.TryGetElement("Catalog.Chapter.Page.Entry.MaterialNumber", out value))
+                {
+                    hints.Add(new Hint()
+                    {
+                        value = value.Value.AsString,
+                        desc = value.Value.AsString,
+                        label = value.Value.AsString
+                    });
+                }
+            }
+
+            return hints;
+        }
+
+        public List<Hint> SearchCatalog(string searchTerm, string langCode)
+        {
+            if (String.IsNullOrWhiteSpace(searchTerm))
+            {
+                searchTerm = "";
+            }
+
+            if (String.IsNullOrWhiteSpace(langCode))
+            {
+                langCode = "en";
+            }
+
+            return SearchCatalog(searchTerm.Trim(), langCode.ToLower(), 5);
+        }
+
+        public List<Hint> SearchCatalog(string searchTerm, string langCode, int limit)
+        {
+            List<Hint> hints = new List<Hint>();
+
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
+            var query = Query.And(Query.Matches("CatalogId", BsonRegularExpression.Create("^" + searchTerm, "i")),
+                Query.EQ("LangCode", langCode));
+
+            var cursor = collection.Find(query).SetLimit(limit).SetFields(new string[] { "CatalogId", "Catalog.Title" });
+
+            foreach (BsonDocument doc in cursor)
+            {
+                hints.Add(new Hint() { value = doc.GetElement("CatalogId").Value.AsString, label = doc.GetElement("Catalog").Value.AsBsonDocument.GetElement("Title").Value.AsString });
+            }
+
+            return hints;
+        }
 
     }
 }
