@@ -1,0 +1,20 @@
+﻿@using AltovientoSolutions.DAL.Mariacheros.Model
+@model List<LyricsModel>
+@{
+    ViewBag.Title = "AllLyrics";
+}
+
+<h2>All Lyrics</h2>
+
+<p>@Html.ActionLink("Add new", "Lyrics", new {Area="Mariachi"})</p>
+
+<ul>
+    @foreach (LyricsModel lyrics in Model)
+    {
+        <li>@lyrics.SongTitle (@lyrics.Author) <span class="controls">
+        <a href="@Url.Content("~/Mariachi/Administration/Lyrics/" + lyrics.Id)" class="edit"><img src="http://media.altovientosolutions.com/dryicons/png/16x16/edit.png" alt="edit"/></a>
+        <a class="delete"><img src="http://media.altovientosolutions.com/dryicons/png/16x16/delete.png" alt="delete"/></a>
+        </span></li>
+    }
+</ul>
+

@@ -94,9 +94,14 @@
     <Compile Include="Areas\IPC\Controllers\PublisherController.cs" />
     <Compile Include="Areas\IPC\Controllers\ViewerController.cs" />
     <Compile Include="Areas\IPC\IPCAreaRegistration.cs" />
+    <Compile Include="Areas\Mariachi\Controllers\AdministrationController.cs" />
+    <Compile Include="Areas\Mariachi\Controllers\APIController.cs" />
     <Compile Include="Areas\Mariachi\Controllers\HomeController.cs" />
     <Compile Include="Areas\Mariachi\Controllers\WebsiteController.cs" />
     <Compile Include="Areas\Mariachi\MariachiAreaRegistration.cs" />
+    <Compile Include="Areas\Mariachi\Models\SongDetailsModel.cs" />
+    <Compile Include="Areas\Mobile\Controllers\LyricsController.cs" />
+    <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
     <Compile Include="Controllers\MariachiController.cs" />
     <Compile Include="Controllers\ReferralsController.cs" />
     <Compile Include="Controllers\SpacesController.cs" />
@@ -174,6 +179,7 @@
     <Content Include="Areas\IPC\Content\css\style.css" />
     <Content Include="Areas\IPC\Content\images\IPCViewer.png" />
     <Content Include="Areas\IPC\Content\script\viewer.js" />
+    <Content Include="Content\css\Mobile.css" />
     <Content Include="Content\images\darkblue-gradient.png" />
     <Content Include="Content\images\Maribel-Salinas-in-mariacheros2.com.png" />
     <Content Include="Content\scripts\Common.js" />
@@ -218,6 +224,13 @@
     <Content Include="Views\Spaces\Index.cshtml" />
     <Content Include="Views\Spaces\AllSpaces.cshtml" />
     <Content Include="Areas\IPC\Views\Viewer\Search.cshtml" />
+    <Content Include="Areas\Mobile\Views\Web.config" />
+    <Content Include="Areas\Mobile\Views\Shared\_MobileLayout.cshtml" />
+    <Content Include="Areas\Mobile\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Mobile\Views\Lyrics\Index.cshtml" />
+    <Content Include="Areas\Mariachi\Views\Administration\Lyrics.cshtml" />
+    <Content Include="Areas\Mariachi\Views\Administration\AllLyrics.cshtml" />
+    <Content Include="Areas\Mobile\Views\Lyrics\Song.cshtml" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />
@@ -229,8 +242,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\IPC\Models\" />
-    <Folder Include="Areas\Mariachi\Models\" />
     <Folder Include="Areas\Mariachi\Views\Shared\" />
+    <Folder Include="Areas\Mobile\Models\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>

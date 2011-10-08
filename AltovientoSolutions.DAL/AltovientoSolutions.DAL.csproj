@@ -68,6 +68,7 @@
     <Compile Include="IPC\Model\Page.cs" />
     <Compile Include="IPC\Model\Translation.cs" />
     <Compile Include="IPC\IPCMediatorMongoDB.cs" />
+    <Compile Include="Mariacheros\Model\LyricsModel.cs" />
     <Compile Include="Mariacheros\MariachiMediator.cs" />
     <Compile Include="ReferralsMediator.cs" />
     <Compile Include="MongoMediatorBase.cs" />
