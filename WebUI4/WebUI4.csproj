@@ -99,7 +99,6 @@
     <Compile Include="Areas\Mariachi\Controllers\HomeController.cs" />
     <Compile Include="Areas\Mariachi\Controllers\WebsiteController.cs" />
     <Compile Include="Areas\Mariachi\MariachiAreaRegistration.cs" />
-    <Compile Include="Areas\Mariachi\Models\SongDetailsModel.cs" />
     <Compile Include="Areas\Mobile\Controllers\LyricsController.cs" />
     <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
     <Compile Include="Controllers\MariachiController.cs" />
@@ -359,7 +358,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>49644</DevelopmentServerPort>
+          <DevelopmentServerPort>52999</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

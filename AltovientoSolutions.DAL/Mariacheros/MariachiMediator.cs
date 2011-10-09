@@ -61,19 +61,19 @@ namespace AltovientoSolutions.DAL.Mariacheros
             }
         }
 
+        #region Band Management
 
-
-
-        public bool DoesWebsiteExist(string name)
+        public bool DoesBandExist(string name)
         {
-            MongoCollection<BsonDocument> mdbcolIPCs = db.GetCollection(mongoCollectionName);
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
-            var query = Query.EQ("WebsiteName", name);
+            var query = Query.EQ("NameLowerCase", name);
 
-            BsonDocument ipcRecord = mdbcolIPCs.FindOne(query);
+            BsonDocument doc = collection.FindOne(query);
 
-            return (ipcRecord != null);
+            return (doc != null);
         }
+
 
 
 
@@ -89,9 +89,11 @@ namespace AltovientoSolutions.DAL.Mariacheros
             return true;
 
         }
+        
+        #endregion
 
 
-
+        #region Lyrics Management
         public List<Model.LyricsModel> GetAllLyrics()
         {
             List<Model.LyricsModel> allLyrics = new List<Model.LyricsModel>();
@@ -114,7 +116,6 @@ namespace AltovientoSolutions.DAL.Mariacheros
             return allLyrics;
         }
 
-
         public Model.LyricsModel GetLyrics(string id)
         {
             MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
@@ -130,7 +131,7 @@ namespace AltovientoSolutions.DAL.Mariacheros
             return model;
         }
 
-        public void AddSong(string SongTitle, string Author, string Lyrics)
+        public bool AddSong(string SongTitle, string Author, string Lyrics)
         {
             MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
@@ -139,37 +140,76 @@ namespace AltovientoSolutions.DAL.Mariacheros
                 .Set("Lyrics", Lyrics);
 
             if (!String.IsNullOrWhiteSpace(Author))
-                doc.Set("Author", Author);
-
+                doc.Set("Author", Author.Trim());
 
 
             SafeModeResult result = collection.Insert(doc, SafeMode.True);
 
+            return result.Ok;
         }
 
-        public void UpdateSong(string id, string SongTitle, string Author, string Lyrics)
+        public bool UpdateSong(string id, string SongTitle, string Author, string Lyrics)
         {
             MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
-            var query = Query.EQ("_id", id);
-            var update = Update.Set("SongTitle", SongTitle.Trim())
-                .Set("Author", Author.Trim())
-                .Set("Lyrics", Lyrics);
+            ObjectId objId;
 
-            SafeModeResult result = collection.Update(query, update, SafeMode.True);
-        }
-
-        public void SaveSong(string id, string SongTitle, string Author, string Lyrics)
-        {
-            if (String.IsNullOrWhiteSpace(id))
+            if (ObjectId.TryParse(id, out objId))
             {
-                AddSong(SongTitle, Author, Lyrics);
+                var query = Query.EQ("_id", objId);
+                var update = Update.Set("SongTitle", SongTitle.Trim())
+                    .Set("Lyrics", Lyrics);
+
+                if (String.IsNullOrWhiteSpace(Author))
+                    update.Unset("Author");
+                else
+                    update.Set("Author", Author.Trim());
+                                    
+                SafeModeResult result = collection.Update(query, update, SafeMode.True);
+                
+                return (result.Ok && result.UpdatedExisting);
             }
             else
             {
-                UpdateSong(id, SongTitle, Author, Lyrics);
+                return false;
             }
         }
 
+        public bool DeleteSong(string id)
+        {
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
+
+            ObjectId objId;
+
+            if (ObjectId.TryParse(id, out objId))
+            {
+                var query = Query.EQ("_id", objId);
+                FindAndModifyResult result = collection.FindAndRemove(query, SortBy.Null);
+
+                return result.Ok;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool SaveSong(string id, string SongTitle, string Author, string Lyrics)
+        {
+
+            bool success = false;
+
+            if (String.IsNullOrWhiteSpace(id))
+            {
+                success = AddSong(SongTitle, Author, Lyrics);
+            }
+            else
+            {
+                success = UpdateSong(id, SongTitle, Author, Lyrics);
+            }
+
+            return success;
+        }
+        #endregion
     }
 }

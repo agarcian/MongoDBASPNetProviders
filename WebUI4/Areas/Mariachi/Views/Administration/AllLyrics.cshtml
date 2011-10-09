@@ -3,18 +3,44 @@
 @{
     ViewBag.Title = "AllLyrics";
 }
-
-<h2>All Lyrics</h2>
-
-<p>@Html.ActionLink("Add new", "Lyrics", new {Area="Mariachi"})</p>
-
-<ul>
+<h2>
+    All Lyrics</h2>
+<p>
+<a href="@Url.Content("~/Mariachi/Administration/Lyrics/")"><img src="http://media.altovientosolutions.com/dryicons/png/16x16/delete.png" alt="Add new" /> Add New</a>
+</p>
+<ul id="lyrics">
     @foreach (LyricsModel lyrics in Model)
     {
-        <li>@lyrics.SongTitle (@lyrics.Author) <span class="controls">
-        <a href="@Url.Content("~/Mariachi/Administration/Lyrics/" + lyrics.Id)" class="edit"><img src="http://media.altovientosolutions.com/dryicons/png/16x16/edit.png" alt="edit"/></a>
-        <a class="delete"><img src="http://media.altovientosolutions.com/dryicons/png/16x16/delete.png" alt="delete"/></a>
+        <li>@lyrics.SongTitle (@lyrics.Author) <span class="controls"><a href="@Url.Content("~/Mariachi/Administration/Lyrics/" + lyrics.Id)" class="edit">
+            <img src="http://media.altovientosolutions.com/dryicons/png/16x16/edit.png" alt="edit" /></a>
+            <a class="delete" data-id="@lyrics.Id">
+                <img src="http://media.altovientosolutions.com/dryicons/png/16x16/delete.png" alt="delete" /></a>
         </span></li>
     }
 </ul>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.delete').click(function () {
 
+                if (confirm('You are about to delete this entry. Are you sure?')) {
+                    var id = $(this).attr('data-id');
+                    $.ajax({
+                        url: '@Url.Content("~/Mariachi/Administration/Lyrics/")',
+                        data: { id: id },
+                        context: $(this).parents('li')[0],
+                        success: function (data) {
+                            $(this).slideUp('slow', function () {
+                                $(this).remove();
+                            });
+                        },
+                        error: function () {
+                            alert('This action could not be completed.  Please reload the page and try again.');
+                        },
+                        type: 'DELETE'
+                    });
+                }
+            });
+        });
+    </script>
+}

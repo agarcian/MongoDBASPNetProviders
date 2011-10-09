@@ -46,6 +46,7 @@
       <HintPath>..\..\Library\CSharpDriver-1.1.0.4184\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -68,12 +69,19 @@
     <Compile Include="IPC\Model\Page.cs" />
     <Compile Include="IPC\Model\Translation.cs" />
     <Compile Include="IPC\IPCMediatorMongoDB.cs" />
+    <Compile Include="Mariacheros\Model\BandModel.cs" />
     <Compile Include="Mariacheros\Model\LyricsModel.cs" />
     <Compile Include="Mariacheros\MariachiMediator.cs" />
     <Compile Include="ReferralsMediator.cs" />
     <Compile Include="MongoMediatorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Lyrics.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Lyrics.resx</DependentUpon>
+    </Compile>
     <Compile Include="Security\MongoDBSpacesProvider.cs" />
+    <Compile Include="SimpleDBImport\Importer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AltovientoSolutions.Common\AltovientoSolutions.Common.csproj">
@@ -86,6 +94,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Lyrics.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lyrics.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

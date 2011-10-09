@@ -60,12 +60,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessControlTestUnit.cs" />
+    <Compile Include="DAL\BandImporter.cs" />
     <Compile Include="IPC\IPCDataAccessTestUnit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spaces\SpacesTestUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
+    <Content Include="Files\SerenataMariachi.Bands.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
