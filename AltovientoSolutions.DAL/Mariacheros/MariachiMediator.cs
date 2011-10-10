@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver.Builders;
+using System.Text.RegularExpressions;
 
 namespace AltovientoSolutions.DAL.Mariacheros
 {
@@ -137,7 +138,8 @@ namespace AltovientoSolutions.DAL.Mariacheros
 
             BsonDocument doc = new BsonDocument();
             doc.Set("SongTitle", SongTitle)
-                .Set("Lyrics", Lyrics);
+                .Set("Lyrics", Lyrics)
+                .Set("Slug", CreateSlug(SongTitle));
 
             if (!String.IsNullOrWhiteSpace(Author))
                 doc.Set("Author", Author.Trim());
@@ -158,7 +160,8 @@ namespace AltovientoSolutions.DAL.Mariacheros
             {
                 var query = Query.EQ("_id", objId);
                 var update = Update.Set("SongTitle", SongTitle.Trim())
-                    .Set("Lyrics", Lyrics);
+                    .Set("Lyrics", Lyrics)
+                    .Set("Slug", CreateSlug(SongTitle));
 
                 if (String.IsNullOrWhiteSpace(Author))
                     update.Unset("Author");
@@ -210,6 +213,34 @@ namespace AltovientoSolutions.DAL.Mariacheros
 
             return success;
         }
+
+        private string CreateSlug(string SongTitle)
+        {
+            string slug = String.Empty;
+
+            if (!String.IsNullOrWhiteSpace(SongTitle))
+            {
+                slug += SongTitle.Trim().Trim('-');
+            }
+
+            slug = slug.Replace("á", "a")
+                .Replace("é", "e")
+                .Replace("í", "i")
+                .Replace("ó", "o")
+                .Replace("ú", "u")
+                .Replace("ñ", "n")
+                .Replace("Á", "A")
+                .Replace("É", "E")
+                .Replace("Í", "I")
+                .Replace("Ó", "O")
+                .Replace("Ú", "U")
+                .Replace("Ñ", "N");
+
+            slug = new Regex("[^A-Za-z0-9-]+").Replace(slug, "-");
+            
+            return slug.ToLower().Trim('-');
+        }
+        
         #endregion
     }
 }

@@ -19,5 +19,7 @@ namespace AltovientoSolutions.DAL.Mariacheros.Model
         [Display(Name = "SongLyrics", ResourceType = typeof(Resources.Lyrics))]
         public string Lyrics { get; set; }
 
+        public string Slug { get; set; }
+
     }
 }

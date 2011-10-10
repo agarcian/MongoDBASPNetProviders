@@ -38,6 +38,9 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mariacheros|AnyCPU'">
+    <OutputPath>bin\Mariacheros\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MongoDB.Bson">
       <HintPath>..\..\Library\CSharpDriver-1.1.0.4184\MongoDB.Bson.dll</HintPath>

@@ -435,6 +435,7 @@ http://ryanfait.com/
       color:#fff;
   }
   
+  
   .header .banner
   {
       
@@ -471,101 +472,7 @@ http://ryanfait.com/
     float:left;
     min-height:200px;
     margin:20px;
-}
-   
-   
-   
-  /*  custom body classes for Account controller.
-----------------------------------------------------------*/
-   
-   body.account
-    {
-	    background: #666; /* old browsers */
-	    /*background: -moz-linear-gradient(top, #333333 0%, #666666 100%); / * firefox * /
-	    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333333), color-stop(100%,#666666)); / * webkit * /
-	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#666666',GradientType=0 ); / * ie * /
-        */
-    }
-
-    .account .main 
-    {
-        padding:0px;
-    }
-   
-    .account .page
-    {
-        width:780px;
-        margin:0px auto;
-        background:#fff;
-    }
-   
-   .account nav .page
-   {
-       border-top-left-radius:5px;
-       border-top-right-radius:5px;
-       margin-top:30px;
-       background-color:#333;
-   }
-
-   .account .banner .page
-   {
-       border-bottom:1px solid #ccc;
-   }
-   
-   .account .main .page
-   {
-       border-bottom-left-radius:5px;
-       border-bottom-right-radius:5px;
-   }
-        
-   .account .header nav
-  {
-      
-      background-color:transparent;
-      color:#fff;
-  }
-  
-  .account .header .banner
-  {
-      
-      background-color:transparent;
-      border-bottom:none;
-  }
-  
-  .account .footer 
-  {
-      background-color:#666;
-  }
-  .account .footer .page
-   {
-       margin-bottom:30px;
-       background-color:transparent;
-       color:#ccc;
-   }
-   
-    /*  custom body classes for Mariacheros.
-----------------------------------------------------------*/
-   
-   body.mariachi-home .main
-   {
-       /*background-image:url(/Content/Images/darkblue-gradient.png);
-       background-repeat:repeat-x;
-       background-position:0px 0px;
-       */
- }
-   
-   body.mariachi-home .banner
-   {
-       background-color:#002E55;
-       border-bottom:none;
-   }
-   
-   
-   
-   
-   
-   
-   
+} 
    
    
    /* Style for elements in the page. 
@@ -638,3 +545,190 @@ ul.dropdown ul
 {
     font-size:1em;
 }
+
+/*******************************************************************
+ *  Master list to represent the full view with controls to do
+ *  edits, additions, and deletions. 
+ ******************************************************************/
+ 
+ .master-list
+ {
+     
+ }
+ 
+ .master-list a.add
+ {
+     background: transparent url(http://media.altovientosolutions.com/dryicons/png/16x16/add.png) no-repeat left center;
+     padding-left:25px;
+ }
+ 
+ .master-list ul
+ {
+     list-style-type:none;
+ }
+ 
+ .master-list ul li
+ {
+     list-style-type:none;
+     border:1px solid transparent;
+     border-bottom:1px solid #ccc;
+     margin:2px 0px;
+     padding:3px 2px;
+ }
+ 
+ .master-list ul li:hover
+ {
+     border:1px dashed #ccc;
+     background-color:#eed;
+ }
+ 
+ .master-list ul li span.controls
+ {
+     display:none;
+ }
+ 
+ .master-list ul li:hover span.controls
+ {
+     display:block;
+     float:right;
+     width:140px;
+     
+ }
+ 
+ .master-list ul li:hover span.controls a.edit
+ {
+    background: transparent url(http://media.altovientosolutions.com/dryicons/png/16x16/edit.png) no-repeat left center;
+    padding-left:20px;
+    padding-right:10px;
+    font-size:12px;
+ }
+ 
+  .master-list ul li:hover span.controls a.delete
+ {
+    background: transparent url(http://media.altovientosolutions.com/dryicons/png/16x16/delete.png) no-repeat left center;
+    padding-left:20px;
+    padding-right:10px;
+    font-size:12px;
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ /*******************************************************************
+ *  Styles for site: Mariacheros.com
+ ******************************************************************/
+ .Mariacheros
+ {
+     font-family: Lucida Sans Unicode, Georgia, Verdana, Arial;
+     background-color:#DDE5E7;
+ }
+ .Mariacheros .banner
+ {
+     display:none;
+     background-color:#002E55;
+ }
+ .Mariacheros .logo
+ {
+     margin-top:-20px;
+     color:#eee;
+     font-size:40px;
+     text-shadow: #ccc 1px 0px 0px;
+ }
+ .Mariacheros .tagline
+ {
+     color:#eea;
+     font-size:22px;
+     
+ }
+ .Mariacheros .wrapper .main
+ {
+     background:transparent url(../images/darkblue-gradient.png) repeat-x top;
+ }
+ .Mariacheros .header .banner
+ {
+     border-bottom: 0px
+ }
+ 
+ 
+ 
+ 
+  
+  
+ /*******************************************************************
+ *  custom body classes for Account controller.  (Generic for all sites)
+ ******************************************************************/ 
+   body.account
+    {
+	    background: #666; /* old browsers */
+	    /*background: -moz-linear-gradient(top, #333333 0%, #666666 100%) !important; / * firefox * /
+	    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333333), color-stop(100%,#666666)) !important; / * webkit * /
+	    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#666666',GradientType=0 ) !important; / * ie * /
+        */
+    }
+    
+    .account .wrapper .main
+    {
+        background:transparent !important;
+        background-image:none;
+    }
+
+    .account .main 
+    {
+        padding:0px;
+    }
+   
+    .account .page
+    {
+        width:780px;
+        margin:0px auto;
+        background:#fff;
+    }
+   
+   .account nav .page
+   {
+       border-top-left-radius:5px;
+       border-top-right-radius:5px;
+       margin-top:30px;
+       background-color:#333;
+   }
+
+   .account .banner .page
+   {
+       border-bottom:1px solid #ccc;
+   }
+   
+   .account .main .page
+   {
+       border-bottom-left-radius:5px;
+       border-bottom-right-radius:5px;
+   }
+        
+   .account .header nav
+  {
+      
+      background-color:transparent;
+      color:#fff;
+  }
+  
+  .account .header .banner
+  {
+      
+      background-color:transparent;
+      border-bottom:none;
+  }
+  
+  .account .footer 
+  {
+      background-color:#666;
+  }
+  .account .footer .page
+   {
+       margin-bottom:30px;
+       background-color:transparent;
+       color:#ccc;
+   }

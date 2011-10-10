@@ -1,48 +1,69 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-@section banner{
-    <h2>
-        Mariacheros</h2>
-    <h4 class="tagline">
-        A Site Exclusive for Mariachi Groups and Artists</h4>
-}
-@section Header{
-    <style type="text/css">
-        .marichi-home
-        {
-            font-family: Lucida Sans Unicode;
-        }
-        
-        .mariachi-home .banner h2
-        {
-            color: #fff;
-            margin-bottom: 5px;
-        }
-        .mariachi-home .banner .tagline
-        {
-            color: #eea;
-        }
-    </style>
-}
 <div class="ui-helper-clearfix">
-    <div style="float: left; margin: 20px; width: 400px;">
-        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros2.com.png")" alt="" />
-        <p style="text-align: center;">
-            Visit Maribel Salinas' website in Mariacheros.com. <a href="">http://maribelsalinas.mariacheros.com</a></p>
+    <div class="left-col">
+        <div>
+            <h2 class="logo">
+                Mariacheros.com</h2>
+            <h2 class="tagline">
+                Custom Profiles for Mariacheros,<br />
+                Mariacheras, and Mariachi Groups<br />
+                <em>... and for Mariachi fans</em></h2>
+        </div>
+        <div style="margin-top:40px;">
+            <p style="text-shadow:#eee 1px 2px 0px; font-size: 1.0em;margin:10px 20px;color:#666">
+                Create your profile and show the world that you are a true <strong>Mariachero</strong>.</p>
+        </div>
+        <div>
+        
+        <div class="editor-line" style="margin-top:30px;"> 
+            <div class="editor-label">
+                Enter your Email Address:
+            </div>
+            <div class="editor-field">
+                <input />
+            </div>
+        </div>
+        <div class="editor-line"> 
+            <div class="editor-label">
+                Choose a Password:
+            </div>
+            <div class="editor-field">
+                <input type="password" />
+            </div>
+        </div>
+        <div class="editor-line"> 
+            <div class="editor-label">
+                Pick a name for your website:
+            </div>
+            <div class="editor-field">
+                <input value="http://mariacheros.com/"/>
+            </div>
+        </div>
+        <div class="editor-line"> 
+            <div class="editor-field">
+                <input id="sitename" value="http://maricheros.com/" readonly="readonly" />
+            </div>
+        </div>
+
+        <div class="editor-line"> 
+            <div class="buttons">
+                <button>Sign Up</button>
+        </div></div>
+        </div>
+       
+
     </div>
-    <div style="float: left; margin: 20px; width: 400px;">
-        <div style="height: 210px;">
-            <h2 style="padding-top: 0px; margin-top: 0px; color: #EEA">
-                Create a Website for your Mariachi</h2>
-            <p style="color: #eee; font-size: 1.2em;">
-                Create a website to promote your mariachi and reach thousands of potential customers
-                in your area.</p>
-            <br>
-            <div class="page ui-helper-clearfix">
-                <div class="buttons">
-                    @Html.ActionLink("Create your Website Now", "Create", "Website")
-                </div>
+    <div class="right-col">
+        <div class="ui-helper-clearfix">
+            <div style="float: left; margin: 20px; width: 400px;">
+                <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros2.com.png")" alt="" />
+                <p style="text-align: center;">
+                    Visit Maribel Salinas' website in Mariacheros.com. <a href="">http://maribelsalinas.mariacheros.com</a></p>
+            </div>
+            <div style="float: left; margin: 20px; width: 400px;">
+                <b>See other mariacheros</b>
             </div>
         </div>
     </div>

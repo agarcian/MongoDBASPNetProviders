@@ -7,7 +7,8 @@
     controller = String.IsNullOrEmpty(controller) ? controller : controller.ToLower();
     area = String.IsNullOrEmpty(area) ? area : area.ToLower();
 
-    var bodyStyle = String.IsNullOrEmpty(area) ? controller : area + "-" + controller;
+
+    var bodyStyle = String.Format("{0} {1}", ConfigurationManager.AppSettings["CustomBodyStyle"],  controller);
  }
 <!DOCTYPE html>
 <html>
@@ -49,7 +50,9 @@
             <nav>
                 <div class="page ui-helper-clearfix">
                     
-                    <div id="mainMenu"></div>
+                    <div id="mainMenu">
+                    @RenderSection("MainMenu", false)
+                    </div>
 
                     <div id="accountMenu" style="float:right">
                     @Html.Partial("_AccountMenuPartial")

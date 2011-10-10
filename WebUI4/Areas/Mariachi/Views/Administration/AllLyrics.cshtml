@@ -5,19 +5,21 @@
 }
 <h2>
     All Lyrics</h2>
-<p>
-<a href="@Url.Content("~/Mariachi/Administration/Lyrics/")"><img src="http://media.altovientosolutions.com/dryicons/png/16x16/delete.png" alt="Add new" /> Add New</a>
-</p>
-<ul id="lyrics">
-    @foreach (LyricsModel lyrics in Model)
-    {
-        <li>@lyrics.SongTitle (@lyrics.Author) <span class="controls"><a href="@Url.Content("~/Mariachi/Administration/Lyrics/" + lyrics.Id)" class="edit">
-            <img src="http://media.altovientosolutions.com/dryicons/png/16x16/edit.png" alt="edit" /></a>
-            <a class="delete" data-id="@lyrics.Id">
-                <img src="http://media.altovientosolutions.com/dryicons/png/16x16/delete.png" alt="delete" /></a>
-        </span></li>
-    }
-</ul>
+<div class="master-list">
+    <p>
+        <a class="add" href="@Url.Content("~/Mariachi/Administration/Lyrics/")">Add New</a>
+    </p>
+    <ul>
+        @foreach (LyricsModel lyrics in Model)
+        {
+            <li class="ui-helper-clearfix">@lyrics.SongTitle <em>@lyrics.Author</em>
+            <span class="controls">
+                <a class="edit" href="@Url.Content("~/Mariachi/Administration/Lyrics/" + lyrics.Id)" class="edit">edit</a>
+                <a class="delete" data-id="@lyrics.Id">delete</a>
+            </span></li>
+        }
+    </ul>
+</div>
 @section Scripts{
     <script type="text/javascript">
         $(document).ready(function () {
@@ -43,4 +45,14 @@
             });
         });
     </script>
+}
+@section Header{
+<style type="text/css">
+    em
+    {font-size:0.75em;
+    }
+</style>
+}
+@section Banner{
+ @Html.Partial("_AdministrationMenu")
 }

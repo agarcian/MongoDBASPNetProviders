@@ -40,6 +40,9 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mariacheros|AnyCPU'">
+    <OutputPath>bin\Mariacheros\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MvcContrib">
       <HintPath>..\Library\MVCContrib\MvcContrib.dll</HintPath>
