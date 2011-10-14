@@ -102,6 +102,7 @@
     <Compile Include="Areas\Mariachi\Controllers\HomeController.cs" />
     <Compile Include="Areas\Mariachi\Controllers\WebsiteController.cs" />
     <Compile Include="Areas\Mariachi\MariachiAreaRegistration.cs" />
+    <Compile Include="Areas\Mariachi\Models\MariacherosLoginModel.cs" />
     <Compile Include="Areas\Mobile\Controllers\LyricsController.cs" />
     <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
     <Compile Include="Controllers\MariachiController.cs" />
@@ -139,6 +140,16 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Mariacheros.es.Designer.cs">
+      <DependentUpon>Mariacheros.es.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Mariacheros.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mariacheros.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Notifications.es.Designer.cs">
       <DependentUpon>Notifications.es.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -183,7 +194,7 @@
     <Content Include="Areas\IPC\Content\script\viewer.js" />
     <Content Include="Content\css\Mobile.css" />
     <Content Include="Content\images\darkblue-gradient.png" />
-    <Content Include="Content\images\Maribel-Salinas-in-mariacheros2.com.png" />
+    <Content Include="Content\images\Maribel-Salinas-in-mariacheros.com.png" />
     <Content Include="Content\scripts\Common.js" />
     <Content Include="Content\scripts\splitter.js" />
     <Content Include="Global.asax" />
@@ -290,6 +301,16 @@
     <EmbeddedResource Include="Resources\Account.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Account.es.designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Mariacheros.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mariacheros.es.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Mariacheros.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mariacheros.Designer.cs</LastGenOutput>
       <CustomToolNamespace>WebUI4.Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Notifications.es.resx">

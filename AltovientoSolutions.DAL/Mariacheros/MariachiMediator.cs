@@ -68,7 +68,10 @@ namespace AltovientoSolutions.DAL.Mariacheros
         {
             MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
-            var query = Query.EQ("NameLowerCase", name);
+            if (String.IsNullOrWhiteSpace(name))
+                return false;
+
+            var query = Query.EQ("NameLowerCase", name.ToLower());
 
             BsonDocument doc = collection.FindOne(query);
 
@@ -242,5 +245,10 @@ namespace AltovientoSolutions.DAL.Mariacheros
         }
         
         #endregion
+
+
+
+
+
     }
 }

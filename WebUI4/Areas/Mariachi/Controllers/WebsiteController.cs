@@ -14,12 +14,12 @@ namespace WebUI4.Areas.Mariachi.Controllers
         [HttpGet()]
         public ActionResult Index()
         {
-                //Check if the user already has a site created.
-                Dictionary<String, String> sites = new Dictionary<string,string>();
+            //Check if the user already has a site created.
+            Dictionary<String, String> sites = new Dictionary<string,string>();
 
             if (User.Identity.IsAuthenticated)
             {
-                
+                return RedirectToAction("Manage");
                 //if (MariachiMediator.GetSitesForUser(User.Identity.Name, out sites))
                 //{
                 //    return RedirectToAction("Manage");
@@ -32,8 +32,25 @@ namespace WebUI4.Areas.Mariachi.Controllers
 
             }
                 //return the default view for non authenticated useres.
-                return View();
+            WebUI4.Areas.Mariachi.Models.MariacherosLoginModel model = new Models.MariacherosLoginModel();
+            return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Index(WebUI4.Areas.Mariachi.Models.MariacherosLoginModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+            }
+
+            return View(model);
+        }
+
+
+
+
 
         [Authorize()]
         [HttpGet]

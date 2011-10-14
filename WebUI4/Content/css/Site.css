@@ -316,7 +316,8 @@ table { border-collapse: collapse; border-spacing: 0; }
     float:none;
 }
 
-.editor-field input,
+.editor-field input[type=text],
+.editor-field input[type=password],
 .editor-field textarea,
 .editor-field select
 {
@@ -697,6 +698,11 @@ ul.dropdown ul
        background-color:#333;
    }
 
+   .account .banner
+   {
+        display:block !important;
+   }
+   
    .account .banner .page
    {
        border-bottom:1px solid #ccc;

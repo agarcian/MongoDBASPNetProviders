@@ -457,6 +457,45 @@ namespace WebUI4.Controllers
             return View(model);
         }
 
+
+        [HttpGet]
+        [CompressFilter]
+        [CacheFilter(Cacheability = HttpCacheability.NoCache, Duration = 0)]
+        public ActionResult IsEmailAvailable(string email)
+        {
+            bool isAvailable = false;
+
+            if (!String.IsNullOrWhiteSpace(email))
+            {
+                isAvailable = Membership.FindUsersByEmail(email).Count > 0;
+            }
+
+            var resultObj = new { result = isAvailable };
+
+            return Json(resultObj, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [CompressFilter]
+        [CacheFilter(Cacheability = HttpCacheability.NoCache, Duration = 0)]
+        public ActionResult IsUsernameAvailable( string username)
+        {
+            bool isAvailable = false;
+
+            if (!String.IsNullOrWhiteSpace(username))
+            {
+                isAvailable = Membership.FindUsersByName(username).Count > 0;
+            }
+
+            var resultObj = new { result = isAvailable };
+
+            return Json(resultObj, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
         //
         // GET: /Account/ChangePasswordSuccess
 

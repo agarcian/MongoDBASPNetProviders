@@ -91,7 +91,8 @@ namespace WebUI4.Areas.IPC.Controllers
                 IPCMediatorMongoDB db = new IPCMediatorMongoDB("space_00010");
                 catalog = db.GetCatalog(id, LangCode);
 
-                cache.Add(cacheKey, catalog, null, Cache.NoAbsoluteExpiration, new TimeSpan(1, 0, 0), CacheItemPriority.Normal, null);
+                if (catalog != null)
+                    cache.Add(cacheKey, catalog, null, Cache.NoAbsoluteExpiration, new TimeSpan(1, 0, 0), CacheItemPriority.Normal, null);
             }
             else
             {
