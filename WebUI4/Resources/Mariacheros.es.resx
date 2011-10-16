@@ -120,13 +120,19 @@
   <data name="ChooseAPassword" xml:space="preserve">
     <value>Defina una clave secreta</value>
   </data>
+  <data name="CreateYourProfile" xml:space="preserve">
+    <value>Cree un perfil y muestrele a todos que usted es un verdadero &lt;strong&gt;Mariachero&lt;/strong&gt;.</value>
+  </data>
   <data name="EnterEmailAddress" xml:space="preserve">
     <value>Correo electronico</value>
   </data>
   <data name="PickASiteName" xml:space="preserve">
-    <value>Seleccione un nombre para su sitio web</value>
+    <value>Escriba el nombre para su sitio web</value>
   </data>
   <data name="Sitename" xml:space="preserve">
     <value>Sitio Web</value>
+  </data>
+  <data name="Tagline" xml:space="preserve">
+    <value>Perfiles personales para Mariacheros,&lt;br /&gt; Mariacheras, y Mariachi Groups&lt;br /&gt; &lt;em&gt;... y para fans del Mariachi&lt;/em&gt;</value>
   </data>
 </root>

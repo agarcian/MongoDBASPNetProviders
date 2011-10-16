@@ -129,6 +129,9 @@
   <data name="Save" xml:space="preserve">
     <value>Guardar</value>
   </data>
+  <data name="ValidatorOnlyAlphanumeric" xml:space="preserve">
+    <value>Solamente letras, numeros, guiones ( - ), o guiones bajos ( _ ) estan permitidos. Espacios no estan permitidos.</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Bienvenido {0}</value>
   </data>

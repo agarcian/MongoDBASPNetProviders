@@ -335,12 +335,12 @@ table { border-collapse: collapse; border-spacing: 0; }
 .editor-field-readonly input
 {
     background-color:#f1f1f1;
-    border:1px solid #d2d2d2;
+    border:21px solid #d2d2d2;
 }
 
 .editor-line .buttons
 {
-    margin:40px auto 10px auto;
+    margin:30px auto 10px auto;
 }
 .editor-line .buttons input, .editor-line .buttons a, .editor-line .buttons button
 {
@@ -611,12 +611,6 @@ ul.dropdown ul
     padding-right:10px;
     font-size:12px;
  }
- 
- 
- 
- 
- 
- 
  
  
  

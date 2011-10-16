@@ -70,6 +70,15 @@ namespace WebUI4.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create your profile and show the world that you are a true &lt;strong&gt;Mariachero&lt;/strong&gt;..
+        /// </summary>
+        public static string CreateYourProfile {
+            get {
+                return ResourceManager.GetString("CreateYourProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your email address.
         /// </summary>
         public static string EnterEmailAddress {

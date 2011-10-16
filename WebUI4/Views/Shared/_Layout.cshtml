@@ -1,5 +1,4 @@
 ﻿@using System.Configuration
-@using AltovientoSolutions.Common.Helpers
 @{
     var controller = Url.RequestContext.RouteData.Values["controller"] as String;
     var area = Url.RequestContext.RouteData.DataTokens["area"] as String;
@@ -8,7 +7,13 @@
     area = String.IsNullOrEmpty(area) ? area : area.ToLower();
 
 
-    var bodyStyle = String.Format("{0} {1}", ConfigurationManager.AppSettings["CustomBodyStyle"],  controller);
+    var bodyStyle = "";
+    bool ignoreBodyStyle = false;
+    Boolean.TryParse(Convert.ToString(ViewBag.IgnoreCustomBodyStyle), out ignoreBodyStyle);
+    if (!ignoreBodyStyle)
+    {
+        bodyStyle= String.Format("{0} {1}", ConfigurationManager.AppSettings["CustomBodyStyle"],  controller);
+    }
  }
 <!DOCTYPE html>
 <html>

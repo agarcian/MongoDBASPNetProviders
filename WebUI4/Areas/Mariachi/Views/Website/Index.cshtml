@@ -12,15 +12,15 @@
                 @Html.Raw(WebUI4.Resources.Mariacheros.Tagline)</h2>
         </div>
         <div style="margin-top: 40px;">
-            <p style="text-shadow: #eee 1px 2px 0px; font-size: 1.0em; margin: 10px 20px; color: #666">
-                Create your profile and show the world that you are a true <strong>Mariachero</strong>.</p>
+            <div style="text-shadow: #eee 1px 2px 0px; font-size: 1.0em; margin: 10px 0px; color: #666">
+                @Html.Raw(WebUI4.Resources.Mariacheros.CreateYourProfile)</div>
         </div>
         <div>
             @* The login will be completed in this page. *@
             @Html.ValidationSummary(true, WebUI4.Resources.Account.ErrorLogin)
             @{ using (Html.BeginForm())
                {
-                <div class="editor-line" style="margin-top: 30px;">
+                <div class="editor-line" style="">
                     <div class="editor-label">
                         @Html.LabelFor(m => m.Email)
                     </div>
@@ -47,16 +47,9 @@
                         @Html.TextBoxFor(m => m.Sitename)
                         <div id="urlHint">mariacheros.com/</div>
                         @Html.ValidationMessageFor(m => m.Sitename)
-                        <div id="urlSitename">
+                        <div id="errMsgSitename">
                         </div>
-                    </div>
-                </div>
-                <div class="editor-line">
-                    <div class="editor-field">
-                        
-
-                        
-
+                        <div style="margin-top:5px;font-size:0.85em;color:#999;font-style:italic;">E.G.  mariachi-de-mexico; MariachiDeMexico</div>
                     </div>
                 </div>
                 <div class="editor-line">
@@ -139,11 +132,25 @@
         #urlHint
         {
             margin-left:5px;
-            margin-top:-28px;
+            margin-top:-38px;
             font-size:1em;
             color:#999;
+            height:38px;
+            line-height:38px;
+            vertical-align:middle;
         }
         
+        .buttons
+        {
+            margin-top:0px !important;
+        }
+        .editor-line {
+        margin: 5px 0px 10px 0px;
+        }
+        .field-validation-error
+        {
+            font-size:0.7em;
+        }
     </style>
 }
 @section Scripts{
@@ -166,16 +173,16 @@
                 callback: function (txt) {
                     //$('#urlSitename').html('mariacheros.com/' + toSlug(txt));
                     $.ajax({
-                        url: '@Url.Content("~/Mariachi/API/SitenameExists")',
-                        data: { id: txt },
+                        url: '@Url.Content("~/Account/IsUsernameAvailable")',
+                        data: { username: txt },
                         success: function (data) {
-                            //                            if (data.result == true) {
-                            //                                $('#submit').attr('disabled', 'disabled');
-                            //                                $('#errMsgSitename').html('This name has already been taken');
-                            //                            } else {
-                            //                                $('#submit').removeAttr('disabled');
-                            //                                $('#errMsgSitename').html('');
-                            //                            }
+                            if (data.result == true) { // if it is available.
+                                $('#submit').removeAttr('disabled');
+                                $('#errMsgSitename').html('');
+                            } else {
+                                $('#submit').attr('disabled', 'disabled');
+                                $('#errMsgSitename').html('This name has already been taken');
+                            }
                         },
                         dataType: 'json'
                     });

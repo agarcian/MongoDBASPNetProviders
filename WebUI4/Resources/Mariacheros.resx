@@ -120,6 +120,9 @@
   <data name="ChooseAPassword" xml:space="preserve">
     <value>Choose a password</value>
   </data>
+  <data name="CreateYourProfile" xml:space="preserve">
+    <value>Create your profile and show the world that you are a true &lt;strong&gt;Mariachero&lt;/strong&gt;.</value>
+  </data>
   <data name="EnterEmailAddress" xml:space="preserve">
     <value>Enter your email address</value>
   </data>

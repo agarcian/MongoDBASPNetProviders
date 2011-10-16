@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Web.Security;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AltovientoSolutions.DAL.Mariacheros;
+using WebUI4.Areas.Mariachi.Models;
+using AltovientoSolutions.Security;
+using System.Web.Profile;
+
 
 namespace WebUI4.Areas.Mariachi.Controllers
 {
@@ -37,19 +43,80 @@ namespace WebUI4.Areas.Mariachi.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(WebUI4.Areas.Mariachi.Models.MariacherosLoginModel model)
+        public ActionResult Index(MariacherosLoginModel model)
         {
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-
+                ModelState.AddModelError("Err", "There is something wrong.  Please try again.");
+                return View(new MariacherosLoginModel());
             }
 
-            return View(model);
+
+            // Check if the sitename (username) is available or not, or it is in the reserved words.
+            bool isUsernameAvailable = false;
+            // Same as AccountController.IsUsernameAvailable
+            if (!String.IsNullOrWhiteSpace(model.Sitename))
+            {
+                List<String> reservedNames = new List<string>();
+                reservedNames.AddRange(ConfigurationManager.AppSettings["ReservedUsernames"].Split(','));
+
+                if (reservedNames.Contains(model.Sitename.Trim().ToLower()))
+                {
+                    isUsernameAvailable = false;
+                }
+                else
+                {
+                    isUsernameAvailable = Membership.FindUsersByName(model.Sitename).Count == 0;
+                }
+            }
+
+
+            if (!isUsernameAvailable)
+            {
+                ModelState.AddModelError("sitename", "This name has already been taken");
+                return View(new MariacherosLoginModel());
+            }
+
+
+            // At this point the input is valid.  Create a new user.
+            {
+                // Attempt to register the user
+                MembershipCreateStatus createStatus;
+                MembershipUser membershipUser = Membership.CreateUser(model.Sitename, model.Password, model.Email, null, null, true, Guid.NewGuid(), out createStatus);
+
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+
+                    // Create a profile for the user.
+                    ProfileCommon profile = (ProfileCommon)ProfileBase.Create(membershipUser.UserName);
+                    // Transfer all the properties from the model into the profile.
+                    profile.Email = membershipUser.Email;
+
+                    // Saves the profile to the provider's repository.
+                    profile.Save();
+
+
+                    // Set the cookie and redirect to home.                    
+                    FormsAuthentication.SetAuthCookie(model.Sitename, false /* createPersistentCookie */);
+                    return RedirectToAction("Manage", "Website", new {area="Mariachi"});
+                }
+                else
+                {
+#warning Send notification here since there should not be errors at this stage.
+                    ModelState.AddModelError("Membership", "There has been an error creating your account.  Please try again.");
+                    return View(new MariacherosLoginModel());
+                }
+            }
         }
 
 
-
+        [HttpGet]
+        public ActionResult Profile(string user, string id)
+        {
+            ViewBag.User = user;
+            return View();
+        }
 
 
         [Authorize()]
