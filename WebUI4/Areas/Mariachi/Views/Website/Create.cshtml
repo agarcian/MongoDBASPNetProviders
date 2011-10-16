@@ -5,12 +5,17 @@
 <h2>Load Data</h2>
 
 <div>
-
-<ul>
-    <li><input type="radio" name="profileType" value="Mariachi Groups"/></li>
-    <li><input type="radio" name="profileType" value="Mariachi Artists (Soloists)/></li>
-    <li><input type="radio" name="profileType" value="Mariachi Fan (Anyone who loves Mariachi)"/></li>
-</ul>
+@{using (Html.BeginForm())
+  {
+    <ul>
+        <li><input type="radio" name="profileType" value="Band"/> Mariachi Groups</li>
+        <li><input type="radio" name="profileType" value="Artist"/> Mariachi Artists (Soloists)</li>
+        <li><input type="radio" name="profileType" value="Fan"/> Mariachi Fan (Anyone who loves Mariachi)</li>
+    </ul>
+    
+    <input type="submit" value="Create" />
+  }
+}
 </div>
 
 

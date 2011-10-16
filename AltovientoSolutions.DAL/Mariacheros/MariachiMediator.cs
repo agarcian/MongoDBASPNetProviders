@@ -9,11 +9,19 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver.Builders;
 using System.Text.RegularExpressions;
+using AltovientoSolutions.DAL.Mariacheros.Model;
 
 namespace AltovientoSolutions.DAL.Mariacheros
 {
     public class MariachiMediator
     {
+
+        
+
+
+
+
+
         private const string MONGO_DATABASE_NAME = "mariacheros";
         private MongoDatabase db;
         private string mongoCollectionName;
@@ -64,7 +72,7 @@ namespace AltovientoSolutions.DAL.Mariacheros
 
         #region Band Management
 
-        public bool DoesBandExist(string name)
+        public bool DoesProfileExist(string name)
         {
             MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
@@ -78,21 +86,27 @@ namespace AltovientoSolutions.DAL.Mariacheros
             return (doc != null);
         }
 
-
-
-
-        public bool GetSitesForUser(string username, out Dictionary<String, String> sites)
+        public bool CreateProfile(string name, string profileType)
         {
-            sites = new Dictionary<string, string>();
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
-            // To Do:  What to do with multilingual sites.
+            if (String.IsNullOrWhiteSpace(name))
+                return false;
 
-            sites.Add("maribelsalinas", "Maribel Salinas website");
-            sites.Add("mariachiviajero", "Mariachi Viajero - The best mariachi in California");
+            ProfileTypeEnum profileTypeEnum = ProfileTypeEnum.Undefined;
 
+            if (!Enum.TryParse<ProfileTypeEnum>(profileType, out profileTypeEnum))
+                return false;
+
+            BandModel bandModel = new BandModel() { Name = name, NameLowerCase = name.ToLower(), ProfileType = profileTypeEnum };
+
+            collection.Save<BandModel>(bandModel);
+            
             return true;
-
         }
+
+
+       
         
         #endregion
 

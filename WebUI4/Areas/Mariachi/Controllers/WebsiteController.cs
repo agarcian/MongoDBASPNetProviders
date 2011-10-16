@@ -25,7 +25,7 @@ namespace WebUI4.Areas.Mariachi.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Manage");
+                return Redirect(String.Format("~/{0}/Create", User.Identity.Name));
                 //if (MariachiMediator.GetSitesForUser(User.Identity.Name, out sites))
                 //{
                 //    return RedirectToAction("Manage");
@@ -99,7 +99,7 @@ namespace WebUI4.Areas.Mariachi.Controllers
 
                     // Set the cookie and redirect to home.                    
                     FormsAuthentication.SetAuthCookie(model.Sitename, false /* createPersistentCookie */);
-                    return RedirectToAction("Manage", "Website", new {area="Mariachi"});
+                    return Redirect(String.Format("~/{0}/Manage/", model.Sitename)); 
                 }
                 else
                 {
@@ -118,12 +118,19 @@ namespace WebUI4.Areas.Mariachi.Controllers
 
             MariachiMediator mediator = new MariachiMediator("Bands");
 
-            if (!mediator.DoesBandExist(user))
+            if (!mediator.DoesProfileExist(user))
             {
-                Response.StatusCode = 404;
-                return Content("Profile not found.");
-            }
 
+                if (User.Identity.IsAuthenticated && String.Compare(User.Identity.Name, user, true) == 0)
+                {
+                    return Redirect(String.Format("~/{0}/Create", user));
+                }
+                else
+                {
+                    Response.StatusCode = 404;
+                    return Content("Profile not found.");
+                }
+            }
 
 
 
@@ -168,15 +175,50 @@ namespace WebUI4.Areas.Mariachi.Controllers
         [OutputCache(Location = System.Web.UI.OutputCacheLocation.None, Duration = 0)]
         public ActionResult Create(string user)
         {
-
-            MariachiMediator mediator = new MariachiMediator("Bands");
-
-            if (mediator.DoesBandExist(user))
+            if (String.Compare(user, User.Identity.Name, true) == 0)
             {
-                return RedirectToRoute(new{});
+
+                MariachiMediator mediator = new MariachiMediator("Bands");
+
+                if (mediator.DoesProfileExist(user))
+                {
+                    return Redirect(String.Format("~/{0}/Manage", user));
+                }
+            }
+            else
+            {
+                // If the logged in user is not the same as the user in the url.
+                return Redirect(String.Format("~/{0}", user));
             }
 
             return View();
+        }
+
+
+        [Authorize()]
+        [HttpPost]
+        public ActionResult Create(string user, string profileType)
+        {
+            if (String.Compare(user, User.Identity.Name, true) == 0)
+            {
+                MariachiMediator mediator = new MariachiMediator("Bands");
+
+                if (mediator.DoesProfileExist(user))
+                {
+                    return Redirect(String.Format("~/{0}/Manage", user));
+                }
+                else
+                {
+                   // Create an empty profile setting the profileType.
+                    bool success = mediator.CreateProfile(user, profileType);
+                    return Redirect(String.Format("~/{0}/Manage", user));
+                }
+            }
+            else
+            {
+                // If the logged in user is not the same as the user in the url.
+                return Redirect("~/");
+            }
         }
 
 
@@ -185,13 +227,17 @@ namespace WebUI4.Areas.Mariachi.Controllers
         [OutputCache(Location=System.Web.UI.OutputCacheLocation.None, Duration=00)]
         public ActionResult Manage(string user)
         {
-
-            MariachiMediator mediator = new MariachiMediator("Bands");
-
-            if (mediator.DoesBandExist(user))
+            if (String.Compare(user, User.Identity.Name, true) == 0)
             {
 
+                MariachiMediator mediator = new MariachiMediator("Bands");
+
+                if (mediator.DoesProfileExist(user))
+                {
+
+                }
             }
+
 
             return View();
         }

@@ -8,6 +8,16 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace AltovientoSolutions.DAL.Mariacheros.Model
 {
+
+    public enum ProfileTypeEnum
+    {
+        Undefined,
+        Band,
+        Artist,
+        Fan
+    }
+
+
     public class BandModel
     {
         [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
@@ -17,6 +27,9 @@ namespace AltovientoSolutions.DAL.Mariacheros.Model
         public string NameLowerCase { get; set; }
 
         public string Slug { get; set; }
+
+        private ProfileTypeEnum profileType = ProfileTypeEnum.Undefined;
+        public ProfileTypeEnum ProfileType { get { return profileType; } set { profileType = value; } }
 
         private Dictionary<string, string> description = new Dictionary<string, string>();
         public Dictionary<string, string> Description

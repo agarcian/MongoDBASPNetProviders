@@ -52,7 +52,7 @@ namespace WebUI4.Areas.Mariachi.Controllers
                 {
 
                     MariachiMediator mediator = new MariachiMediator("Bands");
-                    sitenameExists = mediator.DoesBandExist(id);
+                    sitenameExists = mediator.DoesProfileExist(id);
                 }
             }
 
