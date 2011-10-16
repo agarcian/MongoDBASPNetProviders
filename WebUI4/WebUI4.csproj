@@ -247,6 +247,7 @@
     <Content Include="Web.Mariacheros.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Areas\Mariachi\Views\Shared\_CustomProfileLayout.cshtml" />
     <Content Include="Areas\Mariachi\Views\Website\Profile.cshtml" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
@@ -259,7 +260,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\IPC\Models\" />
-    <Folder Include="Areas\Mariachi\Views\Shared\" />
     <Folder Include="Areas\Mobile\Models\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>

@@ -36,6 +36,13 @@ namespace WebUI4
             // Everything else will fall into the profile format.
 
             routes.MapRoute(
+                "Default", // Route name
+                "", // URL with parameters
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Controllers" } // Parameter defaults
+            );
+
+
+            routes.MapRoute(
                "Account", // Route name
                "Account/{action}/{id}", // URL with parameters
                new { controller = "Account", action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Controllers" } // Parameter defaults

@@ -115,24 +115,22 @@ namespace WebUI4.Areas.Mariachi.Controllers
         public ActionResult Profile(string user, string id)
         {
             ViewBag.User = user;
+
+            MariachiMediator mediator = new MariachiMediator("Bands");
+
+            if (!mediator.DoesBandExist(user))
+            {
+                Response.StatusCode = 404;
+                return Content("Profile not found.");
+            }
+
+
+
+
+
+
             return View();
         }
-
-
-        [Authorize()]
-        [HttpGet]
-        public ActionResult Create(string id)
-        {
-            // id should be the site's name for the current user.
-
-            // Check if id is a valid site for the user, if not redirect to Index where site can be created.
-
-            // Dispay all details about site and allow making changes.
-
-
-            return View();
-        }
-
 
 
         //private static string getETagForResource(string resourceId)
@@ -165,34 +163,41 @@ namespace WebUI4.Areas.Mariachi.Controllers
         //}
 
 
+        [Authorize()]
+        [HttpGet]
+        [OutputCache(Location = System.Web.UI.OutputCacheLocation.None, Duration = 0)]
+        public ActionResult Create(string user)
+        {
+
+            MariachiMediator mediator = new MariachiMediator("Bands");
+
+            if (mediator.DoesBandExist(user))
+            {
+                return RedirectToRoute(new{});
+            }
+
+            return View();
+        }
 
 
         [Authorize()]
         [HttpGet]
-        [OutputCache(Location=System.Web.UI.OutputCacheLocation.Any, Duration=60)]
-        public ActionResult Manage(string id)
+        [OutputCache(Location=System.Web.UI.OutputCacheLocation.None, Duration=00)]
+        public ActionResult Manage(string user)
         {
-            if (String.IsNullOrEmpty(id))
+
+            MariachiMediator mediator = new MariachiMediator("Bands");
+
+            if (mediator.DoesBandExist(user))
             {
-                // If not siteid provided, that means we need to list all the sites for the user.
-                Dictionary<String, String> sites = new Dictionary<string, string>();
 
-                if (User.Identity.IsAuthenticated)
-                {
-                    //if (MariachiMediator.GetSitesForUser(User.Identity.Name, out sites))
-                    //{
-
-                    //}
-                }
-                return View(sites);
             }
 
-            else
-            {
-                // Display the details of the given site id.
-                return View("ManageSite",(object) id);
-            }
+            return View();
         }
+
+
+        
 
 
 
