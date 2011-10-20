@@ -236,9 +236,7 @@
     <Content Include="Views\Spaces\Index.cshtml" />
     <Content Include="Views\Spaces\AllSpaces.cshtml" />
     <Content Include="Areas\IPC\Views\Viewer\Search.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Home\MongoDBRead.cshtml" />
-=======
     <Content Include="Areas\Mobile\Views\Web.config" />
     <Content Include="Areas\Mobile\Views\Shared\_MobileLayout.cshtml" />
     <Content Include="Areas\Mobile\Views\_ViewStart.cshtml" />
@@ -252,7 +250,6 @@
     </Content>
     <Content Include="Areas\Mariachi\Views\Shared\_CustomProfileLayout.cshtml" />
     <Content Include="Areas\Mariachi\Views\Website\Profile.cshtml" />
->>>>>>> origin
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />
@@ -264,14 +261,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\IPC\Models\" />
-<<<<<<< HEAD
     <Folder Include="Areas\Mariachi\Models\" />
     <Folder Include="Areas\Mariachi\Views\Shared\" />
-=======
-    <Folder Include="Areas\Mobile\Models\" />
+<Folder Include="Areas\Mobile\Models\" />
     <Folder Include="Views\Home\" />
->>>>>>> origin
-  </ItemGroup>
+</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MongoDBASPNetProviders\ASPNETProvidersForMongoDB\ASPNETProvidersForMongoDB.csproj">
       <Project>{0972DFF9-1BEB-4599-99DB-5931D2EE950A}</Project>
