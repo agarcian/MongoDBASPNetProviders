@@ -1,0 +1,53 @@
+﻿@model AltovientoSolutions.DAL.Mariacheros.Model.LyricsModel
+@{
+    ViewBag.Title = "Lyrics";
+}
+<h2>
+    Manage Lyrics</h2>
+<div>
+    @{ using (Html.BeginForm())
+       {
+           @Html.HiddenFor(s=>s.Id)
+
+        <div class="editor">
+            <div class="editor-line ui-helper-clearfix">
+                <div class="editor-label">
+                    @Html.LabelFor(s => s.SongTitle)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(s => s.SongTitle)
+                    @Html.ValidationMessageFor(s => s.SongTitle)
+                </div>
+            </div>
+            <div class="editor-line ui-helper-clearfix">
+                <div class="editor-label">
+                    @Html.LabelFor(s => s.Author)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(s => s.Author)
+                    @Html.ValidationMessageFor(s => s.Author)
+                </div>
+            </div>
+            <div class="editor-line ui-helper-clearfix">
+                <div class="editor-label">
+                    @Html.LabelFor(s => s.Lyrics)
+                </div>
+                <div class="editor-field">
+                    @Html.TextAreaFor(s => s.Lyrics, 25, 55, new { style = "width:auto" })
+                    @Html.ValidationMessageFor(s => s.Lyrics)
+                </div>
+            </div>
+            <div class="editor-line ui-helper-clearfix">
+                <div class="buttons">
+                    <input type="submit" value="Save" />
+                    @Html.ActionLink(WebUI4.Resources.Common.Cancel, "Index", "Administration")
+                </div>
+            </div>
+        </div>
+       }
+    }
+</div>
+
+@section Banner{
+ @Html.Partial("_AdministrationMenu")
+}

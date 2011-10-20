@@ -20,12 +20,61 @@ namespace WebUI4
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("{*content}", new { content = @"(.*/)?content(/.*)?" });
+            routes.IgnoreRoute("{*allaspx}", new { allaspx = @".*\.aspx(/.*)?" });
+            routes.IgnoreRoute("{*favicon}", new { favicon = @"(.*/)?favicon.ico(/.*)?" });
+
+
+           
+            //routes.MapRoute(
+            //    "Default", // Route name
+            //    "{controller}/{action}/{id}", // URL with parameters
+            //    new { controller = "Home", action = "Index", id = UrlParameter.Optional }, new string[] {"WebUI4.Controllers"} // Parameter defaults
+            //);
+
+            // In order to support custom urls for users, we need to explicitely indicate which routes are allowed.
+            // Everything else will fall into the profile format.
 
             routes.MapRoute(
                 "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional }, new string[] {"WebUI4.Controllers"} // Parameter defaults
+                "", // URL with parameters
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Controllers" } // Parameter defaults
             );
+
+
+            routes.MapRoute(
+               "Account", // Route name
+               "Account/{action}/{id}", // URL with parameters
+               new { controller = "Account", action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Controllers" } // Parameter defaults
+           );
+
+            routes.MapRoute(
+               "Home", // Route name
+               "Home/{action}/{id}", // URL with parameters
+               new { controller = "Home", action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Controllers" } // Parameter defaults
+           );
+
+            routes.MapRoute(
+               "Spaces", // Route name
+               "Spaces/{action}/{id}", // URL with parameters
+               new { controller = "Spaces", action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Controllers" } // Parameter defaults
+           );
+
+            routes.MapRoute(
+               "Referrals", // Route name
+               "Referrals/{action}/{id}", // URL with parameters
+               new { controller = "Referrals", action = "Index", id = UrlParameter.Optional }, new string[] { "WebUI4.Controllers" } // Parameter defaults
+           );
+
+            // On any Area or controller that is not matched, will fall through to treat the first element in the url as the profile.
+            var route = routes.MapRoute(
+                "Website",
+            "{user}/{action}/{id}",
+            new { controller = "Website", action = "Profile", id = UrlParameter.Optional }, new string[] { "WebUI4.Areas.Mariachi.Controllers" }
+            );
+
+            route.DataTokens["area"] = "Mariachi";
+
 
         }
 

@@ -1,0 +1,58 @@
+﻿@using AltovientoSolutions.DAL.Mariacheros.Model
+@model List<LyricsModel>
+@{
+    ViewBag.Title = "AllLyrics";
+}
+<h2>
+    All Lyrics</h2>
+<div class="master-list">
+    <p>
+        <a class="add" href="@Url.Content("~/Mariachi/Administration/Lyrics/")">Add New</a>
+    </p>
+    <ul>
+        @foreach (LyricsModel lyrics in Model)
+        {
+            <li class="ui-helper-clearfix">@lyrics.SongTitle <em>@lyrics.Author</em>
+            <span class="controls">
+                <a class="edit" href="@Url.Content("~/Mariachi/Administration/Lyrics/" + lyrics.Id)" class="edit">edit</a>
+                <a class="delete" data-id="@lyrics.Id">delete</a>
+            </span></li>
+        }
+    </ul>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.delete').click(function () {
+
+                if (confirm('You are about to delete this entry. Are you sure?')) {
+                    var id = $(this).attr('data-id');
+                    $.ajax({
+                        url: '@Url.Content("~/Mariachi/Administration/Lyrics/")',
+                        data: { id: id },
+                        context: $(this).parents('li')[0],
+                        success: function (data) {
+                            $(this).slideUp('slow', function () {
+                                $(this).remove();
+                            });
+                        },
+                        error: function () {
+                            alert('This action could not be completed.  Please reload the page and try again.');
+                        },
+                        type: 'DELETE'
+                    });
+                }
+            });
+        });
+    </script>
+}
+@section Header{
+<style type="text/css">
+    em
+    {font-size:0.75em;
+    }
+</style>
+}
+@section Banner{
+ @Html.Partial("_AdministrationMenu")
+}

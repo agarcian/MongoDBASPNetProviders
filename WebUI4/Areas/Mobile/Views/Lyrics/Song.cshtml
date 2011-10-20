@@ -1,0 +1,34 @@
+﻿@using AltovientoSolutions.DAL.Mariacheros.Model
+@model LyricsModel
+@{
+    ViewBag.Title = "Index";
+}
+<div data-role="page" data-title="@Model.SongTitle" data-add-back-btn="true" data-theme="d"
+    >
+    <div data-role="header">
+        <h1>
+            Lyrics</h1>
+    </div>
+    <!-- /header -->
+    <div data-role="content">
+        <h3>@Model.SongTitle</h3>
+        <p>
+            <i>@Model.Author</i></p>
+        
+        <div>
+        @Html.Raw(Model.Lyrics.Replace("\r\n", "<br/>"))
+        </div>
+
+    </div>
+    <!-- /content -->
+    @*	<div data-role="footer" data-id="foo1" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed fade ui-fixed-overlay" role="contentinfo" style="top: -877px; ">
+		<div data-role="navbar" class="ui-navbar ui-navbar-noicons" role="navigation">
+			<ul class="ui-grid-b">
+				<li class="ui-block-a"><a href="footer-persist-a.html" class="ui-btn-active ui-state-persist ui-btn ui-btn-down-a ui-btn-hover-a" data-theme="a"><span class="ui-btn-inner"><span class="ui-btn-text">Friends</span></span></a></li>
+				<li class="ui-block-b"><a href="footer-persist-b.html" data-theme="a" class="ui-btn ui-btn-up-a"><span class="ui-btn-inner"><span class="ui-btn-text">Albums</span></span></a></li>
+				<li class="ui-block-c"><a href="footer-persist-c.html" data-theme="a" class="ui-btn ui-btn-up-a"><span class="ui-btn-inner"><span class="ui-btn-text">Emails</span></span></a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->*@
+</div>
+<!-- /page -->

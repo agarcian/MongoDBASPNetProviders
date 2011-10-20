@@ -40,6 +40,9 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Mariacheros|AnyCPU'">
+    <OutputPath>bin\Mariacheros\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MvcContrib">
       <HintPath>..\Library\MVCContrib\MvcContrib.dll</HintPath>
@@ -62,7 +65,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Instrumentation\InvitationEmailSentEvent.cs" />
     <Compile Include="Instrumentation\CustomWebEventCodes.cs" />
     <Compile Include="Instrumentation\MyCriticalEvent.cs" />

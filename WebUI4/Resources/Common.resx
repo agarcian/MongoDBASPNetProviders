@@ -129,6 +129,9 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="ValidatorOnlyAlphanumeric" xml:space="preserve">
+    <value>Only letters, numbers, dashes ( - ), or underscores ( _ ) are allowed. Spaces are not allowed.</value>
+  </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome {0}</value>
   </data>

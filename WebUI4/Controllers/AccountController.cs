@@ -41,6 +41,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult LogIn(string returnUrl)
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             if (User.Identity.IsAuthenticated)
             {
                 // If the user is already authenticated redirect them to the home page.
@@ -63,6 +64,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult LogIn(LogOnModel model, string returnUrl)
         {
+            ViewBag.IgnoreCustomBodyStyle = true; 
             if (ModelState.IsValid)
             {
                 // Try to validate as if the input is the username.
@@ -112,6 +114,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult Register()
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             return View();
         }
 
@@ -121,6 +124,8 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult Register(RegistrationModel model)
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
+
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
@@ -174,6 +179,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult Profile()
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             // TO DO:  In the view, add support for 'link to your facebook account...' functionality
 
             ProfileCommon Profile = ProfileCommon.GetProfile(User.Identity.Name);
@@ -197,6 +203,8 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult Profile(ProfileModel model)
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
+
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
@@ -237,6 +245,8 @@ namespace WebUI4.Controllers
         [CompressFilter()]
         public ActionResult LogOff()
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
+
             FormsAuthentication.SignOut();
 
             //if (Response != null)
@@ -250,6 +260,8 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult RetrievePassword()
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
+
             return View();
         }
 
@@ -257,7 +269,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult RetrievePassword(PasswordRetrievalModel model)
         {
-
+            ViewBag.IgnoreCustomBodyStyle = true;
             ViewBag.PageTitle = String.Format(Resources.Account.RetrievePasswordFor, ConfigurationManager.AppSettings["ApplicationName"]);
 
             if (ModelState.IsValid)
@@ -298,6 +310,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult Validate(string email, string token)
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             bool isValid = false;
 
             if (AccountHelper.IsTokenValid(token, email))
@@ -328,6 +341,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult ResetPassword(string email, string token)
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             if (AccountHelper.IsTokenValid(token, email))
             {
                 string username = Membership.GetUserNameByEmail(email);
@@ -355,6 +369,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult ResetPassword(ResetPasswordModel resetPasswordModel)
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             bool isSuccess = false;
             string username = resetPasswordModel.UserNameOrEmail;
 
@@ -415,6 +430,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult ChangePassword()
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             return View();
         }
 
@@ -426,6 +442,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             if (ModelState.IsValid)
             {
 
@@ -456,6 +473,58 @@ namespace WebUI4.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+
+        [HttpGet]
+        [CompressFilter]
+        [CacheFilter(Cacheability = HttpCacheability.NoCache, Duration = 0)]
+        public ActionResult IsEmailAvailable(string email)
+        {
+            ViewBag.IgnoreCustomBodyStyle = true;
+            bool isAvailable = false;
+
+            if (!String.IsNullOrWhiteSpace(email))
+            {
+                isAvailable = Membership.FindUsersByEmail(email).Count > 0;
+            }
+
+            var resultObj = new { result = isAvailable };
+
+            return Json(resultObj, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [CompressFilter]
+        [CacheFilter(Cacheability = HttpCacheability.NoCache, Duration = 0)]
+        public ActionResult IsUsernameAvailable( string username)
+        {
+            ViewBag.IgnoreCustomBodyStyle = true;
+            bool isAvailable = false;
+
+            if (!String.IsNullOrWhiteSpace(username))
+            {
+                List<String> reservedNames = new List<string>();
+                reservedNames.AddRange(ConfigurationManager.AppSettings["ReservedUsernames"].Split(','));
+
+                if (reservedNames.Contains(username.Trim().ToLower()))
+                {
+                    isAvailable = false;
+                }
+                else
+                {
+                    isAvailable = Membership.FindUsersByName(username).Count == 0;
+                }
+                
+            }
+
+            var resultObj = new { result = isAvailable };
+
+            return Json(resultObj, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
 
         //
         // GET: /Account/ChangePasswordSuccess

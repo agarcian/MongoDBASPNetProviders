@@ -26,6 +26,7 @@ namespace WebUI4.Controllers
         [CompressFilter]
         public ActionResult Index()
         {
+            ViewBag.IgnoreCustomBodyStyle = true;
             return RedirectToAction("Invitation");
         }
 
@@ -35,6 +36,8 @@ namespace WebUI4.Controllers
         [HttpGet]
         public ActionResult Invitation()
         {
+
+            ViewBag.IgnoreCustomBodyStyle = true;
             return View();
         }
 

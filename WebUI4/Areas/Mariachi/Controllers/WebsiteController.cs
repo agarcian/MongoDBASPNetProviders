@@ -1,9 +1,15 @@
 ﻿using System;
+using System.Web.Security;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AltovientoSolutions.DAL.Mariacheros;
+using WebUI4.Areas.Mariachi.Models;
+using AltovientoSolutions.Security;
+using System.Web.Profile;
+
 
 namespace WebUI4.Areas.Mariachi.Controllers
 {
@@ -14,12 +20,12 @@ namespace WebUI4.Areas.Mariachi.Controllers
         [HttpGet()]
         public ActionResult Index()
         {
-                //Check if the user already has a site created.
-                Dictionary<String, String> sites = new Dictionary<string,string>();
+            //Check if the user already has a site created.
+            Dictionary<String, String> sites = new Dictionary<string,string>();
 
             if (User.Identity.IsAuthenticated)
             {
-                
+                return Redirect(String.Format("~/{0}/Create", User.Identity.Name));
                 //if (MariachiMediator.GetSitesForUser(User.Identity.Name, out sites))
                 //{
                 //    return RedirectToAction("Manage");
@@ -32,23 +38,106 @@ namespace WebUI4.Areas.Mariachi.Controllers
 
             }
                 //return the default view for non authenticated useres.
-                return View();
+            WebUI4.Areas.Mariachi.Models.MariacherosLoginModel model = new Models.MariacherosLoginModel();
+            return View(model);
         }
 
-        [Authorize()]
-        [HttpGet]
-        public ActionResult Create(string id)
+        [HttpPost]
+        public ActionResult Index(MariacherosLoginModel model)
         {
-            // id should be the site's name for the current user.
 
-            // Check if id is a valid site for the user, if not redirect to Index where site can be created.
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("Err", "There is something wrong.  Please try again.");
+                return View(new MariacherosLoginModel());
+            }
 
-            // Dispay all details about site and allow making changes.
+
+            // Check if the sitename (username) is available or not, or it is in the reserved words.
+            bool isUsernameAvailable = false;
+            // Same as AccountController.IsUsernameAvailable
+            if (!String.IsNullOrWhiteSpace(model.Sitename))
+            {
+                List<String> reservedNames = new List<string>();
+                reservedNames.AddRange(ConfigurationManager.AppSettings["ReservedUsernames"].Split(','));
+
+                if (reservedNames.Contains(model.Sitename.Trim().ToLower()))
+                {
+                    isUsernameAvailable = false;
+                }
+                else
+                {
+                    isUsernameAvailable = Membership.FindUsersByName(model.Sitename).Count == 0;
+                }
+            }
+
+
+            if (!isUsernameAvailable)
+            {
+                ModelState.AddModelError("sitename", "This name has already been taken");
+                return View(new MariacherosLoginModel());
+            }
+
+
+            // At this point the input is valid.  Create a new user.
+            {
+                // Attempt to register the user
+                MembershipCreateStatus createStatus;
+                MembershipUser membershipUser = Membership.CreateUser(model.Sitename, model.Password, model.Email, null, null, true, Guid.NewGuid(), out createStatus);
+
+                if (createStatus == MembershipCreateStatus.Success)
+                {
+
+                    // Create a profile for the user.
+                    ProfileCommon profile = (ProfileCommon)ProfileBase.Create(membershipUser.UserName);
+                    // Transfer all the properties from the model into the profile.
+                    profile.Email = membershipUser.Email;
+
+                    // Saves the profile to the provider's repository.
+                    profile.Save();
+
+
+                    // Set the cookie and redirect to home.                    
+                    FormsAuthentication.SetAuthCookie(model.Sitename, false /* createPersistentCookie */);
+                    return Redirect(String.Format("~/{0}/Manage/", model.Sitename)); 
+                }
+                else
+                {
+#warning Send notification here since there should not be errors at this stage.
+                    ModelState.AddModelError("Membership", "There has been an error creating your account.  Please try again.");
+                    return View(new MariacherosLoginModel());
+                }
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult Profile(string user, string id)
+        {
+            ViewBag.User = user;
+
+            MariachiMediator mediator = new MariachiMediator("Bands");
+
+            if (!mediator.DoesProfileExist(user))
+            {
+
+                if (User.Identity.IsAuthenticated && String.Compare(User.Identity.Name, user, true) == 0)
+                {
+                    return Redirect(String.Format("~/{0}/Create", user));
+                }
+                else
+                {
+                    Response.StatusCode = 404;
+                    return Content("Profile not found.");
+                }
+            }
+
+
+
 
 
             return View();
         }
-
 
 
         //private static string getETagForResource(string resourceId)
@@ -81,34 +170,80 @@ namespace WebUI4.Areas.Mariachi.Controllers
         //}
 
 
+        [Authorize()]
+        [HttpGet]
+        [OutputCache(Location = System.Web.UI.OutputCacheLocation.None, Duration = 0)]
+        public ActionResult Create(string user)
+        {
+            if (String.Compare(user, User.Identity.Name, true) == 0)
+            {
+
+                MariachiMediator mediator = new MariachiMediator("Bands");
+
+                if (mediator.DoesProfileExist(user))
+                {
+                    return Redirect(String.Format("~/{0}/Manage", user));
+                }
+            }
+            else
+            {
+                // If the logged in user is not the same as the user in the url.
+                return Redirect(String.Format("~/{0}", user));
+            }
+
+            return View();
+        }
+
+
+        [Authorize()]
+        [HttpPost]
+        public ActionResult Create(string user, string profileType)
+        {
+            if (String.Compare(user, User.Identity.Name, true) == 0)
+            {
+                MariachiMediator mediator = new MariachiMediator("Bands");
+
+                if (mediator.DoesProfileExist(user))
+                {
+                    return Redirect(String.Format("~/{0}/Manage", user));
+                }
+                else
+                {
+                   // Create an empty profile setting the profileType.
+                    bool success = mediator.CreateProfile(user, profileType);
+                    return Redirect(String.Format("~/{0}/Manage", user));
+                }
+            }
+            else
+            {
+                // If the logged in user is not the same as the user in the url.
+                return Redirect("~/");
+            }
+        }
 
 
         [Authorize()]
         [HttpGet]
-        [OutputCache(Location=System.Web.UI.OutputCacheLocation.Any, Duration=60)]
-        public ActionResult Manage(string id)
+        [OutputCache(Location=System.Web.UI.OutputCacheLocation.None, Duration=00)]
+        public ActionResult Manage(string user)
         {
-            if (String.IsNullOrEmpty(id))
+            if (String.Compare(user, User.Identity.Name, true) == 0)
             {
-                // If not siteid provided, that means we need to list all the sites for the user.
-                Dictionary<String, String> sites = new Dictionary<string, string>();
 
-                if (User.Identity.IsAuthenticated)
+                MariachiMediator mediator = new MariachiMediator("Bands");
+
+                if (mediator.DoesProfileExist(user))
                 {
-                    //if (MariachiMediator.GetSitesForUser(User.Identity.Name, out sites))
-                    //{
 
-                    //}
                 }
-                return View(sites);
             }
 
-            else
-            {
-                // Display the details of the given site id.
-                return View("ManageSite",(object) id);
-            }
+
+            return View();
         }
+
+
+        
 
 
 
