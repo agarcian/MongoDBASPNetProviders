@@ -25,5 +25,31 @@ namespace WebUI4.Controllers
 
             return RedirectPermanent(ConfigurationManager.AppSettings["StartUrl"]);
         }
+
+
+
+        [HttpGet]
+        public ActionResult MongoDBRead()
+        {
+            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult MongoDBRead(string count)
+        {
+            int totalReads = 20;
+
+            if (!String.IsNullOrWhiteSpace(count))
+            {
+                Int32.TryParse(count, out totalReads);
+            }
+
+
+            ViewBag.Result = AltovientoSolutions.DAL.MongoPerformanceTest.TestRead(totalReads);
+
+            
+            return View();
+        }
     }
 }

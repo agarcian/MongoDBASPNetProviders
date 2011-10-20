@@ -10,7 +10,7 @@ namespace WebUI4.Tests
     [TestClass]
     public class AccessControlTestUnit
     {
-
+        #region Assets used for testing
         private class Class1
         {
             public string Attribute1 { get; set; }
@@ -25,8 +25,6 @@ namespace WebUI4.Tests
                 set { listAttribute3 = value; }
             }
         }
-
-
         private class Class2
         {
             [ContextualSecurity]
@@ -38,8 +36,6 @@ namespace WebUI4.Tests
 
 
         }
-
-
         private class Class3
         {
             public string Attribute1 { get; set; }
@@ -54,8 +50,6 @@ namespace WebUI4.Tests
                 set { listAttribute3 = value; }
             }
         }
-
-
         private class Class4
         {
            
@@ -68,7 +62,7 @@ namespace WebUI4.Tests
 
 
         }
-
+        #endregion
 
 
         [TestMethod]

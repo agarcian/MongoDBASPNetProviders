@@ -218,6 +218,7 @@
     <Content Include="Views\Spaces\Index.cshtml" />
     <Content Include="Views\Spaces\AllSpaces.cshtml" />
     <Content Include="Areas\IPC\Views\Viewer\Search.cshtml" />
+    <Content Include="Views\Home\MongoDBRead.cshtml" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />
@@ -231,7 +232,6 @@
     <Folder Include="Areas\IPC\Models\" />
     <Folder Include="Areas\Mariachi\Models\" />
     <Folder Include="Areas\Mariachi\Views\Shared\" />
-    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MongoDBASPNetProviders\ASPNETProvidersForMongoDB\ASPNETProvidersForMongoDB.csproj">
