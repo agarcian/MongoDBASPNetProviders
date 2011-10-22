@@ -111,6 +111,12 @@ namespace WebUI4.Areas.Mariachi.Controllers
         }
 
 
+        /// <summary>
+        /// This action will present the user profile as viewed by external users.  Called when the url is /{username}
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Profile(string user, string id)
         {
@@ -118,27 +124,29 @@ namespace WebUI4.Areas.Mariachi.Controllers
 
             MariachiMediator mediator = new MariachiMediator("Bands");
 
+
+            // If the profile for the given user does not exist ...
             if (!mediator.DoesProfileExist(user))
             {
-
+                // And if the user is authenticated, 
+                // and the url is for the authenticated user.. 
+                // redirect to the create page, so the logged in user can create their profile.
                 if (User.Identity.IsAuthenticated && String.Compare(User.Identity.Name, user, true) == 0)
                 {
                     return Redirect(String.Format("~/{0}/Create", user));
                 }
                 else
                 {
-                    Response.StatusCode = 404;
-                    return Content("Profile not found.");
+                    // if no logged in user, 
+                    return new HttpNotFoundResult("Profile not found.");
                 }
             }
-
-
-
-
-
-            return View();
+            else
+            {
+                // Display the profile of the user...
+                return View();
+            }
         }
-
 
         //private static string getETagForResource(string resourceId)
         //{
@@ -227,19 +235,26 @@ namespace WebUI4.Areas.Mariachi.Controllers
         [OutputCache(Location=System.Web.UI.OutputCacheLocation.None, Duration=00)]
         public ActionResult Manage(string user)
         {
-            if (String.Compare(user, User.Identity.Name, true) == 0)
+
+            MariachiMediator mediator = new MariachiMediator("Bands");
+            
+            if ((String.Compare(user, User.Identity.Name, true) == 0) &&
+                mediator.DoesProfileExist(user))
             {
+               // If the user is the currently logged in user, and their profile exists...  
 
-                MariachiMediator mediator = new MariachiMediator("Bands");
-
-                if (mediator.DoesProfileExist(user))
-                {
-
-                }
+                return View();
+            }
+            else
+            {
+                // if the user does not exist or the logged in users is not the user requested
+                return new HttpStatusCodeResult(401);
+                // a 401 result will result in a redirection as the browser tries to reauthorize again with the root url.
             }
 
 
-            return View();
+
+            
         }
 
 

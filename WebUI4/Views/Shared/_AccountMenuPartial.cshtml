@@ -1,5 +1,6 @@
 ﻿@using AltovientoSolutions.Common.MVC
-@using WebUI4.Models;
+@using WebUI4.Models
+@using System.Configuration
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -10,13 +11,14 @@
             <li class="dir">
             @AccountHelper.GetProfileName(AccountHelper.ProfileNameFormat.FirstNameLastName)
             <ul>
-                <li>@Html.ActionLink(WebUI4.Resources.Account.MyProfile, "Profile", "Account", new { Area = "" }, null)</li>
+                <li>@Html.ActionLink(ConfigurationManager.AppSettings["ApplicationName"], "Index", "Home", new {area=""}, null)</li>
+                 <li></li>
+                 <li>@Html.ActionLink(WebUI4.Resources.Account.MyProfile, "Profile", "Account", new { Area = "" }, null)</li>
                 <li>@Html.ActionLink(WebUI4.Resources.Account.ChangePassword, "ChangePassword", "Account", new { Area = "" }, null)</li>
                 <li></li>
                 <li>@Html.ActionLink(WebUI4.Resources.Referrals.SendInvitation, "Index", "Referrals", new { Area = "" }, null)</li>
                 <li></li>
                 <li>@Html.ActionLink(WebUI4.Resources.Account.LogOff, "LogOff", "Account", new { Area = "" }, null)</li>
-
             </ul>
         </li>
     </ul>
@@ -25,7 +27,7 @@ else
 {
     <ul class="dropdown dropdown-horizontal">
         <li><img style="vertical-align:middle;background-color:#666" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/16x16/play.png" /> @Html.ActionLink(WebUI4.Resources.Account.LogIn, "LogIn", "Account", new { Area = "" }, null)</li>
-        <li><img style="vertical-align:middle;background-color:#666" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/16x16/play.png" /> @Html.ActionLink(WebUI4.Resources.Account.Register, "Register", "Account", new { Area = "" }, null)</li>
+        @*<li><img style="vertical-align:middle;background-color:#666" src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/16x16/play.png" /> @Html.ActionLink(WebUI4.Resources.Account.Register, "Register", "Account", new { Area = "" }, null)</li>*@
     </ul>
 }
 

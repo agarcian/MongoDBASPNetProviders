@@ -23,7 +23,7 @@ namespace WebUI4.Tests
             int totalDocuments = 100000;
             var list = Enumerable.Range(0, totalDocuments).ToList();
 
-            int count = 0;
+            long count = 0;
             DateTime start, end;
 
             using (server.RequestStart(test))
