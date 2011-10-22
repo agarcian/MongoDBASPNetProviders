@@ -251,15 +251,7 @@ namespace WebUI4.Areas.Mariachi.Controllers
                 return new HttpStatusCodeResult(401);
                 // a 401 result will result in a redirection as the browser tries to reauthorize again with the root url.
             }
-
-
-
-            
         }
-
-
-        
-
 
 
         public static void ValidateCacheOutput(HttpContext context, Object data,
