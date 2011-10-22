@@ -2,28 +2,37 @@
 @{
     ViewBag.Title = "Manage";
 }
-
-
 @section Banner{
-   <h2 class="logo">Mariacheros</h2>
+    <h2 class="logo">
+        Mariacheros</h2>
 }
-
-
-<h2>Manage your profile</h2>
-<p>Provide as much information as you can to have a complete profile.</p>
-
-
+<h2>
+    Manage your profile</h2>
+<p>
+    Provide as much information as you can to have a complete profile.</p>
+<div class="ui-helper-clearfix">
+    <ul id="tabs" class="menutab">
+        <li><a href="#basicinfo">Basic Information</a></li>
+        <li><a href="#prices">Prices</a></li>
+        <li><a href="#photos">Photos</a></li>
+        <li><a href="#videos">Videos</a></li>
+        <li><a href="#music">Music</a></li>
+        <li><a href="#members">Members</a></li>
+        <li><a href="#friends">Friends</a></li>
+    </ul>
+</div>
 <div>
-    <div class="section">
+    <div id="basicinfo" style="" class="section">
         <h3>
             Basic Information</h3>
         <div class="line">
-            <label>Name</label>
+            <label>
+                Name</label>
             <input />
         </div>
     </div>
-    <hr />
-    <div class="section">
+    
+    <div id="prices" style="display:none;" class="section">
         <h3>
             Prices</h3>
         <div>
@@ -31,17 +40,17 @@
             <input />
         </div>
     </div>
-    <hr />
-    <div class="section">
+    
+    <div id="photos" style="display:none;" class="section">
         <h3>
-           Photos</h3>
+            Photos</h3>
         <div>
             Name
             <input />
         </div>
     </div>
-    <hr />
-    <div class="section">
+    
+    <div id="videos" style="display:none;" class="section">
         <h3>
             Videos</h3>
         <div>
@@ -49,17 +58,17 @@
             <input />
         </div>
     </div>
-    <hr /> 
-    <div class="section">
+    
+    <div id="music" style="display:none;" class="section">
         <h3>
-            Repertoire</h3>
+            Music</h3>
         <div>
             Name
             <input />
         </div>
     </div>
-     <hr />
-    <div class="section">
+    
+    <div id="members" style="display:none;" class="section">
         <h3>
             Members</h3>
         <div>
@@ -67,4 +76,44 @@
             <input />
         </div>
     </div>
+
+    <div id="friends" style="display:none;" class="section">
+        <h3>
+            Friends</h3>
+        <div>
+            Friends XX<br />
+            Friends XX<br />
+            Friends XX<br />
+            Friends XX<br />
+            Friends XX<br />
+        </div>
+    </div>
 </div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        $('#tabs li a').click(function () {
+
+            $('.section').css('display', 'none') ;
+            var target = $(this).attr('href');
+            if (console) console.log(target);
+            $(target).slideDown();
+            return false;
+        });
+    
+    
+    </script>
+}
+
+@section Header{
+    <style type="text/css">
+        .section
+        {
+            margin:30px auto;
+            width:700px;
+            min-height:300px;
+            background:#eee;   
+        }
+    </style>
+}
