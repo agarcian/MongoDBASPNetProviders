@@ -1,4 +1,5 @@
-﻿@using System.Collections.Generic
+﻿@model AltovientoSolutions.DAL.Mariacheros.Model.BandModel
+@using System.Collections.Generic
 @{
     ViewBag.Title = "Manage";
 }
@@ -21,85 +22,93 @@
         <li><a href="#friends">Friends</a></li>
     </ul>
 </div>
-<div>
-    <div id="basicinfo" style="" class="section">
-        <h3>
-            Basic Information</h3>
-        <div class="line">
-            <label>
-                Name</label>
-            <input />
+@{ 
+    
+    using (Html.BeginForm())
+    {
+    <div>
+        <div id="basicinfo" style="" class="section">
+            <h3>
+                Basic Information</h3>
+            <div class="line">
+                <label>
+                    Name</label>
+                <input name="Name"/>
+            </div>
+            @{
+        int i = 0;
+        foreach (var item in Model.Description)
+        {
+                <div class="line">
+                    <input name="Description[@i].Key" value="@item.Key" />
+                    <input name="Description[@i].Value" value="@item.Value" />
+                </div> 
+            i++;
+        }
+            }
+            <div class="line">
+                <input name="Description[@i].Key" value="" />
+                <input name="Description[@i].Value" value="" />
+            </div>
         </div>
-        <div class="line">
-            <label>
-                Description (English)</label>
-            <textarea></textarea>
+        <div id="prices" style="display: none;" class="section">
+            <h3>
+                Prices</h3>
+            <div>
+                Name
+                <input />
+            </div>
         </div>
-        <div class="line">
-            <label>
-                Description (Espanol)</label>
-            <textarea></textarea>
+        <div id="photos" style="display: none;" class="section">
+            <h3>
+                Photos</h3>
+            <div>
+                Name
+                <input />
+            </div>
         </div>
+        <div id="videos" style="display: none;" class="section">
+            <h3>
+                Videos</h3>
+            <div>
+                Name
+                <input />
+            </div>
+        </div>
+        <div id="music" style="display: none;" class="section">
+            <h3>
+                Music</h3>
+            <div>
+                Name
+                <input />
+            </div>
+        </div>
+        <div id="members" style="display: none;" class="section">
+            <h3>
+                Members</h3>
+            <div>
+                Name
+                <input />
+            </div>
+        </div>
+        <div id="friends" style="display: none;" class="section">
+            <h3>
+                Friends</h3>
+            <div>
+                Friends XX<br />
+                Friends XX<br />
+                Friends XX<br />
+                Friends XX<br />
+                Friends XX<br />
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="submit" value="Save" />
     </div>
     
-    <div id="prices" style="display:none;" class="section">
-        <h3>
-            Prices</h3>
-        <div>
-            Name
-            <input />
-        </div>
-    </div>
-    
-    <div id="photos" style="display:none;" class="section">
-        <h3>
-            Photos</h3>
-        <div>
-            Name
-            <input />
-        </div>
-    </div>
-    
-    <div id="videos" style="display:none;" class="section">
-        <h3>
-            Videos</h3>
-        <div>
-            Name
-            <input />
-        </div>
-    </div>
-    
-    <div id="music" style="display:none;" class="section">
-        <h3>
-            Music</h3>
-        <div>
-            Name
-            <input />
-        </div>
-    </div>
-    
-    <div id="members" style="display:none;" class="section">
-        <h3>
-            Members</h3>
-        <div>
-            Name
-            <input />
-        </div>
-    </div>
-
-    <div id="friends" style="display:none;" class="section">
-        <h3>
-            Friends</h3>
-        <div>
-            Friends XX<br />
-            Friends XX<br />
-            Friends XX<br />
-            Friends XX<br />
-            Friends XX<br />
-        </div>
-    </div>
-</div>
-
+    }
+}
 @section Scripts{
     <script type="text/javascript">
 
@@ -116,22 +125,21 @@
     
     </script>
 }
-
 @section Header{
     <style type="text/css">
         .section
         {
-            margin:0px auto;
-            padding:20px;
-            width:100%;
-            min-height:300px;
-            background:#eee;   
+            margin: 0px auto;
+            padding: 20px;
+            width: 100%;
+            min-height: 300px;
+            background: #eee;
         }
         
         .menutab li a
         {
-            display:block;
-            min-width:80px;
+            display: block;
+            min-width: 80px;
         }
     </style>
 }

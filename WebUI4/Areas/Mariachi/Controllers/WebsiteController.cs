@@ -9,7 +9,7 @@ using AltovientoSolutions.DAL.Mariacheros;
 using WebUI4.Areas.Mariachi.Models;
 using AltovientoSolutions.Security;
 using System.Web.Profile;
-
+using AltovientoSolutions.DAL.Mariacheros.Model;
 
 namespace WebUI4.Areas.Mariachi.Controllers
 {
@@ -229,7 +229,6 @@ namespace WebUI4.Areas.Mariachi.Controllers
             }
         }
 
-
         [Authorize()]
         [HttpGet]
         [OutputCache(Location=System.Web.UI.OutputCacheLocation.None, Duration=00)]
@@ -242,8 +241,8 @@ namespace WebUI4.Areas.Mariachi.Controllers
                 mediator.DoesProfileExist(user))
             {
                // If the user is the currently logged in user, and their profile exists...  
-
-                return View();
+                BandModel bandModel = new BandModel(); // mediator.GetBandForUser(user);
+                return View(bandModel);
             }
             else
             {
@@ -252,6 +251,14 @@ namespace WebUI4.Areas.Mariachi.Controllers
                 // a 401 result will result in a redirection as the browser tries to reauthorize again with the root url.
             }
         }
+
+        public ActionResult Manage(BandModel model)
+        {
+            // Update the changes into the db.
+            return View(model);
+        }
+
+
 
 
         public static void ValidateCacheOutput(HttpContext context, Object data,
@@ -271,10 +278,6 @@ namespace WebUI4.Areas.Mariachi.Controllers
     else
         status = HttpValidationStatus.Valid;
         }
-
-
-
-
 
     }
 }
