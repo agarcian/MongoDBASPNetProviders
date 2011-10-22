@@ -30,6 +30,16 @@
                 Name</label>
             <input />
         </div>
+        <div class="line">
+            <label>
+                Description (English)</label>
+            <textarea></textarea>
+        </div>
+        <div class="line">
+            <label>
+                Description (Espanol)</label>
+            <textarea></textarea>
+        </div>
     </div>
     
     <div id="prices" style="display:none;" class="section">
@@ -93,12 +103,13 @@
 @section Scripts{
     <script type="text/javascript">
 
-        $('#tabs li a').click(function () {
+        $('#tabs li a').click(function (e) {
 
-            $('.section').css('display', 'none') ;
+            $('.section').css('display', 'none');
             var target = $(this).attr('href');
             if (console) console.log(target);
-            $(target).slideDown();
+            $(target).css('display', '');
+            e.preventDefault();
             return false;
         });
     
@@ -110,10 +121,17 @@
     <style type="text/css">
         .section
         {
-            margin:30px auto;
-            width:700px;
+            margin:0px auto;
+            padding:20px;
+            width:100%;
             min-height:300px;
             background:#eee;   
+        }
+        
+        .menutab li a
+        {
+            display:block;
+            min-width:80px;
         }
     </style>
 }
