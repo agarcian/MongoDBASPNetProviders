@@ -177,6 +177,13 @@ namespace WebUI4.Areas.Mariachi.Controllers
         //    }
         //}
 
+        [Authorize()]
+        [HttpGet]
+        [OutputCache(Location = System.Web.UI.OutputCacheLocation.None, Duration = 0)]
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
 
         [Authorize()]
         [HttpGet]

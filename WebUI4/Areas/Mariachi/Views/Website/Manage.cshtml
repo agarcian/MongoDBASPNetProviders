@@ -14,99 +14,174 @@
 <div class="ui-helper-clearfix">
     <ul id="tabs" class="menutab">
         <li><a href="#basicinfo">Basic Information</a></li>
+        <li><a href="#contact">Contact Info</a></li>
         <li><a href="#prices">Prices</a></li>
         <li><a href="#photos">Photos</a></li>
         <li><a href="#videos">Videos</a></li>
         <li><a href="#music">Music</a></li>
         <li><a href="#members">Members</a></li>
-        <li><a href="#friends">Friends</a></li>
     </ul>
 </div>
 @{ 
-    
     using (Html.BeginForm())
     {
-    <div>
-        <div id="basicinfo" style="" class="section">
-            <h3>
-                Basic Information</h3>
-            <div class="line">
-                <label>
-                    Name</label>
-                <input name="Name"/>
-            </div>
-            @{
-        int i = 0;
-        foreach (var item in Model.Description)
-        {
-                <div class="line">
+    <div id="basicinfo" style="" class="section ui-helper-clearfix">
+        <h3>
+            Basic Information</h3>
+        <div class="editor-line">
+            <div class="editor-label">@Html.LabelFor(x => x.Name)</div>
+            <div class="editor-field">
+                @Html.TextBoxFor(x => x.Name)</div>
+        </div>
+        @{
+            int i = 0;
+            foreach (var item in Model.Description)
+            {
+                <div class="editor-line">
                     <input name="Description[@i].Key" value="@item.Key" />
                     <input name="Description[@i].Value" value="@item.Value" />
                 </div> 
+                i++;
+            }
+        }
+        <div class="editor-line">
+            <div class="editor-label">
+                Description (English)
+            </div>
+            <div class="editor-field">
+                <input name="Description[@i].Key" type="hidden" value="en" />
+                <textarea name="Description[@i].Value" rows="5" cols="50" ></textarea>
+            </div>
+        </div>
+        <div class="editor-line">
+            <div class="editor-label">
+                Description (Espanol)
+            </div>
+            <div class="editor-field">
+                <input name="Description[@i].Key" type="hidden" value="es" />
+                <textarea name="Description[@i].Value" rows="5"  cols="50"></textarea>
+            </div>
+        </div>
+        
+    </div>
+    <div id="contact" style="display:none;" class="section ui-helper-clearfix">
+        <h3>
+            Contact Information</h3>
+        <div style="float: left; width: 50%;">
+            <div class="editor-line">
+                <div class="editor-label">@Html.LabelFor(x => x.Phone)</div>
+                <div class="editor-field">
+                    @{
+        i = 0;
+        foreach (var item in Model.Phone)
+        {
+                        <input name="Phone[@i]" value="@item" type="text" /><br /> 
             i++;
         }
-            }
-            <div class="line">
-                <input name="Description[@i].Key" value="" />
-                <input name="Description[@i].Value" value="" />
+                    }
+                    <input name="Phone[@i]" value="" type="text" />
+                </div>
+            </div>
+            <div class="editor-line">
+                <div class="editor-label">@Html.LabelFor(x => x.Contact)</div>
+                <div class="editor-field">@Html.TextBoxFor(x => x.Contact)</div>
+            </div>
+            <div class="editor-line">
+                <div class="editor-label">@Html.LabelFor(x => x.Website)</div>
+                <div class="editor-field">@Html.TextBoxFor(x => x.Website)</div>
+            </div>
+            <div class="editor-line">
+                <div class="editor-label">@Html.LabelFor(x => x.Email)</div>
+                <div class="editor-field">@Html.TextBoxFor(x => x.Email)</div>
             </div>
         </div>
-        <div id="prices" style="display: none;" class="section">
-            <h3>
-                Prices</h3>
-            <div>
-                Name
-                <input />
+        <div style="float: left; width: 50%;">
+            <div class="editor-line">
+                <div class="editor-label">
+                    @Html.LabelFor(x => x.Address)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(x => x.Address)
+                </div>
             </div>
-        </div>
-        <div id="photos" style="display: none;" class="section">
-            <h3>
-                Photos</h3>
-            <div>
-                Name
-                <input />
+            <div class="editor-line">
+                <div class="editor-label">
+                    @Html.LabelFor(x => x.City)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(x => x.City)
+                </div>
             </div>
-        </div>
-        <div id="videos" style="display: none;" class="section">
-            <h3>
-                Videos</h3>
-            <div>
-                Name
-                <input />
+            <div class="editor-line">
+                <div class="editor-label">
+                    @Html.LabelFor(x => x.State)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(x => x.State)
+                </div>
             </div>
-        </div>
-        <div id="music" style="display: none;" class="section">
-            <h3>
-                Music</h3>
-            <div>
-                Name
-                <input />
+            <div class="editor-line">
+                <div class="editor-label">
+                    @Html.LabelFor(x => x.ZipCode)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(x => x.ZipCode)
+                </div>
             </div>
-        </div>
-        <div id="members" style="display: none;" class="section">
-            <h3>
-                Members</h3>
-            <div>
-                Name
-                <input />
-            </div>
-        </div>
-        <div id="friends" style="display: none;" class="section">
-            <h3>
-                Friends</h3>
-            <div>
-                Friends XX<br />
-                Friends XX<br />
-                Friends XX<br />
-                Friends XX<br />
-                Friends XX<br />
+            <div class="editor-line">
+                <div class="editor-label">
+                    @Html.LabelFor(x => x.Country)
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(x => x.Country)
+                </div>
             </div>
         </div>
     </div>
+    <div id="prices" style="display: none;" class="section">
+        <h3>
+            Prices</h3>
+        <div>
+            Name
+            <input />
+        </div>
+    </div>
+    <div id="photos" style="display: none;" class="section">
+        <h3>
+            Photos</h3>
+        <div>
+            Name
+            <input />
+        </div>
+    </div>
+    <div id="videos" style="display: none;" class="section">
+        <h3>
+            Videos</h3>
+        <div>
+            Name
+            <input />
+        </div>
+    </div>
+    <div id="music" style="display: none;" class="section">
+        <h3>
+            Music</h3>
+        <div>
+            Name
+            <input />
+        </div>
+    </div>
+    <div id="members" style="display: none;" class="section">
+        <h3>
+            Members</h3>
+        <div>
+            Name
+            <input />
+        </div>
+    </div>
+    
     <div>
         <input type="submit" value="Save" />
     </div>
-    
     }
 }
 @section Scripts{

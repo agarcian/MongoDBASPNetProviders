@@ -250,6 +250,7 @@
     </Content>
     <Content Include="Areas\Mariachi\Views\Shared\_CustomProfileLayout.cshtml" />
     <Content Include="Areas\Mariachi\Views\Website\Profile.cshtml" />
+    <Content Include="Areas\Mariachi\Views\Website\Dashboard.cshtml" />
     <None Include="_bin_deployableAssemblies\Microsoft.Web.Infrastructure.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.Razor.dll" />
     <None Include="_bin_deployableAssemblies\System.Web.WebPages.dll" />
@@ -261,11 +262,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\IPC\Models\" />
-    <Folder Include="Areas\Mariachi\Models\" />
-    <Folder Include="Areas\Mariachi\Views\Shared\" />
-<Folder Include="Areas\Mobile\Models\" />
-    <Folder Include="Views\Home\" />
-</ItemGroup>
+    <Folder Include="Areas\Mobile\Models\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MongoDBASPNetProviders\ASPNETProvidersForMongoDB\ASPNETProvidersForMongoDB.csproj">
       <Project>{0972DFF9-1BEB-4599-99DB-5931D2EE950A}</Project>
