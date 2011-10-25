@@ -10,7 +10,8 @@ namespace AltovientoSolutions.Common.Instrumentation
     {
         PasswordChangedEvent = WebEventCodes.WebExtendedBase + 1,
         PasswordResetEvent = WebEventCodes.WebExtendedBase + 2,
-
+        RegistrationEvent = WebEventCodes.WebExtendedBase + 10,
+        RegistrationErrorEvent = WebEventCodes.WebExtendedBase + 11,
         InvitationEmailEvent = WebEventCodes.WebExtendedBase + 100
     }
 }

@@ -22,7 +22,7 @@
         </div>
         <div>
             @* The login will be completed in this page. *@
-            @Html.ValidationSummary(true, WebUI4.Resources.Account.ErrorLogin)
+            @Html.ValidationSummary(false, WebUI4.Resources.Account.ErrorRegistration)
             @{ using (Html.BeginForm())
                {
                 <div class="editor-line" style="">
@@ -202,9 +202,9 @@
                         success: function (data) {
                             if (data.result == true) { // if it is available.
                                 $('#submit').removeAttr('disabled');
-                                $('#errMsgSitename').html('');
+                                $('#errMsgSitename').css('display', 'none').html('');
                             } else {
-                                $('#submit').css('display','none').attr('disabled', 'disabled');
+                                $('#submit').attr('disabled', 'disabled');
                                 $('#errMsgSitename').css('display', 'block').html('This name has already been taken');
                             }
                         },

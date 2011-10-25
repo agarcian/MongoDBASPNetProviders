@@ -65,6 +65,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Instrumentation\RegistrationEvent.cs" />
+    <Compile Include="Instrumentation\RegistrationErrorEvent.cs" />
     <Compile Include="Instrumentation\InvitationEmailSentEvent.cs" />
     <Compile Include="Instrumentation\CustomWebEventCodes.cs" />
     <Compile Include="Instrumentation\MyCriticalEvent.cs" />

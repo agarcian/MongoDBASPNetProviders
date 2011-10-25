@@ -10,7 +10,7 @@ using WebUI4.Areas.Mariachi.Models;
 using AltovientoSolutions.Security;
 using System.Web.Profile;
 using AltovientoSolutions.DAL.Mariacheros.Model;
-
+using AltovientoSolutions.Common.Instrumentation;
 namespace WebUI4.Areas.Mariachi.Controllers
 {
     public class WebsiteController : Controller
@@ -96,6 +96,8 @@ namespace WebUI4.Areas.Mariachi.Controllers
                     // Saves the profile to the provider's repository.
                     profile.Save();
 
+                    // Send notification via Health Monitoring.
+                    new RegistrationEvent(String.Format("Yipeee!! There is a new registration : {0} by {1}.", model.Email, model.Sitename), null, (int)CustomWebEventCodes.RegistrationEvent).Raise(); 
 
                     // Set the cookie and redirect to home.                    
                     FormsAuthentication.SetAuthCookie(model.Sitename, false /* createPersistentCookie */);
@@ -103,8 +105,11 @@ namespace WebUI4.Areas.Mariachi.Controllers
                 }
                 else
                 {
-#warning Send notification here since there should not be errors at this stage.
-                    ModelState.AddModelError("Membership", "There has been an error creating your account.  Please try again.");
+                    // Send notification via Health Monitoring.
+                    new RegistrationErrorEvent(String.Format("A user had an error trying to register a website: {0} : {1}.", model.Email, model.Sitename), null, (int)  CustomWebEventCodes.RegistrationErrorEvent, null).Raise(); 
+                                        
+                    ModelState.AddModelError("Membership", WebUI4.Controllers.AccountController.ErrorCodeToString(createStatus));
+                    
                     return View(new MariacherosLoginModel());
                 }
             }

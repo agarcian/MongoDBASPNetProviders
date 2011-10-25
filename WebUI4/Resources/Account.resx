@@ -317,4 +317,8 @@
     <value>Please enter your user name and password. &lt;a href="{0}"&gt;Register&lt;/a&gt; if you don't have an account.</value>
     <comment>LogIn</comment>
   </data>
+  <data name="ErrorRegistration" xml:space="preserve">
+    <value>There was an error creating your account.  Please fix the error and try again.</value>
+    <comment>Custom Login (Mariacheros)</comment>
+  </data>
 </root>

@@ -185,6 +185,10 @@
     <value>La informacion del perfil no se pudo guardar</value>
     <comment>Account.Profile</comment>
   </data>
+  <data name="ErrorRegistration" xml:space="preserve">
+    <value>Hubo un error al crear su cuenta. Por favor corrija el error e intente de nuevo.</value>
+    <comment>Custom Login (Mariacheros)</comment>
+  </data>
   <data name="FirstName" xml:space="preserve">
     <value>Nombres</value>
     <comment>ProfileModel</comment>
