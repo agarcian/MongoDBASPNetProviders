@@ -52,7 +52,7 @@
                         @Html.TextBoxFor(m => m.Sitename)
                         <div id="urlHint">mariacheros.com/</div>
                         @Html.ValidationMessageFor(m => m.Sitename)
-                        <div id="errMsgSitename">
+                        <div id="errMsgSitename" style="display:none;">
                         </div>
                         <div style="margin-top:5px;font-size:0.85em;color:#999;font-style:italic;">E.G.  mariachi-de-mexico; MariachiDeMexico</div>
                     </div>
@@ -171,6 +171,9 @@
             line-height:40px;
             padding:3px 3px 3px 36px;
             background-color:#fcc;
+            width:300px;
+            border-radius:5px;
+            margin-top:2px;
         }
     </style>
 }
@@ -201,8 +204,8 @@
                                 $('#submit').removeAttr('disabled');
                                 $('#errMsgSitename').html('');
                             } else {
-                                $('#submit').attr('disabled', 'disabled');
-                                $('#errMsgSitename').html('This name has already been taken');
+                                $('#submit').css('display','none').attr('disabled', 'disabled');
+                                $('#errMsgSitename').css('display', 'block').html('This name has already been taken');
                             }
                         },
                         dataType: 'json'
