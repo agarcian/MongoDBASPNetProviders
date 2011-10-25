@@ -3,15 +3,20 @@
 @{
     ViewBag.Title = "Index";
 }
-<div class="ui-helper-clearfix">
-    <div style="width: 500px; float: left;">
-        <div>
+@section Banner{
+ <div>
             <h2 class="logo">
                 @ConfigurationManager.AppSettings["CompanyName"]</h2>
             <h2 class="tagline">
                 @Html.Raw(WebUI4.Resources.Mariacheros.Tagline)</h2>
         </div>
-        <div style="margin-top: 40px;">
+}
+
+
+
+<div class="ui-helper-clearfix">
+    <div style="width: 500px; float: left;">
+        <div style="margin-top: 0px;">
             <div style="text-shadow: #eee 1px 2px 0px; font-size: 1.0em; margin: 10px 0px; color: #666">
                 @Html.Raw(WebUI4.Resources.Mariacheros.CreateYourProfile)</div>
         </div>
@@ -62,9 +67,9 @@
         </div>
     </div>
     <div style="width: 400px; float: right;">
-        <div class="ui-helper-clearfix" style="margin-top: 100px;">
+        <div class="ui-helper-clearfix" style="margin-top:-90px;">
             <div style="text-align: center;">
-                <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros2.com.png")" alt="" style="margin:0px auto;" />
+                <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros.com.png")" alt="" style="margin:0px auto;" />
                 <p style="text-align: center;">
                     Visit Maribel Salinas' website in Mariacheros.com. <a href="">http://maribelsalinas.mariacheros.com</a></p>
             </div>
@@ -77,9 +82,9 @@
     <p style="text-shadow: #eee 1px 2px 0px; font-size: 1.0em; margin: 10px 20px; color: #666">
         See who else has a profile in Mariacheros.com</p>
     <div class="ui-helper-clearfix" style="margin: 20px auto;">
-        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros2.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
-        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros2.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
-        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros2.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
+        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
+        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
+        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
     </div>
 </div>
 @section Header{
@@ -155,6 +160,17 @@
         .field-validation-error
         {
             font-size:0.7em;
+        }
+        
+        
+        #errMsgSitename
+        {
+            color:#c50;
+            background:transparent url(http://media.altovientosolutions.com/dryicons/png/32x32/warning.png) no-repeat 0% 50%;
+            height:40px;
+            line-height:40px;
+            padding:3px 3px 3px 36px;
+            background-color:#fcc;
         }
     </style>
 }
