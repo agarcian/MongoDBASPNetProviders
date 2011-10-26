@@ -512,7 +512,7 @@ namespace WebUI4.Controllers
                 }
                 else
                 {
-                    isAvailable = Membership.FindUsersByName(username).Count == 0;
+                    isAvailable = Membership.GetUser(username) == null;
                 }
                 
             }

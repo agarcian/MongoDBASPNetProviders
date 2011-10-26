@@ -197,7 +197,9 @@
     <Content Include="Content\scripts\Common.js" />
     <Content Include="Content\scripts\splitter.js" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
