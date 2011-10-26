@@ -868,7 +868,9 @@ namespace ASPNETProvidersForMongoDB
                         // Updates the lastactivitydate for the user.
                         var updateQuery = Query.And(
                             Query.EQ("ApplicationName", ApplicationName),
-                            Query.EQ("Username", username));
+                            // This regex makes the search for the username case insensitive.
+                            Query.Matches("Username", new BsonRegularExpression(username, "i"))
+                        );
 
                         var update = Update.Set("LastActivityDate", DateTime.Now);
 
@@ -1019,9 +1021,11 @@ namespace ASPNETProvidersForMongoDB
             try
             {
 
-            var updateQuery = Query.And(
-                Query.EQ("Username", username),
-                Query.EQ("ApplicationName", ApplicationName));
+                var updateQuery = Query.And(
+                    Query.EQ("ApplicationName", ApplicationName),
+                    // This regex makes the search for the username case insensitive.
+                    Query.Matches("Username", new BsonRegularExpression(username, "i"))
+                    );
 
             var update = Update.Set("IsLockedOut", false)
                 .Set("LastLockedOutDate", DateTime.Now);
@@ -1073,8 +1077,10 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var query = Query.And(
-                Query.EQ("Email", email),
-                Query.EQ("ApplicationName", ApplicationName));
+                Query.EQ("ApplicationName", ApplicationName),
+                // This regex makes the search for the username case insensitive.
+                Query.Matches("Email", new BsonRegularExpression(email, "i"))
+                );
 
                 var usr = users.FindOne(query);
 
@@ -1155,8 +1161,10 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var query = Query.And(
-                Query.EQ("Username", username),
-                Query.EQ("ApplicationName", ApplicationName));
+                Query.EQ("ApplicationName", ApplicationName),
+                // This regex makes the search for the username case insensitive.
+                Query.Matches("Username", new BsonRegularExpression(username, "i"))
+                );
 
                 var usr = users.FindOne(query);
 
@@ -1182,8 +1190,9 @@ namespace ASPNETProvidersForMongoDB
                 }
 
                 var query2 = Query.And(
-                Query.EQ("Username", username),
                 Query.EQ("ApplicationName", ApplicationName),
+                // This regex makes the search for the username case insensitive.
+                Query.Matches("Username", new BsonRegularExpression(username, "i")),
                 Query.EQ("IsLockedOut", false));
 
                 var updateQuery = Update.Set("Password", EncodePassword(newPassword))
@@ -1236,8 +1245,10 @@ namespace ASPNETProvidersForMongoDB
             {
 
                 var query = Query.And(
-                    Query.EQ("Username", user.UserName),
-                    Query.EQ("ApplicationName", pApplicationName));
+                    Query.EQ("ApplicationName", pApplicationName),
+                    // This regex makes the search for the username case insensitive.
+                    Query.Matches("Username", new BsonRegularExpression(username, "i"))
+                    );
 
                 var updateQuery = Update.Set("Email", user.Email)
                     .Set("Comment", user.Comment)
@@ -1287,8 +1298,9 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var query = Query.And(
-                    Query.EQ("Username", username),
                     Query.EQ("ApplicationName", pApplicationName),
+                    // This regex makes the search for the username case insensitive.
+                    Query.Matches("Username", new BsonRegularExpression(username, "i")),
                     Query.EQ("IsLockedOut", false));
 
                 var user = users.FindOne(query);
@@ -1307,8 +1319,10 @@ namespace ASPNETProvidersForMongoDB
                     if (isApproved)
                     {
                         var query2 = Query.And(
-                            Query.EQ("Username", username),
-                            Query.EQ("ApplicationName", pApplicationName));
+                            Query.EQ("ApplicationName", pApplicationName),
+                            // This regex makes the search for the username case insensitive.
+                            Query.Matches("Username", new BsonRegularExpression(username, "i"))
+                            );
 
                         var updateQuery = Update.Set("LastLoginDate", DateTime.Now);
 
@@ -1362,8 +1376,10 @@ namespace ASPNETProvidersForMongoDB
             {
 
                 var query = Query.And(
-                        Query.EQ("Username", username),
-                        Query.EQ("ApplicationName", pApplicationName));
+                        Query.EQ("ApplicationName", pApplicationName),
+                        // This regex makes the search for the username case insensitive.
+                        Query.Matches("Username", new BsonRegularExpression(username, "i"))
+                        );
 
                 var user = users.FindOne(query);
 
@@ -1586,8 +1602,11 @@ namespace ASPNETProvidersForMongoDB
             //Build a query to find the user id and then update with new password.
             MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
 
-            var query = Query.And(Query.EQ("Username", usernameToMatch),
-                Query.EQ("ApplicationName", pApplicationName));
+            var query = Query.And(
+                Query.EQ("ApplicationName", pApplicationName),
+                // This regex makes the search for the username case insensitive.
+                Query.Matches("Username", new BsonRegularExpression(usernameToMatch, "i"))
+                );
 
             try
             {
@@ -1650,16 +1669,14 @@ namespace ASPNETProvidersForMongoDB
             //Build a query to find the user id and then update with new password.
             MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
 
-           
-
-
             totalRecords = 0;
 
             try
             {
                 var query = Query.And(
                     Query.Matches("Email",new BsonRegularExpression(emailToMatch + "*", "i")),
-                Query.EQ("ApplicationName", pApplicationName));
+                    Query.EQ("ApplicationName", pApplicationName)
+                    );
 
                 var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
                 cursor.Skip = Math.Max(0, pageSize * (pageIndex - 1));
