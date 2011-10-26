@@ -1247,7 +1247,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                     Query.EQ("ApplicationName", pApplicationName),
                     // This regex makes the search for the username case insensitive.
-                    Query.Matches("Username", new BsonRegularExpression(username, "i"))
+                    Query.Matches("Username", new BsonRegularExpression(user.UserName, "i"))
                     );
 
                 var updateQuery = Update.Set("Email", user.Email)
