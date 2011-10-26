@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #ASPNet Providers for Membership, Roles, and Profile using MongoDB
 
 This project is an implementation of the ASPNet Providers for __Membership__, __Roles__, and __Profile__ using MongoDB.
@@ -74,4 +73,3 @@ My recommendation is to leave it as the transactions in SafeMode won't significa
 ### Want to help?
 Please comment on anything you think can be improved.
 Also you can help adding more test cases to make sure the implementation is completely validated.  I will be providing more test cases over time.
->>>>>>> 8d91e28ca677eb9f9034573c204ebd3a1c5fa083
