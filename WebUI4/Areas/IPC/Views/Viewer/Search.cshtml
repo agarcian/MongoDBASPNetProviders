@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Search";
+}
+<div id="search" style="margin: 10px auto; width: 400px;">
+    <div class="editor-line">
+        <div class="editor-label">
+            <label for="txtSearch">
+                Search Illustrated Parts Catalog:</label>
+        </div>
+        <br />
+        <div class="editor-field">
+            <input id="txtSearch" type="text" />
+            <button>
+                Go</button>
+        </div>
+    </div>
+</div>
+<div class="recent ui-helper-clearfix">
+    <div>
+        You could be interested in these catalogs:</div>
+    <ul>
+        <li><a href="@Url.Content("~/IPC/Viewer/Catalog/1234567")">1234567 - MONETIZE COMPETENTLY
+            WHEREAS</a></li>
+        <li><a href="">5443456 - AUTHORITATIVELY WEB-READINESS </a></li>
+        <li><a href="">9988765 - STRATEGIC INTEGRATED PANDEMIC ...</a></li>
+    </ul>
+</div>
+<hr />
+<div id="results">
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#txtSearch").autocomplete({
+                source: '@Url.Content("~/IPC/API/SearchCatalog")',
+                minLength: 1
+            });
+
+
+//            $("#txtSearch").autocomplete({
+//                minLength: 0,
+//                source: 'http://google.com'  //@Url.Content("~/IPC/API/SearchCatalog")'
+//                //                data: {
+//                //                    searchTerm: function () {
+//                //                        return $(this).val();
+//                //                    },
+//                //                    langCode: function () {
+//                //                        return 'en';
+//                //                    }
+//                //                },
+//                //                focus: function (event, ui) {
+//                //                    $("#txtSearch").val(ui.item.label);
+//                //                    return false;
+//                //                },
+//                //                select: function (event, ui) {
+//                //                    $("#txtSearch").val(ui.item.label);
+//                //                    return false;
+//                //                }
+//            })
+////		.data("autocomplete")._renderItem = function (ul, item) {
+////		    return $("<li></li>")
+////				.data("item.autocomplete", item)
+////				.append("<a>" + item.label + "<br>" + item.desc + "</a>")
+////				.appendTo(ul);
+////		};
+        });
+    </script>
+}
+@section Header{
+    <link href="@Url.Content("~/Areas/IPC/Content/css/style.css")" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .recent ul
+        {
+            list-style-type: none;
+        }
+        .recent ul li
+        {
+            list-style-type: none;
+            padding: 0px 10px;
+        }
+    </style>
+}

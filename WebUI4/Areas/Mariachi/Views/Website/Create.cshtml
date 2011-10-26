@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Website";
+}
+
+<h2>Load Data</h2>
+
+<div>
+@{using (Html.BeginForm())
+  {
+    <ul>
+        <li><input type="radio" name="profileType" value="Band"/> Mariachi Groups</li>
+        <li><input type="radio" name="profileType" value="Artist"/> Mariachi Artists (Soloists)</li>
+        <li><input type="radio" name="profileType" value="Fan"/> Mariachi Fan (Anyone who loves Mariachi)</li>
+    </ul>
+    
+    <input type="submit" value="Create" />
+  }
+}
+</div>
+
+
+@section Header{
+    <style type="text/css">
+        
+    </style>
+}

@@ -1,0 +1,134 @@
+﻿@using System.Configuration
+@{
+    var controller = Url.RequestContext.RouteData.Values["controller"] as String;
+    var area = Url.RequestContext.RouteData.DataTokens["area"] as String;
+    
+    controller = String.IsNullOrEmpty(controller) ? controller : controller.ToLower();
+    area = String.IsNullOrEmpty(area) ? area : area.ToLower();
+
+
+    var bodyStyle = "";
+    bool ignoreBodyStyle = false;
+    Boolean.TryParse(Convert.ToString(ViewBag.IgnoreCustomBodyStyle), out ignoreBodyStyle);
+    if (!ignoreBodyStyle)
+    {
+        bodyStyle= String.Format("{0} {1}", ConfigurationManager.AppSettings["CustomBodyStyle"],  controller);
+    }
+ }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>@(!String.IsNullOrEmpty(ViewBag.Title) ? ViewBag.Title : ConfigurationManager.AppSettings["ApplicationName"])</title>
+    <meta name="description" content="@ViewBag.MetaDescription" />
+    <meta name="robots" content="@ViewBag.Robots" />
+    <script type="text/javascript" src="@ConfigurationManager.AppSettings["CDN-Url"]/modernizr2.custom.01930.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css"
+        rel="stylesheet" type="text/css" />
+    @* ------------ CSS for Dropdown menu --------------*@
+    <style type="text/css">
+    /* Layout */
+    @@import "@ConfigurationManager.AppSettings["CDN-Url"]/free-css-drop-down-menu_v1.2/css/dropdown/dropdown.limited.css";
+    /* Theme */
+    @@import "@ConfigurationManager.AppSettings["CDN-Url"]/free-css-drop-down-menu_v1.2/css/dropdown/themes/flickr.com/default.css";
+    </style>
+    <!--[if lte IE 7]>
+    <style type="text/css" media="screen">
+    body { behavior:url("@ConfigurationManager.AppSettings["CDN-Url"]/free-css-drop-down-menu_v1.2/js/csshover.htc"); }
+    </style>
+    <![endif]-->
+    @* ------------------------------------------------- *@
+    <link href="@Url.Content("~/Content/css/site.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("Header", false)
+    <!-- Change the UA-XXXXX-X to be your site's ID  -->
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '@ConfigurationManager.AppSettings["GoogleAnalyticsKey"]']);
+        _gaq.push(['_trackPageview']);
+        _gaq.push(['_trackPageLoadTime']);
+    </script>
+</head>
+<body class="@bodyStyle">
+    <div class="wrapper">
+        <div class="header">
+            <nav>
+                <div class="page ui-helper-clearfix">
+                    
+                    <div id="mainMenu">
+                    @RenderSection("MainMenu", false)
+                    </div>
+
+                    <div id="accountMenu" style="float:right">
+                    @Html.Partial("_AccountMenuPartial")
+                    </div>
+
+                </div>
+            </nav>
+            <div class="banner">
+                <div class="page ui-helper-clearfix">
+                    @RenderSection("Banner", false)
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="page ui-helper-clearfix">
+                @RenderBody()
+            </div>
+        </div>
+        <div class="push">
+        </div>
+    </div>
+    <div class="footer">
+        <div class="page ui-helper-clearfix">
+            Copyright 2011, @ConfigurationManager.AppSettings["CompanyName"]
+        </div>
+    </div>
+    <!--! end of #container -->
+    <!-- Javascript at the bottom for fast page loading -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <!-- Add all scripts here.-->
+    <script src="@Url.Content("~/Content/scripts/common.js?v=1")" type="text/javascript"></script>
+    @*<script src="@ConfigurationManager.AppSettings["CDN-Url"]/jquery.form-min.js" type="text/javascript"></script>
+    <script src="@ConfigurationManager.AppSettings["CDN-Url"]/jquery.hotkeys-0.7.9.min.js"
+        type="text/javascript"></script>*@
+    <script src="@ConfigurationManager.AppSettings["CDN-Url"]/jquery.scrollTo-1.4.2-min.js"
+        type="text/javascript"></script>
+    <script src="@ConfigurationManager.AppSettings["CDN-Url"]/fancybox/jquery.mousewheel-3.0.4.pack.js"
+        type="text/javascript"></script>
+    <script src="@ConfigurationManager.AppSettings["CDN-Url"]/fancybox/jquery.fancybox-1.3.4.pack.js"
+        type="text/javascript"></script>
+    <script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.js"
+        type="text/javascript"></script>
+    <!-- scripts to support client validation  -->
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/mvc/3.0/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@ConfigurationManager.AppSettings["CDN-Url"]/topbar/topbar.js?v=1" type="text/javascript"></script>
+    @RenderSection("Scripts", false)
+    @* Support for top bar messages, using the TempMessage feature in MVC.
+        http://www.dailycoding.com/Posts/jquery_plugin_for_showing_message_box_in_topbar.aspx
+    *@
+    @{
+        string Message = (string)TempData["Message"];
+        if (!String.IsNullOrEmpty(Message))
+        {
+            
+        <div id="Message" style="display: none;">
+            @Message
+        </div>
+        <script type="text/javascript">
+            $('#Message').showTopbarMessage({ background: "#ccc", close: 3000, height: "60px;" });
+        </script>   
+        }
+    }
+    @* Google Analytics Async Script *@
+    <script type="text/javascript">
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</body>
+</html>

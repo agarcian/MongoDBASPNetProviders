@@ -1,0 +1,119 @@
+﻿@using AltovientoSolutions.DAL.Mariacheros.Model
+@model AltovientoSolutions.DAL.Mariacheros.Model.ProfileTypeEnum
+@{
+    ViewBag.Title = "Dashboard";
+}
+<p>
+    Choose the best option for your online profile.</p>
+<div>
+    <ul id="options" class="ui-helper-clearfix">
+        <li class="box @(Model == ProfileTypeEnum.Band ? "selected" : "")">
+            <h4>
+                Mariachi Groups </h4>
+            <div class="selection">Your current selection</div>
+            <div class="thumb">
+            </div>
+            <div class="intro">
+                Promote your Mariachi and be listed in the Online Mariachi Directory.</div>
+            <div>
+                <strong>Best for:</strong>
+                <ul>
+                    <li>Promoting your mariachi group</li>
+                    <li>Getting new customers</li>
+                    <li>Creating a professional online presence.</li>
+                    <li>Selling your records.</li>
+                </ul>
+            </div>
+            <div>
+                <input value="Select" type="submit" /></div>
+        </li>
+        <li class="box @(Model == ProfileTypeEnum.Artist ? "selected" : "")">
+            <h4>
+                Mariachi Artists</h4>
+                <div class="selection">Your current selection</div>
+            <div class="thumb">
+            </div>
+            <div class="intro">
+                Create your personal Mariachi profile. Use it as your business card and promote
+                your music.</div>
+            <div>
+                <strong>Best for:</strong>
+                <ul>
+                    <li>Creating a name for yourself as a Soloist artist. </li>
+                    <li>Networking with other artists.</li>
+                    <li>Meeting other people.</li>
+                    <li>Showing you are a real mariachero.</li>
+                </ul>
+            </div>
+            <div>
+                <input value="Select" type="submit" /></div>
+        </li>
+        <li class="box @(Model == ProfileTypeEnum.Fan ? "selected" : "")">
+            <h4>
+                Fans</h4>
+                <div class="selection">Your current selection</div>
+            <div class="thumb">
+            </div>
+            <div class="intro">
+                Tell the world how much you love Mariachi and why.</div>
+            <div>
+                <strong>Best for:</strong>
+                <ul>
+                    <li>Fans who want to show off their knowledge.</li>
+                    <li>Meeting other people who love mariachi.</li>
+                    <li>Learning about Mariachi music and artists.</li>
+                </ul>
+            </div>
+            <div>
+                <input value="Select" type="submit" /></div>
+        </li>
+    </ul>
+</div>
+@section Header{
+    <style type="text/css">
+        .box
+        {
+            width: 280px;
+            min-height: 400px;
+            background-color: #fafafa;
+            float: left;
+            margin: 5px;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        ul#options
+        {
+            list-style-type:none;
+        }
+        li.box:hover
+        {
+            background-color:#eca;
+        }
+        li.box.selected
+        {
+            background-color:#fdb;
+        }
+        
+        li.box .selection
+        {
+            visibility:hidden;
+        }
+        li.box.selected .selection
+        {
+            visibility:visible;
+        }
+        
+        
+        .box .thumb
+        {
+            height: 130px;
+            background-color: #fff;
+            margin: 10px 0px;
+        }
+        .box .intro
+        {
+            font-size: 0.95em;
+            height: 80px;
+        }
+    </style>
+}

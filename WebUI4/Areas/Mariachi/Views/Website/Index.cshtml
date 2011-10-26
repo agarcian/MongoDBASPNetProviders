@@ -1,0 +1,220 @@
+﻿@using System.Configuration
+@model WebUI4.Areas.Mariachi.Models.MariacherosLoginModel
+@{
+    ViewBag.Title = "Index";
+}
+@section Banner{
+ <div>
+            <h2 class="logo">
+                @ConfigurationManager.AppSettings["CompanyName"]</h2>
+            <h2 class="tagline">
+                @Html.Raw(WebUI4.Resources.Mariacheros.Tagline)</h2>
+        </div>
+}
+
+
+
+<div class="ui-helper-clearfix">
+    <div style="width: 500px; float: left;">
+        <div style="margin-top: 0px;">
+            <div style="text-shadow: #eee 1px 2px 0px; font-size: 1.0em; margin: 10px 0px; color: #666">
+                @Html.Raw(WebUI4.Resources.Mariacheros.CreateYourProfile)</div>
+        </div>
+        <div>
+            @* The login will be completed in this page. *@
+            @Html.ValidationSummary(false, WebUI4.Resources.Account.ErrorRegistration)
+            @{ using (Html.BeginForm())
+               {
+                <div class="editor-line" style="">
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Email)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(m => m.Email)
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                </div>
+                <div class="editor-line">
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Password)
+                    </div>
+                    <div class="editor-field">
+                        @Html.PasswordFor(m => m.Password)
+                        <div id="showPasswordContainer"><input type="checkbox" id="showPassword" /><label for="showPassword">Show password</label></div>
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </div>
+                <div class="editor-line">
+                    <div class="editor-label">
+                        @Html.LabelFor(m => m.Sitename)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextBoxFor(m => m.Sitename)
+                        <div id="urlHint">mariacheros.com/</div>
+                        @Html.ValidationMessageFor(m => m.Sitename)
+                        <div id="errMsgSitename" style="display:none;">
+                        </div>
+                        <div style="margin-top:5px;font-size:0.85em;color:#999;font-style:italic;">E.G.  mariachi-de-mexico; MariachiDeMexico</div>
+                    </div>
+                </div>
+                <div class="editor-line">
+                    <div class="buttons">
+                        <input id="submit" type="submit" value="Sign Up" />
+                    </div>
+                </div>
+               }
+            }
+        </div>
+    </div>
+    <div style="width: 400px; float: right;">
+        <div class="ui-helper-clearfix" style="margin-top:-90px;">
+            <div style="text-align: center;">
+                <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros.com.png")" alt="" style="margin:0px auto;" />
+                <p style="text-align: center;">
+                    Visit Maribel Salinas' website in Mariacheros.com. <a href="">http://maribelsalinas.mariacheros.com</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="ui-helper-clearfix" style="margin: 30px auto;">
+    <h4>
+        Meet other Mariacheros</h4>
+    <p style="text-shadow: #eee 1px 2px 0px; font-size: 1.0em; margin: 10px 20px; color: #666">
+        See who else has a profile in Mariacheros.com</p>
+    <div class="ui-helper-clearfix" style="margin: 20px auto;">
+        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
+        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
+        <img src="@Url.Content("~/Content/images/Maribel-Salinas-in-mariacheros.com.png")" alt="" style="margin:0px 15px;float:left;" width="270px" />
+    </div>
+</div>
+@section Header{
+    <style type="text/css">
+        
+        .Mariacheros .wrapper .main
+         {
+             background:transparent url(../images/darkblue-gradient.png) repeat-x top;
+         }
+        .editor-line .editor-label label
+        {
+            font-weight: bold;
+            font-size:14px;
+            color:#333;
+            text-shadow:#fff 2px 2px 2px;
+        }
+        .editor-line .editor-field
+        {
+            margin-top: 3px ;
+        }
+        .editor-line .editor-field input[type=text],
+        .editor-line .editor-field input[type=password]
+        {
+            height: 30px;
+            margin:0px;
+            font-size:1em;
+            vertical-align:middle;
+        }
+        
+        #showPasswordContainer
+        {
+            font-size:0.85em;   
+            background-color:#ccd5d7;
+            width:150px;
+            height:30px;
+            line-height:30px;
+            vertical-align:middle;
+            margin-left:10px;
+            padding:0px 5px;
+            border-radius:5px;
+        }
+        #showPasswordContainer *{
+            font-size:0.85em;
+        }
+        #showPassword
+        {
+            margin-right:5px;
+        }
+        
+        #Sitename
+        {
+            padding-left:150px;
+            width:300px !important;
+        }
+        #urlHint
+        {
+            margin-left:5px;
+            margin-top:-38px;
+            font-size:1em;
+            color:#999;
+            height:38px;
+            line-height:38px;
+            vertical-align:middle;
+        }
+        
+        .buttons
+        {
+            margin-top:0px !important;
+        }
+        .editor-line {
+        margin: 5px 0px 10px 0px;
+        }
+        .field-validation-error
+        {
+            font-size:0.7em;
+        }
+        
+        
+        #errMsgSitename
+        {
+            color:#c50;
+            background:transparent url(http://media.altovientosolutions.com/dryicons/png/32x32/warning.png) no-repeat 0% 50%;
+            height:40px;
+            line-height:40px;
+            padding:3px 3px 3px 36px;
+            background-color:#fcc;
+            width:300px;
+            border-radius:5px;
+            margin-top:2px;
+        }
+    </style>
+}
+@section Scripts{
+    <script type="text/javascript" src="http://scripts.altovientosolutions.com/typewatch.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#showPassword').change(function () {
+                if ($(this).is(':checked')) {
+                    document.getElementById('Password').type = 'text';
+                    }
+                else {
+                    document.getElementById('Password').type = 'password';
+                }
+            });
+
+
+
+            $("#Sitename").typeWatch({
+                callback: function (txt) {
+                    //$('#urlSitename').html('mariacheros.com/' + toSlug(txt));
+                    $.ajax({
+                        url: '@Url.Content("~/Account/IsUsernameAvailable")',
+                        data: { username: txt },
+                        success: function (data) {
+                            if (data.result == true) { // if it is available.
+                                $('#submit').removeAttr('disabled');
+                                $('#errMsgSitename').css('display', 'none').html('');
+                            } else {
+                                $('#submit').attr('disabled', 'disabled');
+                                $('#errMsgSitename').css('display', 'block').html('This name has already been taken');
+                            }
+                        },
+                        dataType: 'json'
+                    });
+                },
+                wait: 750,
+                highlight: false,
+                captureLength: 0
+            });
+        });
+    </script>
+}

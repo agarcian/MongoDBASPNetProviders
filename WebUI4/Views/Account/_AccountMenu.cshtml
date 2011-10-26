@@ -1,0 +1,43 @@
+﻿@{
+    string currentAction = (string) Url.RequestContext.RouteData.Values["Action"];
+}
+<div class="ui-helper-clearfix">
+<ul class="menutab" style="margin-top:15px">
+        <li><a href="@Url.Content("~/Home/Index")" title="WebUI4.Resources.Account.Home">
+            <img src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/house.png" />
+            @WebUI4.Resources.Common.Home
+            </a>
+        </li>
+      @if (User.Identity.IsAuthenticated)
+      { 
+        <li><a href="@Url.Content("~/Account/Profile")" title="WebUI4.Resources.Account.MyProfile">
+            <img src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/address_book.png" />
+            @WebUI4.Resources.Account.MyProfile
+            </a>
+        </li>
+        <li><a href="@Url.Content("~/Account/ChangePassword")" title="WebUI4.Resources.Account.ChangePassword">
+            <img src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/pencil.png" />
+            @WebUI4.Resources.Account.ChangePassword
+            </a>
+        </li>
+          @*<li><a href="@Url.Content("~/Account/LogOff")" title="WebUI4.Resources.Account.LogOff">
+            <img src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/eject.png" />
+            @WebUI4.Resources.Account.LogOff
+            </a>
+        </li>*@
+      }
+      else
+      { 
+         <li><a href="@Url.Content("~/Account/RetrievePassword")" title="WebUI4.Resources.Account.RetrievePasswordTooltip">
+            <img src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/padlock_open.png" />
+            @WebUI4.Resources.Account.RetrievePassword
+            </a>
+        </li>
+        @*<li><a href="@Url.Content("~/Account/Register")" title="WebUI4.Resources.Account.RegisterTooltip">
+            <img src="http://media.altovientosolutions.com/dryicons/Handy%20Icons/24x24/user.png" />
+            @WebUI4.Resources.Account.Register
+            </a>
+        </li>*@
+      } 
+</ul>
+</div>

@@ -1,0 +1,48 @@
+﻿    .banner
+    {
+        background-color:#fff !important;
+    }
+    h1, h2
+    {
+        color:#088;
+        border-bottom:1px solid #088;
+        margin:0px 0px 20px 0px;
+        line-height:32px;
+    }
+    
+    h3, h4, h5, h6
+    {
+        color:#088;
+        margin:25px 0px 20px 0px;
+    }
+    img
+    {
+        vertical-align:middle;
+    }
+    div.box 
+    {
+        background-color:#fafafa;
+        border:1px solid #ccc;
+        padding:20px;
+        margin:10px 0px 10px 50px;
+      }
+      
+      dl
+      {
+        margin:20px;
+        width:380px;
+        float:left;
+      }
+        
+    dt
+    {
+        font-weight:bold;
+        font-size:1.1em;
+        margin:10px 0px;
+        color:#088;
+    }
+    dd
+    {
+        font-size:0.9em;
+        color:#666;
+    }

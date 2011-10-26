@@ -1,0 +1,71 @@
+﻿@model WebUI4.Models.ProfileModel
+@using System.Configuration
+@{
+    ViewBag.Title = WebUI4.Resources.Account.ManageYourProfile;
+}
+
+@section Banner{
+    @Html.Partial("_AccountMenu")
+}
+
+<h2>@WebUI4.Resources.Account.ManageYourProfile</h2>
+@Html.ValidationSummary(true, "Profile update was unsuccessful. Please correct the errors and try again.")
+@using (Html.BeginForm())
+{
+    @Html.Hidden("Password", "ThisValueIsIgnoredInTheController");
+    @Html.Hidden("ConfirmPassword", "ThisValueIsIgnoredInTheController");    
+    <text> 
+    <div class="editor">
+        <div class="editor-line ui-helper-clearfix">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.UserName)
+            </div>
+            <div class="editor-field editor-field-readonly">
+                @Html.TextBoxFor(m => m.UserName, new { @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="editor-line ui-helper-clearfix">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Email)
+            </div>
+            <div class="editor-field editor-field-readonly">
+                @Html.TextBoxFor(m => m.Email, new { @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="editor-line ui-helper-clearfix">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.FirstName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.FirstName)
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+        </div>
+        <div class="editor-line ui-helper-clearfix">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.LastName)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.LastName)
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+        </div>
+        <div class="editor-line ui-helper-clearfix">
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Country)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.Country)
+                @Html.ValidationMessageFor(m => m.Country)
+            </div>
+        </div>
+        <div class="editor-line ui-helper-clearfix">
+            <div class="buttons">
+                <input type="submit" value="@WebUI4.Resources.Common.Save" />
+
+                @Html.ActionLink(WebUI4.Resources.Common.Cancel, "Index", "Home")
+            </div>
+        </div>
+    </div>
+    </text>
+}
