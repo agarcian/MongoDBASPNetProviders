@@ -9,7 +9,7 @@ A Space has a name, a unique id, and a secret api which can be used for administ
 **Groups management**
 
 Allows to create groups under a space to allow the definition of security settings under that space.  Use Case:  A customer would create that has dealers and each delaer can have multiple users.
-=======
+
 #ASPNet Providers for Membership, Roles, and Profile using MongoDB
 
 This project is an implementation of the ASPNet Providers for __Membership__, __Roles__, and __Profile__ using MongoDB.
@@ -46,7 +46,7 @@ My recommendation is to leave it as the transactions in SafeMode won't significa
 ### Want to help?
 Please comment on anything you think can be improved.
 Also you can help adding more test cases to make sure the implementation is completely validated.  I will be providing more test cases over time.
-=======
+
 #ASPNet Providers for Membership, Roles, and Profile using MongoDB
 
 This project is an implementation of the ASPNet Providers for __Membership__, __Roles__, and __Profile__ using MongoDB.  
