@@ -16,12 +16,6 @@ namespace AltovientoSolutions.DAL.Mariacheros
     public class MariachiMediator
     {
 
-        
-
-
-
-
-
         private const string MONGO_DATABASE_NAME = "mariacheros";
         private MongoDatabase db;
         private string mongoCollectionName;

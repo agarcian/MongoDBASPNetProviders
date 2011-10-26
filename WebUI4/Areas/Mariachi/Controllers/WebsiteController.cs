@@ -20,21 +20,24 @@ namespace WebUI4.Areas.Mariachi.Controllers
         [HttpGet()]
         public ActionResult Index()
         {
+
+            MariachiMediator mediator = new MariachiMediator("mariacheros");
             //Check if the user already has a site created.
             Dictionary<String, String> sites = new Dictionary<string,string>();
 
             if (User.Identity.IsAuthenticated)
             {
-                return Redirect(String.Format("~/{0}/Create", User.Identity.Name));
-                //if (MariachiMediator.GetSitesForUser(User.Identity.Name, out sites))
-                //{
-                //    return RedirectToAction("Manage");
+                // Check if the user already has a site created.
+                bool siteExists = mediator.DoesProfileExist(User.Identity.Name);
 
-                //}
-
-                // IF the site has been created, redirect to the manage site details page.
-
-                // If not, allow to create a site in the view.
+                if (siteExists)
+                {
+                    return Redirect(String.Format("~/{0}/Manage", User.Identity.Name));
+                }
+                else
+                {
+                    return Redirect(String.Format("~/{0}/Dashboard", User.Identity.Name));
+                }
 
             }
                 //return the default view for non authenticated useres.
@@ -114,7 +117,6 @@ namespace WebUI4.Areas.Mariachi.Controllers
                 }
             }
         }
-
 
         /// <summary>
         /// This action will present the user profile as viewed by external users.  Called when the url is /{username}
@@ -214,7 +216,6 @@ namespace WebUI4.Areas.Mariachi.Controllers
             return View();
         }
 
-
         [Authorize()]
         [HttpPost]
         public ActionResult Create(string user, string profileType)
@@ -269,9 +270,6 @@ namespace WebUI4.Areas.Mariachi.Controllers
             // Update the changes into the db.
             return View(model);
         }
-
-
-
 
         public static void ValidateCacheOutput(HttpContext context, Object data,
         ref HttpValidationStatus status)
