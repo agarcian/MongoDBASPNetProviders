@@ -189,7 +189,16 @@ namespace WebUI4.Areas.Mariachi.Controllers
         [OutputCache(Location = System.Web.UI.OutputCacheLocation.None, Duration = 0)]
         public ActionResult Dashboard()
         {
-            return View();
+            MariachiMediator mediator = new MariachiMediator("Bands");
+
+
+            // If the profile for the given user does not exist ...
+            ProfileTypeEnum profileTypeEnum = mediator.GetProfileType(User.Identity.Name);
+
+
+
+
+            return View(profileTypeEnum);
         }
 
         [Authorize()]

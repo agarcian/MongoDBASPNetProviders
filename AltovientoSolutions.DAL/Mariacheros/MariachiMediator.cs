@@ -99,7 +99,35 @@ namespace AltovientoSolutions.DAL.Mariacheros
             return true;
         }
 
+        /// <summary>
+        /// Gets the type of profile this user has associated, if any.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public ProfileTypeEnum GetProfileType(string name)
+        {
+            MongoCollection<BsonDocument> collection = db.GetCollection(mongoCollectionName);
 
+            if (String.IsNullOrWhiteSpace(name))
+                return ProfileTypeEnum.Undefined;
+
+            ProfileTypeEnum profileTypeEnum = ProfileTypeEnum.Undefined;
+
+            var query = Query.EQ("NameLowerCase", name.ToLower().Trim());
+
+            BsonDocument doc = collection.FindOne(query);
+            if (doc != null && doc.Contains("ProfileType"))
+            {
+                if (Enum.TryParse<ProfileTypeEnum>(doc.GetElement("ProfileType").Value.AsInt32.ToString(), out profileTypeEnum))
+                    return profileTypeEnum;
+                else
+                    return ProfileTypeEnum.Undefined;
+            }
+            else
+            {
+                return ProfileTypeEnum.Undefined;
+            }
+        }
        
         
         #endregion

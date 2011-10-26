@@ -1,13 +1,16 @@
-﻿@{
+﻿@using AltovientoSolutions.DAL.Mariacheros.Model
+@model AltovientoSolutions.DAL.Mariacheros.Model.ProfileTypeEnum
+@{
     ViewBag.Title = "Dashboard";
 }
 <p>
-    Choose the best option for your online profile. (Cannot be changed later)</p>
+    Choose the best option for your online profile.</p>
 <div>
-    <div class="ui-helper-clearfix">
-        <div class="box">
+    <ul id="options" class="ui-helper-clearfix">
+        <li class="box @(Model == ProfileTypeEnum.Band ? "selected" : "")">
             <h4>
-                Mariachi Groups</h4>
+                Mariachi Groups </h4>
+            <div class="selection">Your current selection</div>
             <div class="thumb">
             </div>
             <div class="intro">
@@ -23,10 +26,11 @@
             </div>
             <div>
                 <input value="Select" type="submit" /></div>
-        </div>
-        <div class="box">
+        </li>
+        <li class="box @(Model == ProfileTypeEnum.Artist ? "selected" : "")">
             <h4>
                 Mariachi Artists</h4>
+                <div class="selection">Your current selection</div>
             <div class="thumb">
             </div>
             <div class="intro">
@@ -43,10 +47,11 @@
             </div>
             <div>
                 <input value="Select" type="submit" /></div>
-        </div>
-        <div class="box">
+        </li>
+        <li class="box @(Model == ProfileTypeEnum.Fan ? "selected" : "")">
             <h4>
                 Fans</h4>
+                <div class="selection">Your current selection</div>
             <div class="thumb">
             </div>
             <div class="intro">
@@ -61,8 +66,8 @@
             </div>
             <div>
                 <input value="Select" type="submit" /></div>
-        </div>
-    </div>
+        </li>
+    </ul>
 </div>
 @section Header{
     <style type="text/css">
@@ -76,6 +81,28 @@
             border-radius: 10px;
             padding: 10px;
         }
+        ul#options
+        {
+            list-style-type:none;
+        }
+        li.box:hover
+        {
+            background-color:#eca;
+        }
+        li.box.selected
+        {
+            background-color:#fdb;
+        }
+        
+        li.box .selection
+        {
+            visibility:hidden;
+        }
+        li.box.selected .selection
+        {
+            visibility:visible;
+        }
+        
         
         .box .thumb
         {
