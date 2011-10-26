@@ -761,7 +761,8 @@ namespace ASPNETProvidersForMongoDB
 
                 var query = Query.And(
                     Query.EQ("ApplicationName", pApplicationName),
-                    Query.GTE("Username", username)
+                    // This regex makes the search for the username case insensitive.
+                     Query.Matches("Username", new BsonRegularExpression(username, "i"))
                 );
 
                 var user = users.FindOne(query);
@@ -847,7 +848,8 @@ namespace ASPNETProvidersForMongoDB
 
                 var query = Query.And(
                     Query.EQ("ApplicationName", ApplicationName),
-                    Query.EQ("Username", username)
+                    // This regex makes the search for the username case insensitive.
+                     Query.Matches("Username", new BsonRegularExpression(username, "i"))
                     );
 
                 var user = users.FindOne(query);
