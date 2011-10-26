@@ -645,7 +645,7 @@ namespace ASPNETProvidersForMongoDB
 
             try
             {
-                totalRecords = cursor.Count();
+                totalRecords = (int) cursor.Count();
 
                 if (totalRecords <= 0) { return usersCollection; }
 
@@ -825,8 +825,15 @@ namespace ASPNETProvidersForMongoDB
         /// <returns>
         /// A <see cref="T:System.Web.Security.MembershipUser"/> object populated with the specified user's information from the data source.
         /// </returns>
+        /// <exception cref="ArgumentNullException">username is null or whitespace.</exception>
+        /// <exception cref="ArgumentException">username contains a comma (,).</exception>
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
+            if (String.IsNullOrWhiteSpace(username) || username.IndexOf(',') > -1)
+                throw new ArgumentNullException("username cannot be null or white space");
+
+            if (username.IndexOf(',') > -1)
+                throw new ArgumentException("username cannot contain commas.");
 
             MembershipUser u = null;
 
@@ -1583,7 +1590,7 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var cursor = users.Find(query);
-                totalRecords = users.Count();
+                totalRecords = (int) users.Count();
 
                 if (totalRecords == 0) { return usersCollection; }
 

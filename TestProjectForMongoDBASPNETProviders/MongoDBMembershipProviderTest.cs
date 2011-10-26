@@ -18,22 +18,59 @@ namespace TestProjectForMongoDBASPNETProviders
     {
         static string mongoDBConnString = ConfigurationManager.ConnectionStrings["MongoProvidersDBConnStr"].ConnectionString;
         static MongoDBMembershipProvider mongoProvider = new MongoDBMembershipProvider();
- 
+
 
         [ClassInitialize]
         public static void InitializeTestClass(TestContext context)
         {
             // Use the App.config to set the properties of the MongoDB database.
-            mongoProvider = (MongoDBMembershipProvider) Membership.Provider;
+            mongoProvider = (MongoDBMembershipProvider)Membership.Provider;
+
+
+            // Initializes the database with 10 sample users.
+            MembershipCreateStatus status;
+            for (int i = 1; i <= 10; i++)
+            {
+                mongoProvider.CreateUser("username" + i, "password" + i, "user" + i + "@example.com",
+                    "What is MongoDB?",
+                    "A cool NoSQL database", true, Guid.NewGuid(), out status);
+            }
         }
 
+
+        [ClassCleanup]
+        public static void CleanupTestClass()
+        {
+            // Use the App.config to set the properties of the MongoDB database.
+            mongoProvider = (MongoDBMembershipProvider)Membership.Provider;
+
+            // Removes from the database the 10 sample users.
+            for (int i = 1; i <= 10; i++)
+            {
+                mongoProvider.DeleteUser("username" + i, true);
+            }
+        }
+
+        //[TestInitialize]
+        //public void InitializeTest()
+        //{
+        //}
+
+
+        //[TestCleanup]
+        //public void CleanupTest()
+        //{
+        //}
+
+
+
         [TestMethod]
-        public void CreateUserTest()
+        public void CreateAndDeleteUserTest()
         {
             DateTime startTest = DateTime.Now;
 
-            string username = "username1";
-            string email = "user1@example.com";
+            string username = "usernamexyz";
+            string email = "userxyz@example.com";
             string password = "12345678";
             string question = "What is MongoDB?";
             string answer = "A cool NoSQL database";
@@ -55,34 +92,31 @@ namespace TestProjectForMongoDBASPNETProviders
             user = mongoProvider.CreateUser(username, password, email,
                 question, answer, isApproved, Guid.NewGuid(), out status);
 
-            Assert.IsNotNull(user);
-            Assert.AreEqual(status, MembershipCreateStatus.Success);
+            Assert.IsNotNull(user, "A user should have been created");
+            Assert.AreEqual(status, MembershipCreateStatus.Success, "The creation should have been successful");
 
 
             // Create a user with the same username.
             user = mongoProvider.CreateUser(username, password, "AnotherEmail@example.com",
                 question, answer, isApproved, Guid.NewGuid(), out status);
 
-            Assert.IsNull(user);
-            Assert.AreEqual(status, MembershipCreateStatus.DuplicateUserName);
+            Assert.IsNull(user, "No user should have been created since the username is already taken");
+            Assert.AreEqual(status, MembershipCreateStatus.DuplicateUserName, "Expecting a DuplicateUserName status");
 
 
-            // Create a user with the same username.
+            // Create a user with a different same username but the same password.
             user = mongoProvider.CreateUser("newUserName", password, email,
                 question, answer, isApproved, Guid.NewGuid(), out status);
 
-            Assert.IsNull(user);
-            Assert.AreEqual(status, MembershipCreateStatus.DuplicateEmail);
-
-
-
+            Assert.IsNull(user, "No user should have been created since the email is already taken"); 
+            Assert.AreEqual(status, MembershipCreateStatus.DuplicateEmail, "Expecting DuplicateEmail status");
 
             // Clean up after yourself, please...
             user = mongoProvider.GetUser(username, false); 
             if (user != null)
             {
                 bool bSuccess = mongoProvider.DeleteUser(username, true);
-                Assert.IsTrue(bSuccess);
+                Assert.IsTrue(bSuccess, "Should have deleted the user");
             }
 
             double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
@@ -93,90 +127,19 @@ namespace TestProjectForMongoDBASPNETProviders
         public void GetAllUsersTest()
         {
             DateTime startTest = DateTime.Now;
-
-            string username = "username";
-            string email = "user1@example.com";
-            string password = "12345678";
-            string question = "What is MongoDB?";
-            string answer = "A cool NoSQL database";
-            bool isApproved = true;
-            MembershipUser user;
-
-
-            MembershipCreateStatus status;
-
-            // Make sure no users where left behind in a previous failed test.
-            bool bSuccess = mongoProvider.DeleteUser(username + "1", true);
-            bSuccess = mongoProvider.DeleteUser(username + "2", true);
-            bSuccess = mongoProvider.DeleteUser(username + "3", true);
-            bSuccess = mongoProvider.DeleteUser(username + "4", true);
-            bSuccess = mongoProvider.DeleteUser(username + "5", true);
-            bSuccess = mongoProvider.DeleteUser(username + "6", true);
-            bSuccess = mongoProvider.DeleteUser(username + "7", true);
-
-
-
-            // No users at all expected in the database...
+            
+            // All defined users are expected ...
             int totalRecords = 0;
             MembershipUserCollection users = mongoProvider.GetAllUsers(1, 5, out totalRecords);
-            Assert.AreEqual(0, totalRecords);
-
-
-
-
-            // Create a user with the same username.
-
-            user = mongoProvider.CreateUser(username + "1", password, "1" + email, question, answer, isApproved, Guid.NewGuid(), out status);
-            Assert.IsNotNull(user); Assert.AreEqual(status, MembershipCreateStatus.Success);
-
-            user = mongoProvider.CreateUser(username + "2", password, "2" + email, question, answer, isApproved, Guid.NewGuid(), out status);
-            Assert.IsNotNull(user); Assert.AreEqual(status, MembershipCreateStatus.Success);
-
-            user = mongoProvider.CreateUser(username + "3", password, "3" + email, question, answer, isApproved, Guid.NewGuid(), out status);
-            Assert.IsNotNull(user); Assert.AreEqual(status, MembershipCreateStatus.Success);
-
-            user = mongoProvider.CreateUser(username + "4", password, "4" + email, question, answer, isApproved, Guid.NewGuid(), out status);
-            Assert.IsNotNull(user); Assert.AreEqual(status, MembershipCreateStatus.Success);
-
-            user = mongoProvider.CreateUser(username + "5", password, "5" + email, question, answer, isApproved, Guid.NewGuid(), out status);
-            Assert.IsNotNull(user); Assert.AreEqual(status, MembershipCreateStatus.Success);
-
-            user = mongoProvider.CreateUser(username + "6", password, "6" + email, question, answer, isApproved, Guid.NewGuid(), out status);
-            Assert.IsNotNull(user); Assert.AreEqual(status, MembershipCreateStatus.Success);
-
-            user = mongoProvider.CreateUser(username + "7", password, "7" + email, question, answer, isApproved, Guid.NewGuid(), out status);
-            Assert.IsNotNull(user); Assert.AreEqual(status, MembershipCreateStatus.Success);
-
-
-
-            totalRecords = 0;
-            users = mongoProvider.GetAllUsers(1, 5, out totalRecords);
-            Assert.AreEqual(7, totalRecords);
-            Assert.AreEqual(5, users.Count);
+            Assert.AreEqual(10, totalRecords, "Should return a full count of all users in the database");
+            Assert.AreEqual(5, users.Count, "Expecting a limited number of users from the search (page size)");
             
-            totalRecords = 0;
-            users = mongoProvider.GetAllUsers(2, 5, out totalRecords);
-            Assert.AreEqual(7, totalRecords);
-            Assert.AreEqual(2, users.Count);
-
-            bSuccess = mongoProvider.DeleteUser(username + "1", true);
-            Assert.IsTrue(bSuccess);
-            bSuccess = mongoProvider.DeleteUser(username + "2", true);
-            Assert.IsTrue(bSuccess);
-            bSuccess = mongoProvider.DeleteUser(username + "3", true);
-            Assert.IsTrue(bSuccess);
-            bSuccess = mongoProvider.DeleteUser(username + "4", true);
-            Assert.IsTrue(bSuccess);
-            bSuccess = mongoProvider.DeleteUser(username + "5", true);
-            Assert.IsTrue(bSuccess);
-            bSuccess = mongoProvider.DeleteUser(username + "6", true);
-            Assert.IsTrue(bSuccess);
-            bSuccess = mongoProvider.DeleteUser(username + "7", true);
-            Assert.IsTrue(bSuccess);
+            users = mongoProvider.GetAllUsers(2, 7, out totalRecords);
+            Assert.AreEqual(10, totalRecords);
+            Assert.AreEqual(3, users.Count, "Expecting the reminder of records if pagesize is 7 and retrieving 2nd page.");
 
             double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
             Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
-            
         }
 
     }
