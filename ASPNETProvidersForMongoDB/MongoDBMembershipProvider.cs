@@ -43,7 +43,7 @@ namespace ASPNETProvidersForMongoDB
         private int pMinRequiredPasswordLength;
         private string pPasswordStrengthRegularExpression;
         private string pMongoProviderDatabaseName;
-        private string pMongoProviderUsersCollectionName;
+        private string pmongoProviderMembershipCollectionName;
         #endregion
 
         #region Properties
@@ -175,9 +175,9 @@ namespace ASPNETProvidersForMongoDB
         /// <summary>
         /// Gets the name of the collection in the Mongo Database used to store the user data.
         /// </summary>
-        public string MongoProviderUsersCollectionName
+        public string mongoProviderCollectionName
         {
-            get { return pMongoProviderUsersCollectionName; }
+            get { return pmongoProviderMembershipCollectionName; }
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
             var query = Query.And(
                 Query.EQ("Username", username),
                 Query.EQ("ApplicationName", pApplicationName)
@@ -295,7 +295,7 @@ namespace ASPNETProvidersForMongoDB
 
 
             pMongoProviderDatabaseName = Convert.ToString(GetConfigValue(config["mongoProviderDatabaseName"], "ASPNetProviderDB"));
-            pMongoProviderUsersCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderUsersCollectionName"], "Users"));
+            pmongoProviderMembershipCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderCollectionName"], "Users"));
 
             string temp_format = config["passwordFormat"];
             if (temp_format == null)
@@ -388,7 +388,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
             var query = Query.And(
                 Query.EQ("Username", username),
                 Query.EQ("ApplicationName", pApplicationName)
@@ -496,7 +496,7 @@ namespace ASPNETProvidersForMongoDB
                 MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
                 //Build a query to find the user id and then update with new password.
-                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
                 
                 bool bSuccess = false;
 
@@ -574,7 +574,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             var query = Query.And(
                Query.EQ("Username", username),
@@ -635,7 +635,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             var query = Query.EQ("ApplicationName", ApplicationName);
             var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
@@ -692,7 +692,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
 
             int numOnline = 0;
@@ -751,7 +751,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             string password = "";
             string passwordAnswer = "";
@@ -842,7 +842,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
             try
             {
 
@@ -915,7 +915,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
             try
             {
 
@@ -1013,7 +1013,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
 
             bool bSuccess = false;
@@ -1070,7 +1070,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             string username = "";
 
@@ -1152,7 +1152,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
 
             string passwordAnswer = "";
@@ -1239,7 +1239,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             try
             {
@@ -1293,7 +1293,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             try
             {
@@ -1367,7 +1367,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             DateTime windowStart = new DateTime();
             int failureCount = 0;
@@ -1600,7 +1600,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             var query = Query.And(
                 Query.EQ("ApplicationName", pApplicationName),
@@ -1667,7 +1667,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             totalRecords = 0;
 

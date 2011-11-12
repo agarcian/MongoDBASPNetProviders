@@ -121,7 +121,7 @@ namespace ASPNETProvidersForMongoDB
             }
 
             pMongoProviderDatabaseName = Convert.ToString(GetConfigValue(config["mongoProviderDatabaseName"], "ASPNetProviderDB"));
-            pMongoProviderProfileCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderProfilesCollectionName"], "Profiles"));
+            pMongoProviderProfileCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderCollectionName"], "Profiles"));
 
             //
             // Initialize connection string.

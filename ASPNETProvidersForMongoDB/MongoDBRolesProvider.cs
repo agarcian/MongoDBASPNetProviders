@@ -66,13 +66,13 @@ namespace ASPNETProvidersForMongoDB
             get { return pMongoProviderDatabaseName; }
         }
 
-        private string pMongoProviderRolesCollectionName;
+        private string pmongoProviderRolesCollectionName;
         /// <summary>
         /// Gets the name of the collection in the Mongo Database used to store the user data.
         /// </summary>
-        public string MongoProviderUsersCollectionName
+        public string mongoProviderCollectionName
         {
-            get { return pMongoProviderRolesCollectionName; }
+            get { return pmongoProviderRolesCollectionName; }
         }
 
         //
@@ -113,7 +113,7 @@ namespace ASPNETProvidersForMongoDB
             pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
             pMongoProviderDatabaseName = Convert.ToString(GetConfigValue(config["mongoProviderDatabaseName"], "ASPNetProviderDB"));
-            pMongoProviderRolesCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderRolesCollectionName"], "Roles"));
+            pmongoProviderRolesCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderCollectionName"], "Roles"));
 
             //
             // Initialize MongoDB ConnectionString.
@@ -138,7 +138,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
 
             foreach (string rolename in rolenames)
@@ -201,7 +201,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
            
             if (rolename == null || rolename == "")
@@ -243,7 +243,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
             
             if (!RoleExists(rolename))
             {
@@ -297,7 +297,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
             try
             {
@@ -337,7 +337,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
 
 
@@ -379,7 +379,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
 
             if (username == null || username == "")
@@ -423,7 +423,7 @@ namespace ASPNETProvidersForMongoDB
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
             if (roleName == null || roleName == "")
                 throw new ProviderException("Role name cannot be empty or null.");
@@ -463,7 +463,7 @@ namespace ASPNETProvidersForMongoDB
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
 
             if (username == null || username == "")
@@ -503,7 +503,7 @@ namespace ASPNETProvidersForMongoDB
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
             foreach (string rolename in roleNames)
             {
@@ -562,7 +562,7 @@ namespace ASPNETProvidersForMongoDB
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
             try
             {
