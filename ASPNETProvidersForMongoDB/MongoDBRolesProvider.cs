@@ -66,13 +66,13 @@ namespace ASPNETProvidersForMongoDB
             get { return pMongoProviderDatabaseName; }
         }
 
-        private string pMongoProviderUsersCollectionName;
+        private string pMongoProviderRolesCollectionName;
         /// <summary>
         /// Gets the name of the collection in the Mongo Database used to store the user data.
         /// </summary>
         public string MongoProviderUsersCollectionName
         {
-            get { return pMongoProviderUsersCollectionName; }
+            get { return pMongoProviderRolesCollectionName; }
         }
 
         //
@@ -113,7 +113,7 @@ namespace ASPNETProvidersForMongoDB
             pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
             pMongoProviderDatabaseName = Convert.ToString(GetConfigValue(config["mongoProviderDatabaseName"], "ASPNetProviderDB"));
-            pMongoProviderUsersCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderUsersCollectionName"], "Users"));
+            pMongoProviderRolesCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderRolesCollectionName"], "Users"));
 
             //
             // Initialize MongoDB ConnectionString.
@@ -138,7 +138,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
 
             foreach (string rolename in rolenames)
@@ -201,7 +201,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
            
             if (rolename == null || rolename == "")
@@ -243,7 +243,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
             
             if (!RoleExists(rolename))
             {
@@ -297,7 +297,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
             try
             {
@@ -337,7 +337,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
 
 
@@ -379,7 +379,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
 
             if (username == null || username == "")
@@ -423,7 +423,7 @@ namespace ASPNETProvidersForMongoDB
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
             if (roleName == null || roleName == "")
                 throw new ProviderException("Role name cannot be empty or null.");
@@ -463,7 +463,7 @@ namespace ASPNETProvidersForMongoDB
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
 
             if (username == null || username == "")
@@ -503,7 +503,7 @@ namespace ASPNETProvidersForMongoDB
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
             foreach (string rolename in roleNames)
             {
@@ -562,7 +562,7 @@ namespace ASPNETProvidersForMongoDB
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderUsersCollectionName);
+            MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pMongoProviderRolesCollectionName);
 
             try
             {
