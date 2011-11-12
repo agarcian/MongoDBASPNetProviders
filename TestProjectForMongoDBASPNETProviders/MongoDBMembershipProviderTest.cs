@@ -431,7 +431,6 @@ namespace TestProjectForMongoDBASPNETProviders
             Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
         
-        
         [TestMethod]
         public void GetAllUsersTest()
         {
@@ -450,6 +449,7 @@ namespace TestProjectForMongoDBASPNETProviders
             double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
             Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
+
 
     }
 }

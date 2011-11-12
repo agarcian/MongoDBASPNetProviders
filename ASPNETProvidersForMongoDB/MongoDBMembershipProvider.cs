@@ -18,6 +18,10 @@ using System.IO;
 
 namespace ASPNETProvidersForMongoDB
 {
+    /// <summary>
+    /// Implements the membership provider 
+    /// using the MongoDB.
+    /// </summary>
     public sealed class MongoDBMembershipProvider : MembershipProvider
     {
         #region private fields

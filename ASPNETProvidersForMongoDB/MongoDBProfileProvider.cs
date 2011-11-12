@@ -14,6 +14,9 @@ using System.Configuration;
 
 namespace ASPNETProvidersForMongoDB
 {
+    /// <summary>
+    /// Implementation of the ASPNet Profile Provider using MongoDB.
+    /// </summary>
     public class MongoDBProfileProvider : ProfileProvider
     {
 
@@ -75,6 +78,12 @@ namespace ASPNETProvidersForMongoDB
         // A helper function to retrieve config values from the configuration file.
         //
 
+        /// <summary>
+        /// Gets the config value.
+        /// </summary>
+        /// <param name="configValue">The config value.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns></returns>
         private string GetConfigValue(string configValue, string defaultValue)
         {
             if (String.IsNullOrEmpty(configValue))
@@ -88,6 +97,16 @@ namespace ASPNETProvidersForMongoDB
         // System.Configuration.Provider.ProviderBase.Initialize Method
         //
 
+        /// <summary>
+        /// Initializes the provider.
+        /// </summary>
+        /// <param name="name">The friendly name of the provider.</param>
+        /// <param name="config">A collection of the name/value pairs representing the provider-specific attributes specified in the configuration for this provider.</param>
+        /// <exception cref="T:System.ArgumentNullException">The name of the provider is null.</exception>
+        ///   
+        /// <exception cref="T:System.ArgumentException">The name of the provider has a length of zero.</exception>
+        ///   
+        /// <exception cref="T:System.InvalidOperationException">An attempt is made to call <see cref="M:System.Configuration.Provider.ProviderBase.Initialize(System.String,System.Collections.Specialized.NameValueCollection)"/> on a provider after the provider has already been initialized.</exception>
         public override void Initialize(string name, NameValueCollection config)
         {
 
@@ -146,12 +165,24 @@ namespace ASPNETProvidersForMongoDB
 
         private string pApplicationName;
 
+        /// <summary>
+        /// Gets or sets the name of the currently running application.
+        /// </summary>
+        /// <returns>A <see cref="T:System.String"/> that contains the application's shortened name, which does not contain a full path or extension, for example, SimpleAppSettings.</returns>
         public override string ApplicationName
         {
             get { return pApplicationName; }
             set { pApplicationName = value; }
         }
 
+        /// <summary>
+        /// When overridden in a derived class, deletes all user-profile data for profiles in which the last activity date occurred before the specified date.
+        /// </summary>
+        /// <param name="authenticationOption">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption"/> values, specifying whether anonymous, authenticated, or both types of profiles are deleted.</param>
+        /// <param name="userInactiveSinceDate">A <see cref="T:System.DateTime"/> that identifies which user profiles are considered inactive. If the <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate"/>  value of a user profile occurs on or before this date and time, the profile is considered inactive.</param>
+        /// <returns>
+        /// The number of profiles deleted from the data source.
+        /// </returns>
         public override int DeleteInactiveProfiles(ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate)
         {
             int deleteCount = 0;
@@ -196,6 +227,13 @@ namespace ASPNETProvidersForMongoDB
             return deleteCount;
         }
 
+        /// <summary>
+        /// When overridden in a derived class, deletes profile properties and information for profiles that match the supplied list of user names.
+        /// </summary>
+        /// <param name="usernames">A string array of user names for profiles to be deleted.</param>
+        /// <returns>
+        /// The number of profiles deleted from the data source.
+        /// </returns>
         public override int DeleteProfiles(string[] usernames)
         {
             int deleteCount = 0;
@@ -237,6 +275,13 @@ namespace ASPNETProvidersForMongoDB
             return deleteCount;
         }
 
+        /// <summary>
+        /// When overridden in a derived class, deletes profile properties and information for the supplied list of profiles.
+        /// </summary>
+        /// <param name="profiles">A <see cref="T:System.Web.Profile.ProfileInfoCollection"/>  of information about profiles that are to be deleted.</param>
+        /// <returns>
+        /// The number of profiles deleted from the data source.
+        /// </returns>
         public override int DeleteProfiles(ProfileInfoCollection profiles)
         {
             List<string> usernames = new List<string>();
@@ -248,6 +293,18 @@ namespace ASPNETProvidersForMongoDB
             return DeleteProfiles(usernames.ToArray());
         }
 
+        /// <summary>
+        /// When overridden in a derived class, retrieves profile information for profiles in which the last activity date occurred on or before the specified date and the user name matches the specified user name.
+        /// </summary>
+        /// <param name="authenticationOption">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption"/> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</param>
+        /// <param name="usernameToMatch">The user name to search for.</param>
+        /// <param name="userInactiveSinceDate">A <see cref="T:System.DateTime"/> that identifies which user profiles are considered inactive. If the <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate"/> value of a user profile occurs on or before this date and time, the profile is considered inactive.</param>
+        /// <param name="pageIndex">The index of the page of results to return.</param>
+        /// <param name="pageSize">The size of the page of results to return.</param>
+        /// <param name="totalRecords">When this method returns, contains the total number of profiles.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Profile.ProfileInfoCollection"/> containing user profile information for inactive profiles where the user name matches the supplied <paramref name="usernameToMatch"/> parameter.
+        /// </returns>
         public override ProfileInfoCollection FindInactiveProfilesByUserName(ProfileAuthenticationOption authenticationOption, string usernameToMatch, DateTime userInactiveSinceDate, int pageIndex, int pageSize, out int totalRecords)
         {
             CheckParameters(pageIndex, pageSize);
@@ -256,6 +313,17 @@ namespace ASPNETProvidersForMongoDB
                   pageIndex, pageSize, out totalRecords);
         }
 
+        /// <summary>
+        /// When overridden in a derived class, retrieves profile information for profiles in which the user name matches the specified user names.
+        /// </summary>
+        /// <param name="authenticationOption">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption"/> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</param>
+        /// <param name="usernameToMatch">The user name to search for.</param>
+        /// <param name="pageIndex">The index of the page of results to return.</param>
+        /// <param name="pageSize">The size of the page of results to return.</param>
+        /// <param name="totalRecords">When this method returns, contains the total number of profiles.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Profile.ProfileInfoCollection"/> containing user-profile information for profiles where the user name matches the supplied <paramref name="usernameToMatch"/> parameter.
+        /// </returns>
         public override ProfileInfoCollection FindProfilesByUserName(ProfileAuthenticationOption authenticationOption, string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             CheckParameters(pageIndex, pageSize);
@@ -264,6 +332,17 @@ namespace ASPNETProvidersForMongoDB
                 null, pageIndex, pageSize, out totalRecords);
         }
 
+        /// <summary>
+        /// When overridden in a derived class, retrieves user-profile data from the data source for profiles in which the last activity date occurred on or before the specified date.
+        /// </summary>
+        /// <param name="authenticationOption">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption"/> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</param>
+        /// <param name="userInactiveSinceDate">A <see cref="T:System.DateTime"/> that identifies which user profiles are considered inactive. If the <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate"/>  of a user profile occurs on or before this date and time, the profile is considered inactive.</param>
+        /// <param name="pageIndex">The index of the page of results to return.</param>
+        /// <param name="pageSize">The size of the page of results to return.</param>
+        /// <param name="totalRecords">When this method returns, contains the total number of profiles.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Profile.ProfileInfoCollection"/> containing user-profile information about the inactive profiles.
+        /// </returns>
         public override ProfileInfoCollection GetAllInactiveProfiles(ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate, int pageIndex, int pageSize, out int totalRecords)
         {
             CheckParameters(pageIndex, pageSize);
@@ -272,6 +351,16 @@ namespace ASPNETProvidersForMongoDB
                   pageIndex, pageSize, out totalRecords);
         }
 
+        /// <summary>
+        /// When overridden in a derived class, retrieves user profile data for all profiles in the data source.
+        /// </summary>
+        /// <param name="authenticationOption">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption"/> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</param>
+        /// <param name="pageIndex">The index of the page of results to return.</param>
+        /// <param name="pageSize">The size of the page of results to return.</param>
+        /// <param name="totalRecords">When this method returns, contains the total number of profiles.</param>
+        /// <returns>
+        /// A <see cref="T:System.Web.Profile.ProfileInfoCollection"/> containing user-profile information for all profiles in the data source.
+        /// </returns>
         public override ProfileInfoCollection GetAllProfiles(ProfileAuthenticationOption authenticationOption, int pageIndex, int pageSize, out int totalRecords)
         {
             CheckParameters(pageIndex, pageSize);
@@ -280,6 +369,14 @@ namespace ASPNETProvidersForMongoDB
                   pageIndex, pageSize, out totalRecords);
         }
 
+        /// <summary>
+        /// When overridden in a derived class, returns the number of profiles in which the last activity date occurred on or before the specified date.
+        /// </summary>
+        /// <param name="authenticationOption">One of the <see cref="T:System.Web.Profile.ProfileAuthenticationOption"/> values, specifying whether anonymous, authenticated, or both types of profiles are returned.</param>
+        /// <param name="userInactiveSinceDate">A <see cref="T:System.DateTime"/> that identifies which user profiles are considered inactive. If the <see cref="P:System.Web.Profile.ProfileInfo.LastActivityDate"/>  of a user profile occurs on or before this date and time, the profile is considered inactive.</param>
+        /// <returns>
+        /// The number of profiles in which the last activity date occurred on or before the specified date.
+        /// </returns>
         public override int GetNumberOfInactiveProfiles(ProfileAuthenticationOption authenticationOption, DateTime userInactiveSinceDate)
         {
            
@@ -302,6 +399,16 @@ namespace ASPNETProvidersForMongoDB
         // Specifying a pageIndex of 0 retrieves a count of the results only.
         //
 
+        /// <summary>
+        /// Gets the profile info.
+        /// </summary>
+        /// <param name="authenticationOption">The authentication option.</param>
+        /// <param name="usernameToMatch">The username to match.</param>
+        /// <param name="userInactiveSinceDate">The user inactive since date.</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="totalRecords">The total records.</param>
+        /// <returns></returns>
         private ProfileInfoCollection GetProfileInfo(
           ProfileAuthenticationOption authenticationOption,
           string usernameToMatch,
@@ -392,13 +499,13 @@ namespace ASPNETProvidersForMongoDB
         }
 
 
-        //
-        // CheckParameters
-        // Verifies input parameters for page size and page index. 
-        // Called by GetAllProfiles, GetAllInactiveProfiles, 
-        // FindProfilesByUserName, and FindInactiveProfilesByUserName.
-        //
 
+
+        /// <summary>
+        /// Checks the parameters.
+        /// </summary>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
         private void CheckParameters(int pageIndex, int pageSize)
         {
             if (pageIndex < 0)
@@ -407,12 +514,11 @@ namespace ASPNETProvidersForMongoDB
                 throw new ArgumentException("Page size must be greater than 0.");
         }
 
-        //
-        // GetProfileInfoFromReader
-        //  Takes the current row from the MongoDB document
-        // and populates a ProfileInfo object from the values. 
-        //
-
+        /// <summary>
+        /// Gets the profile info from reader.
+        /// </summary>
+        /// <param name="profile">The profile.</param>
+        /// <returns></returns>
         private ProfileInfo GetProfileInfoFromReader(BsonDocument profile)
         {
             string username = profile["Username"].AsString;
@@ -434,6 +540,12 @@ namespace ASPNETProvidersForMongoDB
         }
 
 
+        /// <summary>
+        /// Gets the property values.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="ppc">The PPC.</param>
+        /// <returns></returns>
         public override System.Configuration.SettingsPropertyValueCollection GetPropertyValues(System.Configuration.SettingsContext context, System.Configuration.SettingsPropertyCollection ppc)
         {
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
@@ -533,6 +645,11 @@ namespace ASPNETProvidersForMongoDB
             return svc;
         }
 
+        /// <summary>
+        /// Sets the property values.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="ppvc">The PPVC.</param>
         public override void SetPropertyValues(System.Configuration.SettingsContext context, System.Configuration.SettingsPropertyValueCollection ppvc)
         {
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
