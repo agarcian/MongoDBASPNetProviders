@@ -113,7 +113,7 @@ namespace ASPNETProvidersForMongoDB
             pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
             pMongoProviderDatabaseName = Convert.ToString(GetConfigValue(config["mongoProviderDatabaseName"], "ASPNetProviderDB"));
-            pMongoProviderRolesCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderRolesCollectionName"], "Users"));
+            pMongoProviderRolesCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderRolesCollectionName"], "Roles"));
 
             //
             // Initialize MongoDB ConnectionString.
