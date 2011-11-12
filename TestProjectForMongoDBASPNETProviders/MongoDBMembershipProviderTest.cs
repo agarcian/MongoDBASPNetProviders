@@ -19,11 +19,7 @@ namespace TestProjectForMongoDBASPNETProviders
         static string mongoDBConnString = ConfigurationManager.ConnectionStrings["MongoProvidersDBConnStr"].ConnectionString;
         static MongoDBMembershipProvider mongoProvider = new MongoDBMembershipProvider();
 
-
         static string[] commonUsernamesUsedInTests = new string[] { "usernamexyz" };
-
-
-
 
         /// <summary>
         /// Runs once before any test in this class runs and prepopulates the database with some values to be used in the tests.
@@ -38,16 +34,7 @@ namespace TestProjectForMongoDBASPNETProviders
             mongoProvider = (MongoDBMembershipProvider)Membership.Provider;
 
 
-            // Initializes the database with 10 sample users.
-            MembershipCreateStatus status;
-            for (int i = 1; i <= 10; i++)
-            {
-                mongoProvider.CreateUser("username" + i, "password" + i, "user" + i + "@example.com",
-                    "What is MongoDB?",
-                    "A cool NoSQL database", true, Guid.NewGuid(), out status);
-            }
-
-
+            
 
             // Clean up common usernames used accross the different tests.
             foreach (string username in commonUsernamesUsedInTests)
@@ -84,7 +71,6 @@ namespace TestProjectForMongoDBASPNETProviders
 
         }
 
-
         /// <summary>
         /// Destroys users that need to be non-existant in the individual tests.
         /// </summary>
@@ -94,7 +80,16 @@ namespace TestProjectForMongoDBASPNETProviders
         [TestInitialize]
         public void InitializeTest()
         {
-            
+            // Initializes the database with 10 sample users.
+            MembershipCreateStatus status;
+            for (int i = 1; i <= 10; i++)
+            {
+                mongoProvider.CreateUser("username" + i, "password" + i, "user" + i + "@example.com",
+                    "What is MongoDB?",
+                    "A cool NoSQL database", true, Guid.NewGuid(), out status);
+            }
+
+
         }
 
         /// <summary>
@@ -183,8 +178,6 @@ namespace TestProjectForMongoDBASPNETProviders
             Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
 
-
-
         [TestMethod]
         public void DeleteUserTest()
         {
@@ -206,6 +199,25 @@ namespace TestProjectForMongoDBASPNETProviders
 
             user = mongoProvider.GetUser("username1", false);
             Assert.IsNull(user, "Should not be able to retrieve this user");
+            ///// Delete an existing user /////////////////////////////////////////////////////////////////////
+
+
+            ///// Delete an existing user with alternate casing ////////////////////////////////////////////////
+            success = mongoProvider.DeleteUser("USERName2", true);
+            Assert.IsTrue(success, "Should have been able to delete the user");
+
+            user = mongoProvider.GetUser("username2", false);
+            Assert.IsNull(user, "Should not be able to retrieve this user");
+
+            user = mongoProvider.GetUser("username2", true);
+            Assert.IsNull(user, "Should not be able to retrieve this user");
+
+            user = mongoProvider.GetUser("USERName2", false);
+            Assert.IsNull(user, "Should not be able to retrieve this user");
+
+            user = mongoProvider.GetUser("USERName2", true);
+            Assert.IsNull(user, "Should not be able to retrieve this user");
+
             ///// Delete an existing user /////////////////////////////////////////////////////////////////////
             
 
@@ -340,7 +352,6 @@ namespace TestProjectForMongoDBASPNETProviders
             double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
             Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
-
 
         [TestMethod]
         public void GetAllUsersTest()

@@ -208,7 +208,7 @@ namespace ASPNETProvidersForMongoDB
             //Build a query to find the user id and then update with new password.
             MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
             var query = Query.And(
-                Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
+                Query.EQ("UsernameLowerCase", username.ToLower()),
                 Query.EQ("ApplicationName", pApplicationName)
             );
             var update = Update
@@ -390,7 +390,7 @@ namespace ASPNETProvidersForMongoDB
             //Build a query to find the user id and then update with new password.
             MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
             var query = Query.And(
-                Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
+                Query.EQ("UsernameLowerCase", username.ToLower()),
                 Query.EQ("ApplicationName", pApplicationName)
             );
             var update = Update
@@ -505,8 +505,10 @@ namespace ASPNETProvidersForMongoDB
                     BsonDocument user = new BsonDocument()
                         .Add("PKID", providerUserKey.ToString())
                         .Add("Username", username)
+                        .Add("UsernameLowerCase", username.ToLower())
                         .Add("Password", EncodePassword(password))
                         .Add("Email", email)
+                        .Add("EmailLowerCase", email.ToLower())
                         .Add("PasswordQuestion", passwordQuestion)
                         .Add("PasswordAnswer", EncodePassword(passwordAnswer))
                         .Add("IsApproved", isApproved)
@@ -578,7 +580,7 @@ namespace ASPNETProvidersForMongoDB
 
             var query = Query.And(
                Query.EQ("ApplicationName", pApplicationName),
-               Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i"))
+               Query.EQ("UsernameLowerCase", username.ToLower())
             );
 
             var sortBy = SortBy.Ascending("Username");
@@ -640,7 +642,7 @@ namespace ASPNETProvidersForMongoDB
             var query = Query.EQ("ApplicationName", ApplicationName);
             var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
             cursor.Skip = Math.Max(0, pageSize * (pageIndex - 1));
-            cursor.SetFields(new string[] {"PKID", "Username", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
+            cursor.SetFields(new string[] {"PKID", "Username", "UsernameLowerCase", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
             cursor.Limit = pageSize;
 
             try
@@ -762,7 +764,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                     Query.EQ("ApplicationName", pApplicationName),
                     // This regex makes the search for the username case insensitive.
-                     Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i"))
+                     Query.EQ("UsernameLowerCase", username.ToLower())
                 );
 
                 var user = users.FindOne(query);
@@ -849,7 +851,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                     Query.EQ("ApplicationName", ApplicationName),
                     // This regex makes the search for the username case insensitive.
-                     Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i"))
+                     Query.EQ("UsernameLowerCase", username.ToLower())
                     );
 
                 var user = users.FindOne(query);
@@ -869,7 +871,7 @@ namespace ASPNETProvidersForMongoDB
                         var updateQuery = Query.And(
                             Query.EQ("ApplicationName", ApplicationName),
                             // This regex makes the search for the username case insensitive.
-                            Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i"))
+                            Query.EQ("UsernameLowerCase", username.ToLower())
                         );
 
                         var update = Update.Set("LastActivityDate", DateTime.Now);
@@ -1024,7 +1026,7 @@ namespace ASPNETProvidersForMongoDB
                 var updateQuery = Query.And(
                     Query.EQ("ApplicationName", ApplicationName),
                     // This regex makes the search for the username case insensitive.
-                    Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i"))
+                    Query.EQ("UsernameLowerCase", username.ToLower())
                     );
 
             var update = Update.Set("IsLockedOut", false)
@@ -1079,7 +1081,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                 Query.EQ("ApplicationName", ApplicationName),
                 // This regex makes the search for the username case insensitive.
-                Query.Matches("Email", new BsonRegularExpression(email, "i"))
+                Query.EQ("EmailLowerCase", email.ToLower())
                 );
 
                 var usr = users.FindOne(query);
@@ -1163,7 +1165,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                 Query.EQ("ApplicationName", ApplicationName),
                 // This regex makes the search for the username case insensitive.
-                Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i"))
+                Query.EQ("UsernameLowerCase", username.ToLower())
                 );
 
                 var usr = users.FindOne(query);
@@ -1192,7 +1194,7 @@ namespace ASPNETProvidersForMongoDB
                 var query2 = Query.And(
                 Query.EQ("ApplicationName", ApplicationName),
                 // This regex makes the search for the username case insensitive.
-                Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
+                Query.EQ("UsernameLowerCase", username.ToLower()),
                 Query.EQ("IsLockedOut", false));
 
                 var updateQuery = Update.Set("Password", EncodePassword(newPassword))
@@ -1247,7 +1249,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                     Query.EQ("ApplicationName", pApplicationName),
                     // This regex makes the search for the username case insensitive.
-                    Query.Matches("Username", new BsonRegularExpression(user.UserName, "i"))
+                    Query.EQ("UsernameLowerCase", user.UserName.ToLower())
                     );
 
                 var updateQuery = Update.Set("Email", user.Email)
@@ -1300,7 +1302,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                     Query.EQ("ApplicationName", pApplicationName),
                     // This regex makes the search for the username case insensitive.
-                    Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
+                    Query.EQ("UsernameLowerCase", username.ToLower()),
                     Query.EQ("IsLockedOut", false));
 
                 var user = users.FindOne(query);
@@ -1321,7 +1323,7 @@ namespace ASPNETProvidersForMongoDB
                         var query2 = Query.And(
                             Query.EQ("ApplicationName", pApplicationName),
                             // This regex makes the search for the username case insensitive.
-                            Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i"))
+                            Query.EQ("UsernameLowerCase", username.ToLower())
                             );
 
                         var updateQuery = Update.Set("LastLoginDate", DateTime.Now);
@@ -1378,7 +1380,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                         Query.EQ("ApplicationName", pApplicationName),
                         // This regex makes the search for the username case insensitive.
-                        Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i"))
+                        Query.EQ("UsernameLowerCase", username.ToLower())
                         );
 
                 var user = users.FindOne(query);
@@ -1602,21 +1604,24 @@ namespace ASPNETProvidersForMongoDB
             //Build a query to find the user id and then update with new password.
             MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
-            var query = Query.And(
-                Query.EQ("ApplicationName", pApplicationName),
-                // This regex makes the search for the username case insensitive.
-                Query.Matches("Username", new BsonRegularExpression(usernameToMatch, "i"))
-                );
-
             try
             {
+                // Build this query to do a count, which is fast and is needed to return the total count.
+                var query = Query.And(
+                    Query.EQ("ApplicationName", pApplicationName),
+                    // This regex makes the search for the username case insensitive.
+                    Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.ToLower() + "*"))
+                    );
+
                 var cursor = users.Find(query);
                 totalRecords = (int) users.Count();
+
 
                 if (totalRecords == 0) { return usersCollection; }
 
                 var query1 = Query.And(Query.EQ("ApplicationName", ApplicationName),
-                    Query.Matches("Username", new BsonRegularExpression(usernameToMatch + "*", "i")));
+                    Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.ToLower() + "*"))
+                    );
 
                 var cursor1 = users.Find(query1).SetSortOrder(new string[] { "Username" });
                 cursor1.Skip = Math.Max(0, pageSize * (pageIndex - 1));
@@ -1674,7 +1679,7 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var query = Query.And(
-                    Query.Matches("Email",new BsonRegularExpression(emailToMatch + "*", "i")),
+                    Query.Matches("EmailLowerCase",new BsonRegularExpression(emailToMatch.ToLower() + "*")),
                     Query.EQ("ApplicationName", pApplicationName)
                     );
 

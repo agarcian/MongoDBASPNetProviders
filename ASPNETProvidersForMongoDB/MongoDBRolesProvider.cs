@@ -390,7 +390,7 @@ namespace ASPNETProvidersForMongoDB
             {
 
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
+                     Query.EQ("UsernameLowerCase", username.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 var cursor = roles.Find(query);
@@ -476,7 +476,7 @@ namespace ASPNETProvidersForMongoDB
             {
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
                      Query.EQ("Rolename", roleName),
-                     Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
+                     Query.EQ("UsernameLowerCase", username.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 int count = (int) roles.Count(query);
@@ -533,7 +533,7 @@ namespace ASPNETProvidersForMongoDB
                     foreach (string rolename in roleNames)
                     {
                         var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                            Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
+                            Query.EQ("UsernameLowerCase", username.ToLower()),
                             Query.EQ("Rolename", rolename),
                             Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
