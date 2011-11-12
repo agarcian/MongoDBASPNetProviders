@@ -455,7 +455,7 @@ namespace ASPNETProvidersForMongoDB
                 {
                     SettingsPropertyValue pv = new SettingsPropertyValue(prop);
 
-                    var query = Query.And(Query.EQ("Username", username),
+                    var query = Query.And(Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
                         Query.EQ("ApplicationName", pApplicationName),
                         Query.EQ("IsAnonymous", !isAuthenticated));
 
@@ -549,7 +549,7 @@ namespace ASPNETProvidersForMongoDB
 
 
             var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                Query.EQ("Username", username));
+                Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")));
 
             var existingProfile = profiles.FindOne(query);
 
@@ -583,7 +583,7 @@ namespace ASPNETProvidersForMongoDB
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
             try
             {
-                var query = Query.And(Query.EQ("Username", username),
+                var query = Query.And(Query.Matches("Username", new BsonRegularExpression("/^" + username + "$", "i")),
                     Query.EQ("ApplicationName", pApplicationName),
                     Query.EQ("IsAnonymous", !isAuthenticated));
 
