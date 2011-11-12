@@ -354,6 +354,85 @@ namespace TestProjectForMongoDBASPNETProviders
         }
 
         [TestMethod]
+        public void PasswordChangeTest()
+        {
+            DateTime startTest = DateTime.Now;
+
+            MembershipUser user;
+            MembershipCreateStatus status;
+            bool success;
+
+            string username = "usernamexyz";
+            string upperCaseUsername = "UsernameXYZ";
+            string email = "userxyz@example.com";
+            string upperCaseEmail = "UserXYZ@example.com";
+            string password = "12345678";
+            string newPassword = "newPasswordXYZ";
+            string question = "What is MongoDB?";
+            string answer = "A cool NoSQL database";
+            bool isApproved = true;
+
+            // Create a user.  This is a valid call.
+            user = mongoProvider.CreateUser(username, password, email,
+                question, answer, isApproved, Guid.NewGuid(), out status);
+
+            Assert.IsNotNull(user, "A user should have been created");
+
+
+            /// Validate that the password cannot be changed /////////////////////////////////////////////////
+            user = mongoProvider.GetUser(username, false);
+
+            success = user.ChangePassword(password, newPassword);
+            Assert.IsTrue(success, "Should have been successful");
+
+            user = mongoProvider.GetUser(username, false);
+
+            success = mongoProvider.ValidateUser(username, password);
+            Assert.IsFalse(success, "Should not have been successful");
+
+            success = mongoProvider.ValidateUser(username, newPassword);
+            Assert.IsTrue(success, "Should have been successful");
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            /// Validate that the password cannot be changed with different casing ///////////////////////////////
+            user = mongoProvider.GetUser(username.ToUpper(), false);
+
+            success = mongoProvider.ValidateUser(username, password);
+            Assert.IsFalse(success, "Should not have been successful");
+
+            success = mongoProvider.ValidateUser(username, newPassword);
+            Assert.IsTrue(success, "Should have been successful");
+
+            success = mongoProvider.ValidateUser(username.ToUpper(), newPassword);
+            Assert.IsTrue(success, "Should have been successful");
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            /// Validate that passwords are case sensitive ///////////////////////////////////////////////////////
+            user = mongoProvider.GetUser(username, false);
+
+            success = mongoProvider.ValidateUser(username, newPassword);
+            Assert.IsTrue(success, "Should have been successful");
+
+            success = mongoProvider.ValidateUser(username, newPassword.ToUpper());
+            Assert.IsFalse(success, "Should not have been successful");
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+            double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
+            Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
+        }
+        
+        
+        [TestMethod]
         public void GetAllUsersTest()
         {
             DateTime startTest = DateTime.Now;
