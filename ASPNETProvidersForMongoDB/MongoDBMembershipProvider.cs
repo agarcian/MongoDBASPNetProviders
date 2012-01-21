@@ -977,7 +977,7 @@ namespace ASPNETProvidersForMongoDB
         private MembershipUser GetUserFromReader(BsonDocument doc)
         {
             object providerUserKey = Guid.Parse(doc["PKID"].AsString);
-            string username = doc["Username"].AsString;
+            string username = doc["UserName"].AsString;
             string email = doc["Email"].AsString; ;
             string passwordQuestion = doc.Contains("PasswordQuestion") ? doc["PasswordQuestion"].AsString : null;
             string comment = doc.Contains("Comment") ? doc["Comment"].AsString : null;
@@ -1091,7 +1091,7 @@ namespace ASPNETProvidersForMongoDB
                 var usr = users.FindOne(query);
 
                 if (usr != null)
-                    username = usr["Username"].AsString;
+                    username = usr["UserName"].AsString;
                 
             }
             catch (ApplicationException e)

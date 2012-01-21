@@ -531,7 +531,7 @@ namespace ASPNETProvidersForMongoDB
         /// <returns></returns>
         private ProfileInfo GetProfileInfoFromReader(BsonDocument profile)
         {
-            string username = profile["Username"].AsString;
+            string username = profile["UserName"].AsString;
 
             DateTime lastActivityDate = new DateTime();
             if (profile["LastActivityDate"] != BsonNull.Value)
@@ -563,7 +563,7 @@ namespace ASPNETProvidersForMongoDB
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
 
-            string username = (string)context["Username"];
+            string username = (string)context["UserName"];
             bool isAuthenticated = (bool)context["IsAuthenticated"];
 
             // The serializeAs attribute is ignored in this provider implementation.
@@ -667,7 +667,7 @@ namespace ASPNETProvidersForMongoDB
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
 
 
-            string username = (string)context["Username"];
+            string username = (string)context["UserName"];
             bool isAuthenticated = (bool)context["IsAuthenticated"];
 
             // Create profile if does not exist.

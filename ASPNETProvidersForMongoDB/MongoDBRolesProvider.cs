@@ -349,7 +349,7 @@ namespace ASPNETProvidersForMongoDB
                 
                 foreach(var role in cursor)
                 {
-                    userNames.Add(role["Username"].AsString);
+                    userNames.Add(role["UserName"].AsString);
                 }
             }
             catch (ApplicationException e)
@@ -498,7 +498,7 @@ namespace ASPNETProvidersForMongoDB
 
                 foreach (var role in cursor)
                 {
-                    userNames.Add(role["Username"].AsString);
+                    userNames.Add(role["UserName"].AsString);
                 }
             }
             catch (ApplicationException e)
