@@ -447,10 +447,10 @@ namespace ASPNETProvidersForMongoDB
             switch (authenticationOption)
             {
                 case ProfileAuthenticationOption.Anonymous:
-                    query = Query.And(query, Query.LT("IsAnonymous", true));
+                    query = Query.And(query, Query.EQ("IsAnonymous", true));
                     break;
                 case ProfileAuthenticationOption.Authenticated:
-                    query = Query.And(query, Query.LT("IsAnonymous", false));
+                    query = Query.And(query, Query.EQ("IsAnonymous", false));
                     break;
                 default:
                     break;
@@ -636,7 +636,7 @@ namespace ASPNETProvidersForMongoDB
             {
                 if (WriteExceptionsToEventLog)
                 {
-                    WriteToEventLog(e, "AddUsersToRoles");
+                    WriteToEventLog(e, "GetPropertyValues");
                 }
             }
 
