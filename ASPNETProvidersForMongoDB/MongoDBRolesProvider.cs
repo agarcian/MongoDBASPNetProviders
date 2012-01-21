@@ -193,8 +193,8 @@ namespace ASPNETProvidersForMongoDB
                 {
                     foreach (string rolename in rolenames)
                     {
-                        BsonDocument role_user_duple = new BsonDocument().Add("RoleName", rolename)
-                            .Add("UserName", username)
+                        BsonDocument role_user_duple = new BsonDocument().Add("Rolename", rolename)
+                            .Add("Username", username)
                             .Add("ApplicationName", pApplicationName)
                             .Add("RecordType", RecordType.RoleToUser.ToString());  // We will be using the same table.  Add a record type to store everything in the same table.
 
@@ -241,7 +241,7 @@ namespace ASPNETProvidersForMongoDB
 
             try
             {
-                BsonDocument role = new BsonDocument().Add("RoleName", rolename)
+                BsonDocument role = new BsonDocument().Add("Rolename", rolename)
                             .Add("ApplicationName", pApplicationName)
                             .Add("RecordType", RecordType.RoleDefinition.ToString());  // We will be using the same table.  Add a record type to store everything in the same table.
 
@@ -292,7 +292,7 @@ namespace ASPNETProvidersForMongoDB
             {
                 // Remove the role.
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                    Query.EQ("RoleName", rolename),
+                    Query.EQ("Rolename", rolename),
                     Query.EQ("RecordType", RecordType.RoleDefinition.ToString()));
 
                 bSuccess = roles.FindAndRemove(query, SortBy.Null).Ok;
@@ -301,7 +301,7 @@ namespace ASPNETProvidersForMongoDB
                 {
                     // Remove users associated to the role.
                     var query2 = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                    Query.EQ("RoleName", rolename),
+                    Query.EQ("Rolename", rolename),
                     Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                     bSuccess = roles.Remove(query2).Ok;
@@ -341,15 +341,15 @@ namespace ASPNETProvidersForMongoDB
             {
                 
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("RoleName", rolename),
+                     Query.EQ("Rolename", rolename),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()),
-                     Query.Matches("UserName", new BsonRegularExpression(usernameToMatch + "*", "i")) );
+                     Query.Matches("Username", new BsonRegularExpression(usernameToMatch + "*", "i")) );
 
                 var cursor = roles.Find(query);
                 
                 foreach(var role in cursor)
                 {
-                    userNames.Add(role["UserName"].AsString);
+                    userNames.Add(role["Username"].AsString);
                 }
             }
             catch (ApplicationException e)
@@ -393,11 +393,11 @@ namespace ASPNETProvidersForMongoDB
                      Query.EQ("RecordType", RecordType.RoleDefinition.ToString()));
 
                 var cursor = roles.Find(query);
-                cursor.SetFields(new string[] { "RoleName" });
+                cursor.SetFields(new string[] { "Rolename" });
                 
                 foreach (var role in cursor)
                 {
-                    roleNames.Add(role["RoleName"].AsString);
+                    roleNames.Add(role["Rolename"].AsString);
                 }
             }
             catch (ApplicationException e)
@@ -448,7 +448,7 @@ namespace ASPNETProvidersForMongoDB
 
                 foreach (var role in cursor)
                 {
-                    roleNames.Add(role["RoleName"].AsString);
+                    roleNames.Add(role["Rolename"].AsString);
                 }
             }
             catch (ApplicationException e)
@@ -491,14 +491,14 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("RoleName", roleName),
+                     Query.EQ("Rolename", roleName),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 var cursor = roles.Find(query);
 
                 foreach (var role in cursor)
                 {
-                    userNames.Add(role["UserName"].AsString);
+                    userNames.Add(role["Username"].AsString);
                 }
             }
             catch (ApplicationException e)
@@ -541,7 +541,7 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("RoleName", roleName),
+                     Query.EQ("Rolename", roleName),
                      Query.EQ("UsernameLowerCase", username.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
@@ -605,7 +605,7 @@ namespace ASPNETProvidersForMongoDB
                     {
                         var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
                             Query.EQ("UsernameLowerCase", username.ToLower()),
-                            Query.EQ("RoleName", rolename),
+                            Query.EQ("Rolename", rolename),
                             Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                        bool bSuccess = roles.Remove(query).Ok;
@@ -645,7 +645,7 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("RoleName", roleName),
+                     Query.EQ("Rolename", roleName),
                      Query.EQ("RecordType", RecordType.RoleDefinition.ToString()));
 
                 int count = (int) roles.Count(query);
