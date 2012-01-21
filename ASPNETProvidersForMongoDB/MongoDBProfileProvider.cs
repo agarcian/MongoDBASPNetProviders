@@ -156,6 +156,16 @@ namespace ASPNETProvidersForMongoDB
             }
 
             connectionString = pConnectionStringSettings.ConnectionString;
+
+
+            // Ensure index.
+            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+
+            MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
+            profiles.EnsureIndex("UsernameLowerCase");
+
+
         }
 
 
@@ -242,7 +252,7 @@ namespace ASPNETProvidersForMongoDB
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
-
+           
 
             try
             {
@@ -251,7 +261,7 @@ namespace ASPNETProvidersForMongoDB
                 {
 
                     var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Username", user));
+                     Query.EQ("UsernameLowerCase", user.ToLower()));
 
                     profiles.Remove(query, SafeMode.False);  // Makes it fast.
 
@@ -430,7 +440,7 @@ namespace ASPNETProvidersForMongoDB
             
             if (usernameToMatch != null)
             {
-                query = Query.And(query, Query.EQ("Username", usernameToMatch));
+                query = Query.And(query, Query.EQ("UsernameLowerCase", usernameToMatch.ToLower()));
             }
 
             // If searching for inactive profiles, 
@@ -553,8 +563,7 @@ namespace ASPNETProvidersForMongoDB
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
 
-
-            string username = (string)context["UserName"];
+            string username = (string)context["Username"];
             bool isAuthenticated = (bool)context["IsAuthenticated"];
 
             // The serializeAs attribute is ignored in this provider implementation.
@@ -658,7 +667,7 @@ namespace ASPNETProvidersForMongoDB
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
 
 
-            string username = (string)context["UserName"];
+            string username = (string)context["Username"];
             bool isAuthenticated = (bool)context["IsAuthenticated"];
 
             // Create profile if does not exist.
@@ -677,6 +686,7 @@ namespace ASPNETProvidersForMongoDB
 
             profile.Add("ApplicationName", pApplicationName)
                 .Add("Username", username)
+                .Add("UsernameLowerCase", username.ToLower())
                 .Add("LastActivityDate", DateTime.Now)
                 .Add("LastUpdatedDate", DateTime.Now)
                 .Add("IsAnonymous", !isAuthenticated);
