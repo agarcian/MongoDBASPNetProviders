@@ -481,7 +481,7 @@ namespace ASPNETProvidersForMongoDB
                 if (pageSize == 0) { return profilesCollection; }
 
                 var cursor = profiles.Find(query);
-                cursor.SetFields(new string[] {"Username", "LastActivityDate", "LastUpdatedDate", "IsAnonymous"});
+                cursor.SetFields(new string[] {"UserName", "LastActivityDate", "LastUpdatedDate", "IsAnonymous"});
                 cursor.Skip =  Math.Max(0, pageSize * (pageIndex - 1));
                 cursor.Limit = pageSize;
 
@@ -685,7 +685,7 @@ namespace ASPNETProvidersForMongoDB
             var profile = new BsonDocument();
 
             profile.Add("ApplicationName", pApplicationName)
-                .Add("Username", username)
+                .Add("UserName", username)
                 .Add("UsernameLowerCase", username.ToLower())
                 .Add("LastActivityDate", DateTime.Now)
                 .Add("LastUpdatedDate", DateTime.Now)

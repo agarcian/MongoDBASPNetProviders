@@ -508,7 +508,7 @@ namespace ASPNETProvidersForMongoDB
                 {
                     BsonDocument user = new BsonDocument()
                         .Add("PKID", providerUserKey.ToString())
-                        .Add("Username", username)
+                        .Add("UserName", username)
                         .Add("UsernameLowerCase", username.ToLower())
                         .Add("Password", EncodePassword(password))
                         .Add("Email", email)
@@ -587,7 +587,7 @@ namespace ASPNETProvidersForMongoDB
                Query.EQ("UsernameLowerCase", username.ToLower())
             );
 
-            var sortBy = SortBy.Ascending("Username");
+            var sortBy = SortBy.Ascending("UserName");
 
 
             bool bSuccess = false;
@@ -644,9 +644,9 @@ namespace ASPNETProvidersForMongoDB
             MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
             var query = Query.EQ("ApplicationName", ApplicationName);
-            var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
+            var cursor = users.Find(query).SetSortOrder(new string[] { "UserName" });
             cursor.Skip = Math.Max(0, pageSize * (pageIndex - 1));
-            cursor.SetFields(new string[] {"PKID", "Username", "UsernameLowerCase", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
+            cursor.SetFields(new string[] {"PKID", "UserName", "UsernameLowerCase", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
             cursor.Limit = pageSize;
 
             try
@@ -1627,9 +1627,9 @@ namespace ASPNETProvidersForMongoDB
                     Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.ToLower() + "*"))
                     );
 
-                var cursor1 = users.Find(query1).SetSortOrder(new string[] { "Username" });
+                var cursor1 = users.Find(query1).SetSortOrder(new string[] { "UserName" });
                 cursor1.Skip = Math.Max(0, pageSize * (pageIndex - 1));
-                cursor1.SetFields(new string[] { "PKID", "Username", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
+                cursor1.SetFields(new string[] { "PKID", "UserName", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
                 cursor1.Limit = pageSize;
 
                 foreach (var user in cursor1)
@@ -1687,9 +1687,9 @@ namespace ASPNETProvidersForMongoDB
                     Query.EQ("ApplicationName", pApplicationName)
                     );
 
-                var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
+                var cursor = users.Find(query).SetSortOrder(new string[] { "UserName" });
                 cursor.Skip = Math.Max(0, pageSize * (pageIndex - 1));
-                cursor.SetFields(new string[] { "PKID", "Username", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
+                cursor.SetFields(new string[] { "PKID", "UserName", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
                 cursor.Limit = pageSize;
 
                 foreach (var user in cursor)
