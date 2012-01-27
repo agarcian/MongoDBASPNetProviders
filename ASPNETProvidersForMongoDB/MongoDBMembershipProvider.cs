@@ -1601,6 +1601,12 @@ namespace ASPNETProvidersForMongoDB
         public override MembershipUserCollection FindUsersByName(string usernameToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             MembershipUserCollection usersCollection = new MembershipUserCollection();
+            totalRecords = 0;
+
+            // Return empty results if no usernameToMatch was passed.
+            if (String.IsNullOrWhiteSpace(usernameToMatch))
+                return usersCollection;
+
 
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
@@ -1614,7 +1620,7 @@ namespace ASPNETProvidersForMongoDB
                 var query = Query.And(
                     Query.EQ("ApplicationName", pApplicationName),
                     // This regex makes the search for the username case insensitive.
-                    Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.ToLower() + "*"))
+                    Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.Trim().ToLower() + "*"))
                     );
 
                 var cursor = users.Find(query);
@@ -1624,7 +1630,7 @@ namespace ASPNETProvidersForMongoDB
                 if (totalRecords == 0) { return usersCollection; }
 
                 var query1 = Query.And(Query.EQ("ApplicationName", ApplicationName),
-                    Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.ToLower() + "*"))
+                    Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.Trim().ToLower() + "*"))
                     );
 
                 var cursor1 = users.Find(query1).SetSortOrder(new string[] { "Username" });
@@ -1671,6 +1677,11 @@ namespace ASPNETProvidersForMongoDB
         public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             MembershipUserCollection usersCollection = new MembershipUserCollection();
+            totalRecords = 0;
+
+            // Return empty results if no emailToMatch was passed.
+            if (string.IsNullOrWhiteSpace(emailToMatch))
+                return usersCollection;
 
             MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
             MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
