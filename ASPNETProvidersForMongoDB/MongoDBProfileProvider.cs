@@ -259,9 +259,11 @@ namespace ASPNETProvidersForMongoDB
              
                 foreach (string user in usernames)
                 {
+                    if (String.IsNullOrWhiteSpace(user))
+                        continue;
 
                     var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("UsernameLowerCase", user.ToLower()));
+                     Query.EQ("UsernameLowerCase", user.Trim().ToLower()));
 
                     profiles.Remove(query, SafeMode.False);  // Makes it fast.
 
@@ -438,9 +440,9 @@ namespace ASPNETProvidersForMongoDB
 
             // If searching for a user name to match, add the command text and parameters.
             
-            if (usernameToMatch != null)
+            if (!String.IsNullOrWhiteSpace(usernameToMatch))
             {
-                query = Query.And(query, Query.EQ("UsernameLowerCase", usernameToMatch.ToLower()));
+                query = Query.And(query, Query.EQ("UsernameLowerCase", usernameToMatch.Trim().ToLower()));
             }
 
             // If searching for inactive profiles, 
