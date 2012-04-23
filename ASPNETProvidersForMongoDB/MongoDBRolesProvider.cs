@@ -193,8 +193,8 @@ namespace ASPNETProvidersForMongoDB
                 {
                     foreach (string rolename in rolenames)
                     {
-                        BsonDocument role_user_duple = new BsonDocument().Add("Rolename", rolename)
-                            .Add("Username", username)
+                        BsonDocument role_user_duple = new BsonDocument().Add("Rolename", rolename.ToLower())
+                            .Add("Username", username.ToLower())
                             .Add("ApplicationName", pApplicationName)
                             .Add("RecordType", RecordType.RoleToUser.ToString());  // We will be using the same table.  Add a record type to store everything in the same table.
 
@@ -301,7 +301,7 @@ namespace ASPNETProvidersForMongoDB
                 {
                     // Remove users associated to the role.
                     var query2 = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                    Query.EQ("Rolename", rolename),
+                    Query.EQ("Rolename", rolename.ToLower()),
                     Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                     bSuccess = roles.Remove(query2).Ok;
@@ -341,9 +341,9 @@ namespace ASPNETProvidersForMongoDB
             {
                 
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Rolename", rolename),
+                     Query.EQ("Rolename", rolename.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()),
-                     Query.Matches("Username", new BsonRegularExpression(usernameToMatch + "*", "i")) );
+                     Query.Matches("Username", new BsonRegularExpression(usernameToMatch.ToLower() + "*", "i")) );
 
                 var cursor = roles.Find(query);
                 
@@ -441,7 +441,7 @@ namespace ASPNETProvidersForMongoDB
             {
 
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("UsernameLowerCase", username.ToLower()),
+                     Query.EQ("Username", username.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 var cursor = roles.Find(query);
@@ -483,15 +483,16 @@ namespace ASPNETProvidersForMongoDB
 
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
-            if (roleName == null || roleName == "")
+            if (String.IsNullOrWhiteSpace(roleName))
                 throw new ProviderException("Role name cannot be empty or null.");
+            
             if (!RoleExists(roleName))
                 throw new ProviderException("Role does not exist.");
 
             try
             {
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Rolename", roleName),
+                     Query.EQ("Rolename", roleName.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 var cursor = roles.Find(query);
@@ -541,8 +542,8 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Rolename", roleName),
-                     Query.EQ("UsernameLowerCase", username.ToLower()),
+                     Query.EQ("Rolename", roleName.ToLower()),
+                     Query.EQ("Username", username.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 int count = (int) roles.Count(query);
@@ -604,7 +605,7 @@ namespace ASPNETProvidersForMongoDB
                     foreach (string rolename in roleNames)
                     {
                         var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                            Query.EQ("UsernameLowerCase", username.ToLower()),
+                            Query.EQ("Username", username.ToLower()),
                             Query.EQ("Rolename", rolename),
                             Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
