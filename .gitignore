@@ -46,4 +46,4 @@ _ReSharper*/
 ~$*
 
 #NuGet
-packages/
+#packages/
