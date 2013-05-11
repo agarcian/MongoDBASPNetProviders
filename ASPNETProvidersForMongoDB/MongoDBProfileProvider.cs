@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Configuration.Provider;
-using System.Text;
-using System.Diagnostics;
-using System.Web.Security;
 using System.Collections.Specialized;
+using System.Configuration;
+using System.Configuration.Provider;
+using System.Diagnostics;
 using System.Web.Profile;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
-using System.Configuration;
 
 namespace ASPNETProvidersForMongoDB
 {
@@ -130,7 +127,7 @@ namespace ASPNETProvidersForMongoDB
             base.Initialize(name, config);
 
 
-            if (config["applicationName"] == null || config["applicationName"].Trim() == "")
+            if (String.IsNullOrWhiteSpace(config["applicationName"]))
             {
                 pApplicationName = System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath;
             }
@@ -139,8 +136,17 @@ namespace ASPNETProvidersForMongoDB
                 pApplicationName = config["applicationName"];
             }
 
-            pMongoProviderDatabaseName = Convert.ToString(GetConfigValue(config["mongoProviderDatabaseName"], "ASPNetProviderDB"));
-            pMongoProviderProfileCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderCollectionName"], "Profiles"));
+            if (String.IsNullOrWhiteSpace(config["mongoProviderDatabaseName"]))
+            {
+                throw new ProviderException("mongoProviderDatabaseName is not defined in the web.config under the profile section.");
+            }
+            else
+            {
+                pMongoProviderDatabaseName = config["mongoProviderDatabaseName"];
+            }
+
+
+            pMongoProviderProfileCollectionName = GetConfigValue(config["mongoProviderCollectionName"], "Profiles");
 
             //
             // Initialize connection string.
@@ -150,18 +156,19 @@ namespace ASPNETProvidersForMongoDB
                 ConnectionStrings[config["connectionStringName"]];
 
             if (pConnectionStringSettings == null ||
-                pConnectionStringSettings.ConnectionString.Trim() == "")
+                String.IsNullOrWhiteSpace(pConnectionStringSettings.ConnectionString))
             {
-                throw new ProviderException("Connection string cannot be blank.");
+                throw new ProviderException("connectionStringName cannot be blank.");
             }
 
             connectionString = pConnectionStringSettings.ConnectionString;
 
 
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+           
             // Ensure index.
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
             profiles.EnsureIndex("UsernameLowerCase");
 
@@ -197,15 +204,16 @@ namespace ASPNETProvidersForMongoDB
         {
             int deleteCount = 0;
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
 
 
             try
             {
-                var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
+                var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                     Query.LTE("LastActivityDate", userInactiveSinceDate));
 
                 switch (authenticationOption)
@@ -248,8 +256,9 @@ namespace ASPNETProvidersForMongoDB
         {
             int deleteCount = 0;
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
            
@@ -262,10 +271,10 @@ namespace ASPNETProvidersForMongoDB
                     if (String.IsNullOrWhiteSpace(user))
                         continue;
 
-                    var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
+                    var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                      Query.EQ("UsernameLowerCase", user.Trim().ToLower()));
 
-                    profiles.Remove(query, SafeMode.False);  // Makes it fast.
+                    profiles.Remove(query, WriteConcern.Acknowledged);  // Makes it fast.
 
                     deleteCount++;
                 }
@@ -429,13 +438,14 @@ namespace ASPNETProvidersForMongoDB
           int pageSize,
           out int totalRecords)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
 
 
-            var query = Query.EQ("ApplicationName", pApplicationName);
+            var query = Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower());
             
 
             // If searching for a user name to match, add the command text and parameters.
@@ -537,11 +547,11 @@ namespace ASPNETProvidersForMongoDB
 
             DateTime lastActivityDate = new DateTime();
             if (profile["LastActivityDate"] != BsonNull.Value)
-                lastActivityDate = profile["LastActivityDate"].AsDateTime;
+                lastActivityDate = profile["LastActivityDate"].ToUniversalTime();
            
             DateTime lastUpdatedDate = new DateTime();
             if (profile["LastUpdatedDate"] != BsonNull.Value)
-                lastUpdatedDate = profile["LastUpdatedDate"].AsDateTime;
+                lastUpdatedDate = profile["LastUpdatedDate"].ToUniversalTime();
 
             bool isAnonymous = profile["IsAnonymous"].AsBoolean;
 
@@ -560,8 +570,9 @@ namespace ASPNETProvidersForMongoDB
         /// <returns></returns>
         public override System.Configuration.SettingsPropertyValueCollection GetPropertyValues(System.Configuration.SettingsContext context, System.Configuration.SettingsPropertyCollection ppc)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
 
@@ -579,7 +590,7 @@ namespace ASPNETProvidersForMongoDB
                     SettingsPropertyValue pv = new SettingsPropertyValue(prop);
 
                     var query = Query.And(Query.EQ("UsernameLowerCase", username.ToLower()),
-                        Query.EQ("ApplicationName", pApplicationName),
+                        Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                         Query.EQ("IsAnonymous", !isAuthenticated));
 
                     var profile = profiles.FindOne(query);
@@ -604,7 +615,7 @@ namespace ASPNETProvidersForMongoDB
                                 returnValue = obj.AsBoolean;
                                 break;
                             case BsonType.DateTime:
-                                returnValue = obj.AsDateTime;
+                                returnValue = obj.ToUniversalTime();;
                                 break;
                             case BsonType.Double:
                                 returnValue = obj.AsDouble;
@@ -663,8 +674,9 @@ namespace ASPNETProvidersForMongoDB
         /// <param name="ppvc">The PPVC.</param>
         public override void SetPropertyValues(System.Configuration.SettingsContext context, System.Configuration.SettingsPropertyValueCollection ppvc)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
 
@@ -676,7 +688,7 @@ namespace ASPNETProvidersForMongoDB
             ObjectId existingProfileId = ObjectId.Empty;
 
 
-            var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
+            var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                 Query.EQ("UsernameLowerCase", username.ToLower()));
 
             var existingProfile = profiles.FindOne(query);
@@ -687,6 +699,7 @@ namespace ASPNETProvidersForMongoDB
             var profile = new BsonDocument();
 
             profile.Add("ApplicationName", pApplicationName)
+                .Add("ApplicationNameLowerCase", pApplicationName.ToLower())
                 .Add("Username", username)
                 .Add("UsernameLowerCase", username.ToLower())
                 .Add("LastActivityDate", DateTime.Now)
@@ -706,14 +719,15 @@ namespace ASPNETProvidersForMongoDB
 
         private void UpdateActivityDates(string username, bool isAuthenticated, bool activityOnly)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
             try
             {
                 var query = Query.And(Query.EQ("UsernameLowerCase", username.ToLower()),
-                    Query.EQ("ApplicationName", pApplicationName),
+                    Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                     Query.EQ("IsAnonymous", !isAuthenticated));
 
                 var updateQuery = Update.Set("LastActivityDate", DateTime.Now);
@@ -723,7 +737,7 @@ namespace ASPNETProvidersForMongoDB
                     updateQuery.Set("LastUpdatedDate", DateTime.Now);
                 }
 
-                profiles.Update(query, updateQuery, SafeMode.False);
+                profiles.Update(query, updateQuery, WriteConcern.Acknowledged);
             }
             catch (ApplicationException e)
             {

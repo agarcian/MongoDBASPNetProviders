@@ -1,8 +1,4 @@
-﻿using System;
-using System.Web.Profile;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Web.Profile;
 
 namespace ASPNETProvidersForMongoDB
 {
@@ -13,12 +9,6 @@ namespace ASPNETProvidersForMongoDB
     /// </summary>
     public class ProfileCommon : ProfileBase
     {
-        /// <summary>
-        /// Gets the user name for the profile.
-        /// </summary>
-        /// <returns>The user name for the profile or the anonymous-user identifier assigned to the profile.</returns>
-        [SettingsAllowAnonymous(false)]
-        public string UserName { get { return base.UserName; } }
         /// <summary>
         /// Gets or sets the first name.
         /// </summary>
@@ -87,6 +77,7 @@ namespace ASPNETProvidersForMongoDB
         // Add as many properties you want for your application.
 
 
+        /*
         /// <summary>
         /// Creates the specified ProfileCommon based on the given username.
         /// </summary>
@@ -107,6 +98,8 @@ namespace ASPNETProvidersForMongoDB
         {
             return ProfileBase.Create(username, isAuthenticated) as ProfileCommon;
         }
+        */
+
 
         /// <summary>
         /// Gets the profile.

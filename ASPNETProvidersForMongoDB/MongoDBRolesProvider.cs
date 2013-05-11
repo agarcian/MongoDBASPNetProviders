@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Specialized;
+using System.Configuration;
 using System.Configuration.Provider;
-using System.Text;
 using System.Diagnostics;
 using System.Web.Security;
-using System.Collections.Specialized;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
-using System.Configuration;
 
 namespace ASPNETProvidersForMongoDB
 {
@@ -32,7 +30,7 @@ namespace ASPNETProvidersForMongoDB
 
         private string eventSource = "MongoDBRolesProvider";
         private string eventLog = "Application";
-        private string exceptionMessage = "An exception occurred. Please check the Event Log.";
+        //private string exceptionMessage = "An exception occurred. Please check the Event Log.";
         private string connectionString;
 
         private bool pWriteExceptionsToEventLog;
@@ -129,7 +127,14 @@ namespace ASPNETProvidersForMongoDB
                                             System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
             pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
-            pMongoProviderDatabaseName = Convert.ToString(GetConfigValue(config["mongoProviderDatabaseName"], "ASPNetProviderDB"));
+            if (String.IsNullOrWhiteSpace(config["mongoProviderDatabaseName"]))
+            {
+                throw new ProviderException("mongoProviderDatabaseName is not defined in the web.config under the roles section.");
+            }
+            else
+            {
+                pMongoProviderDatabaseName = config["mongoProviderDatabaseName"];
+            }
             pmongoProviderRolesCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderCollectionName"], "Roles"));
 
             //
@@ -139,7 +144,7 @@ namespace ASPNETProvidersForMongoDB
             ConnectionStringSettings ConnectionStringSettings =
               ConfigurationManager.ConnectionStrings[config["connectionStringName"]];
 
-            if (ConnectionStringSettings == null || ConnectionStringSettings.ConnectionString.Trim() == "")
+            if (ConnectionStringSettings == null || String.IsNullOrWhiteSpace(ConnectionStringSettings.ConnectionString))
             {
                 throw new ProviderException("Connection string cannot be blank.");
             }
@@ -155,10 +160,9 @@ namespace ASPNETProvidersForMongoDB
         /// <param name="rolenames">The rolenames.</param>
         public override void AddUsersToRoles(string[] usernames, string[] rolenames)
         {
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
             
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
@@ -193,9 +197,13 @@ namespace ASPNETProvidersForMongoDB
                 {
                     foreach (string rolename in rolenames)
                     {
-                        BsonDocument role_user_duple = new BsonDocument().Add("Rolename", rolename.ToLower())
+                        BsonDocument role_user_duple = new BsonDocument()
+                            .Add("Rolename", rolename)
                             .Add("Username", username.ToLower())
                             .Add("ApplicationName", pApplicationName)
+                            .Add("RolenameLowerCase", rolename.ToLower())
+                            .Add("UsernameLowerCase", username)
+                            .Add("ApplicationNameLowerCase", pApplicationName.ToLower())
                             .Add("RecordType", RecordType.RoleToUser.ToString());  // We will be using the same table.  Add a record type to store everything in the same table.
 
                         bool bSuccess = roles.Save(role_user_duple).Ok;
@@ -223,10 +231,11 @@ namespace ASPNETProvidersForMongoDB
         /// <param name="rolename">The rolename.</param>
         public override void CreateRole(string rolename)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+ 
 
-            
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
            
@@ -241,8 +250,11 @@ namespace ASPNETProvidersForMongoDB
 
             try
             {
-                BsonDocument role = new BsonDocument().Add("Rolename", rolename)
+                BsonDocument role = new BsonDocument()
+                            .Add("Rolename", rolename)
                             .Add("ApplicationName", pApplicationName)
+                            .Add("RolenameLowerCase", rolename.ToLower())
+                            .Add("ApplicationNameLowerCase", pApplicationName.ToLower())
                             .Add("RecordType", RecordType.RoleDefinition.ToString());  // We will be using the same table.  Add a record type to store everything in the same table.
 
                 bool bSuccess = roles.Save(role).Ok;
@@ -271,9 +283,9 @@ namespace ASPNETProvidersForMongoDB
         /// <returns></returns>
         public override bool DeleteRole(string rolename, bool throwOnPopulatedRole)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
             
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
             
@@ -291,8 +303,8 @@ namespace ASPNETProvidersForMongoDB
             try
             {
                 // Remove the role.
-                var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                    Query.EQ("Rolename", rolename),
+                var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                    Query.EQ("RolenameLowerCase", rolename.ToLower()),
                     Query.EQ("RecordType", RecordType.RoleDefinition.ToString()));
 
                 bSuccess = roles.FindAndRemove(query, SortBy.Null).Ok;
@@ -300,8 +312,8 @@ namespace ASPNETProvidersForMongoDB
                 if (bSuccess)
                 {
                     // Remove users associated to the role.
-                    var query2 = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                    Query.EQ("Rolename", rolename.ToLower()),
+                    var query2 = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                    Query.EQ("RolenameLowerCase", rolename.ToLower()),
                     Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                     bSuccess = roles.Remove(query2).Ok;
@@ -331,19 +343,19 @@ namespace ASPNETProvidersForMongoDB
         {
             List<String> userNames = new List<string>();
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
             
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
             try
             {
-                
-                var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Rolename", rolename.ToLower()),
+
+                var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                     Query.EQ("RolenameLowerCase", rolename.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()),
-                     Query.Matches("Username", new BsonRegularExpression(usernameToMatch.ToLower() + "*", "i")) );
+                     Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.ToLower() + "*", "i")) );
 
                 var cursor = roles.Find(query);
                 
@@ -377,9 +389,9 @@ namespace ASPNETProvidersForMongoDB
         {
             List<String> roleNames = new List<string>();
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
             
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
@@ -389,7 +401,7 @@ namespace ASPNETProvidersForMongoDB
             try
             {
 
-                var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
+                var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleDefinition.ToString()));
 
                 var cursor = roles.Find(query);
@@ -426,22 +438,23 @@ namespace ASPNETProvidersForMongoDB
 
             List<String> roleNames = new List<string>();
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
             
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
 
-            if (username == null || username == "")
+            if (String.IsNullOrWhiteSpace(username))
+            {
                 throw new ProviderException("User name cannot be empty or null.");
-
+            }
 
             try
             {
 
-                var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Username", username.ToLower()),
+                var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                     Query.EQ("UsernameLowerCase", username.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 var cursor = roles.Find(query);
@@ -478,8 +491,9 @@ namespace ASPNETProvidersForMongoDB
         {
             List<String> userNames = new List<string>();
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
@@ -491,8 +505,8 @@ namespace ASPNETProvidersForMongoDB
 
             try
             {
-                var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Rolename", roleName.ToLower()),
+                var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                     Query.EQ("RolenameLowerCase", roleName.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 var cursor = roles.Find(query);
@@ -527,8 +541,10 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override bool IsUserInRole(string username, string roleName)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+
 
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
@@ -541,9 +557,9 @@ namespace ASPNETProvidersForMongoDB
             bool isUserinRole = false;
             try
             {
-                var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Rolename", roleName.ToLower()),
-                     Query.EQ("Username", username.ToLower()),
+                var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                     Query.EQ("RolenameLowerCase", roleName.ToLower()),
+                     Query.EQ("UsernameLowerCase", username.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                 int count = (int) roles.Count(query);
@@ -572,8 +588,9 @@ namespace ASPNETProvidersForMongoDB
         /// <param name="roleNames">A string array of role names to remove the specified user names from.</param>
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
@@ -604,9 +621,9 @@ namespace ASPNETProvidersForMongoDB
                 {
                     foreach (string rolename in roleNames)
                     {
-                        var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                            Query.EQ("Username", username.ToLower()),
-                            Query.EQ("Rolename", rolename),
+                        var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                            Query.EQ("UsernameLowerCase", username.ToLower()),
+                            Query.EQ("RolenameLowerCase", rolename),
                             Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                        bool bSuccess = roles.Remove(query).Ok;
@@ -638,15 +655,16 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override bool RoleExists(string roleName)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
+            MongoClient client = new MongoClient(connectionString);
+            MongoServer server = client.GetServer(); // connect to the mongoDB url.
+            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
             MongoCollection<BsonDocument> roles = ProviderDB.GetCollection(pmongoProviderRolesCollectionName);
 
             try
             {
-                var query = Query.And(Query.EQ("ApplicationName", pApplicationName),
-                     Query.EQ("Rolename", roleName),
+                var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                     Query.EQ("RolenameLowerCase", roleName.ToLower()),
                      Query.EQ("RecordType", RecordType.RoleDefinition.ToString()));
 
                 int count = (int) roles.Count(query);

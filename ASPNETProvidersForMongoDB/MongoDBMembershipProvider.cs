@@ -1,20 +1,18 @@
-﻿using System.Web.Security;
-using System.Configuration.Provider;
+﻿using System;
 using System.Collections.Specialized;
-using System;
-using System.Data;
-using System.Data.Odbc;
 using System.Configuration;
+using System.Configuration.Provider;
 using System.Diagnostics;
-using System.Web;
-using System.Globalization;
+using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Configuration;
-using MongoDB.Driver;
+using System.Web.Security;
 using MongoDB.Bson;
+using MongoDB.Driver;
 using MongoDB.Driver.Builders;
-using System.IO;
+using StackExchange.Profiling;
 
 namespace ASPNETProvidersForMongoDB
 {
@@ -193,66 +191,74 @@ namespace ASPNETProvidersForMongoDB
         /// <returns></returns>
         public override bool ChangePassword(string username, string oldPwd, string newPwd)
         {
-            if (!ValidateUser(username, oldPwd))
-                return false;
-
-            ValidatePasswordEventArgs args = new ValidatePasswordEventArgs(username, newPwd, true);
-
-            OnValidatingPassword(args);
-
-            if (args.Cancel)
-                if (args.FailureInformation != null)
-                    throw args.FailureInformation;
-                else
-                    throw new MembershipPasswordException("Change password canceled due to new password validation failure.");
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-            var query = Query.And(
-                Query.EQ("UsernameLowerCase", username.ToLower()),
-                Query.EQ("ApplicationName", pApplicationName)
-            );
-            var update = Update
-                .Set("Password", EncodePassword(newPwd))
-                .Set("LastPasswordChangedDate", DateTime.Now);
-           
-            bool bSuccess = false;
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                bSuccess = users.Update(query, update).UpdatedExisting;
 
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+                if (!ValidateUser(username, oldPwd))
+                    return false;
+
+                ValidatePasswordEventArgs args = new ValidatePasswordEventArgs(username, newPwd, true);
+
+                OnValidatingPassword(args);
+
+                if (args.Cancel)
+                    if (args.FailureInformation != null)
+                        throw args.FailureInformation;
+                    else
+                        throw new MembershipPasswordException("Change password canceled due to new password validation failure.");
+
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+
+
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+                var query = Query.And(
+                    Query.EQ("UsernameLowerCase", username.ToLower()),
+                    Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower())
+                );
+                var update = Update
+                    .Set("Password", EncodePassword(newPwd))
+                    .Set("LastPasswordChangedDate", DateTime.Now);
+
+                bool bSuccess = false;
+                try
                 {
-                    WriteToEventLog(e, "ChangePassword");
+                    bSuccess = users.Update(query, update).UpdatedExisting;
 
-                    throw new ProviderException(exceptionMessage);
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw e;
-                }
-            }
-            finally
-            {
-            }
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "ChangePassword");
 
-            if (bSuccess)
-            {
-                return true;
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+                finally
+                {
+                }
+
+                if (bSuccess)
+                {
+                    return true;
+                }
             }
 
             return false;
         }
         #endregion
 
-        
-        
+        #region Constructor and initialization
+
         /// <summary>
         /// Initializes the provider.
         /// </summary>
@@ -297,8 +303,15 @@ namespace ASPNETProvidersForMongoDB
             pRequiresUniqueEmail = Convert.ToBoolean(GetConfigValue(config["requiresUniqueEmail"], "true"));
             pWriteExceptionsToEventLog = Convert.ToBoolean(GetConfigValue(config["writeExceptionsToEventLog"], "true"));
 
+            if (String.IsNullOrWhiteSpace(config["mongoProviderDatabaseName"]))
+            {
+                throw new ProviderException("mongoProviderDatabaseName is not defined in the web.config under the membership section.");
+            }
+            else
+            {
+                pMongoProviderDatabaseName = config["mongoProviderDatabaseName"];
+            }
 
-            pMongoProviderDatabaseName = Convert.ToString(GetConfigValue(config["mongoProviderDatabaseName"], "ASPNetProviderDB"));
             pmongoProviderMembershipCollectionName = Convert.ToString(GetConfigValue(config["mongoProviderCollectionName"], "Users"));
 
             string temp_format = config["passwordFormat"];
@@ -341,10 +354,10 @@ namespace ASPNETProvidersForMongoDB
 
             Configuration cfg = null;
 
-
-            if (Directory.Exists(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath))
-                // When running from a web app
-                cfg = WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
+            if (Directory.Exists(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath) || (System.Web.HttpContext.Current != null && !System.Web.HttpContext.Current.Request.PhysicalPath.Equals(string.Empty)))
+                cfg = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("~");
+            // When running from a web app
+            //    cfg = WebConfigurationManager.OpenWebConfiguration(System.Web.Hosting.HostingEnvironment.ApplicationVirtualPath);
             else
                 // when running from a test case.
                 cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -356,7 +369,47 @@ namespace ASPNETProvidersForMongoDB
                 if (PasswordFormat != MembershipPasswordFormat.Clear)
                     throw new ProviderException("Hashed or Encrypted passwords " +
                                                 "are not supported with auto-generated keys.");
+
+
+            // Ensures that the MongoDB collection has the proper indices defined.
+            EnsureIndices();
+
+
         }
+
+        /// <summary>
+        /// Runs a call to ensure that each MongoDB collection used here will set the indices as required.   
+        /// That way it is not necessary to do it on the collection set up.
+        /// </summary>
+        private void EnsureIndices()
+        {
+            try
+            {
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+ 
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> usersCollection = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+
+                // Ensure Indices for ApplicationSpaces Collection.
+                usersCollection.EnsureIndex(IndexKeys.Ascending("UsernameLowerCase", "ApplicationNameLowerCase"), IndexOptions.SetUnique(true));
+                usersCollection.EnsureIndex(IndexKeys.Ascending("EmailLowerCase", "ApplicationNameLowerCase"), IndexOptions.SetUnique(true));
+                
+
+            }
+            catch (MongoAuthenticationException exc)
+            {
+                
+            }
+            catch (Exception exc)
+            {
+                
+            }
+        }
+        #endregion
+
+
 
         /// <summary>
         ///  A helper function to retrieve config values from the configuration file.
@@ -385,50 +438,58 @@ namespace ASPNETProvidersForMongoDB
                       string newPwdQuestion,
                       string newPwdAnswer)
         {
-            if (!ValidateUser(username, password))
-                return false;
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-            var query = Query.And(
-                Query.EQ("UsernameLowerCase", username.ToLower()),
-                Query.EQ("ApplicationName", pApplicationName)
-            );
-            var update = Update
-                .Set("PasswordQuestion", newPwdQuestion)
-                .Set("PasswordAnswer", EncodePassword(newPwdAnswer));
-
-
-            bool bSuccess = false; 
-            
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                bSuccess = users.Update(query, update).UpdatedExisting; 
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+
+                if (!ValidateUser(username, password))
+                    return false;
+
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+
+
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+                var query = Query.And(
+                    Query.EQ("UsernameLowerCase", username.ToLower()),
+                    Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower())
+                );
+                var update = Update
+                    .Set("PasswordQuestion", newPwdQuestion)
+                    .Set("PasswordAnswer", EncodePassword(newPwdAnswer));
+
+
+                bool bSuccess = false;
+
+                try
                 {
-                    WriteToEventLog(e, "ChangePasswordQuestionAndAnswer");
-
-                    throw new ProviderException(exceptionMessage);
+                    bSuccess = users.Update(query, update).UpdatedExisting;
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw e;
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "ChangePasswordQuestionAndAnswer");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
-            }
-            finally
-            {
+                finally
+                {
 
-            }
+                }
 
-            if (bSuccess)
-            {
-                return true;
+                if (bSuccess)
+                {
+                    return true;
+                }
             }
 
             return false;
@@ -457,110 +518,117 @@ namespace ASPNETProvidersForMongoDB
                  object providerUserKey,
                  out MembershipCreateStatus status)
         {
-            ValidatePasswordEventArgs args =
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
+            {
+
+                ValidatePasswordEventArgs args =
               new ValidatePasswordEventArgs(username, password, true);
 
-            OnValidatingPassword(args);
+                OnValidatingPassword(args);
 
-            if (args.Cancel)
-            {
-                status = MembershipCreateStatus.InvalidPassword;
-                return null;
-            }
-
-
-
-            if (RequiresUniqueEmail && GetUserNameByEmail(email) != "")
-            {
-                status = MembershipCreateStatus.DuplicateEmail;
-                return null;
-            }
-
-            MembershipUser u = GetUser(username, false);
-
-            if (u == null)
-            {
-                DateTime createDate = DateTime.Now;
-
-                if (providerUserKey == null)
+                if (args.Cancel)
                 {
-                    providerUserKey = Guid.NewGuid();
-                }
-                else
-                {
-                    if (!(providerUserKey is Guid))
-                    {
-                        status = MembershipCreateStatus.InvalidProviderUserKey;
-                        return null;
-                    }
+                    status = MembershipCreateStatus.InvalidPassword;
+                    return null;
                 }
 
 
-                MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
 
-                //Build a query to find the user id and then update with new password.
-                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-                
-                bool bSuccess = false;
-
-                try
+                if (RequiresUniqueEmail && GetUserNameByEmail(email) != "")
                 {
-                    BsonDocument user = new BsonDocument()
-                        .Add("PKID", providerUserKey.ToString())
-                        .Add("Username", username)
-                        .Add("UsernameLowerCase", username.ToLower())
-                        .Add("Password", EncodePassword(password))
-                        .Add("Email", email)
-                        .Add("EmailLowerCase", email.ToLower())
-                        .Add("PasswordQuestion", passwordQuestion)
-                        .Add("PasswordAnswer", EncodePassword(passwordAnswer))
-                        .Add("IsApproved", isApproved)
-                        .Add("Comment", "")
-                        .Add("CreationDate", createDate)
-                        .Add("LastPasswordChangedDate", createDate)
-                        .Add("LastLoginDate", createDate)
-                        .Add("LastActivityDate", createDate)
-                        .Add("ApplicationName", pApplicationName)
-                        .Add("IsLockedOut", false)
-                        .Add("LastLockedOutDate", createDate)
-                        .Add("FailedPasswordAttemptCount", 0)
-                        .Add("FailedPasswordAttemptWindowStart", createDate)
-                        .Add("FailedPasswordAnswerAttemptCount", createDate)
-                        .Add("FailedPasswordAnswerAttemptWindowStart", createDate);
+                    status = MembershipCreateStatus.DuplicateEmail;
+                    return null;
+                }
 
-                    bSuccess = users.Save(user).Ok;
+                MembershipUser u = GetUser(username, false);
 
-                    if (bSuccess)
+                if (u == null)
+                {
+                    DateTime createDate = DateTime.Now;
+
+                    if (providerUserKey == null)
                     {
-                        status = MembershipCreateStatus.Success;
+                        providerUserKey = Guid.NewGuid();
                     }
                     else
                     {
-                        status = MembershipCreateStatus.UserRejected;
+                        if (!(providerUserKey is Guid))
+                        {
+                            status = MembershipCreateStatus.InvalidProviderUserKey;
+                            return null;
+                        }
                     }
-                }
-                catch (ApplicationException e)
-                {
-                    if (WriteExceptionsToEventLog)
+
+                    MongoClient client = new MongoClient(connectionString);
+                    MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                    MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+
+                    //Build a query to find the user id and then update with new password.
+                    MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+
+                    bool bSuccess = false;
+
+                    try
                     {
-                        WriteToEventLog(e, "CreateUser");
+                        BsonDocument user = new BsonDocument()
+                            .Add("PKID", providerUserKey.ToString())
+                            .Add("Username", username)
+                            .Add("UsernameLowerCase", username.ToLower())
+                            .Add("Password", EncodePassword(password))
+                            .Add("Email", email)
+                            .Add("EmailLowerCase", email.ToLower())
+                            .Add("PasswordQuestion", passwordQuestion)
+                            .Add("PasswordAnswer", EncodePassword(passwordAnswer))
+                            .Add("IsApproved", isApproved)
+                            .Add("Comment", "")
+                            .Add("CreationDate", createDate)
+                            .Add("LastPasswordChangedDate", createDate)
+                            .Add("LastLoginDate", createDate)
+                            .Add("LastActivityDate", createDate)
+                            .Add("ApplicationName", pApplicationName)
+                            .Add("ApplicationNameLowerCase", pApplicationName.ToLower())
+                            .Add("IsLockedOut", false)
+                            .Add("LastLockedOutDate", createDate)
+                            .Add("FailedPasswordAttemptCount", 0)
+                            .Add("FailedPasswordAttemptWindowStart", createDate)
+                            .Add("FailedPasswordAnswerAttemptCount", createDate)
+                            .Add("FailedPasswordAnswerAttemptWindowStart", createDate);
+
+                        bSuccess = users.Save(user).Ok;
+
+                        if (bSuccess)
+                        {
+                            status = MembershipCreateStatus.Success;
+                        }
+                        else
+                        {
+                            status = MembershipCreateStatus.UserRejected;
+                        }
+                    }
+                    catch (ApplicationException e)
+                    {
+                        if (WriteExceptionsToEventLog)
+                        {
+                            WriteToEventLog(e, "CreateUser");
+                        }
+
+                        status = MembershipCreateStatus.ProviderError;
+                    }
+                    finally
+                    {
                     }
 
-                    status = MembershipCreateStatus.ProviderError;
+
+                    return GetUser(username, false);
                 }
-                finally
+                else
                 {
+                    status = MembershipCreateStatus.DuplicateUserName;
                 }
 
-
-                return GetUser(username, false);
             }
-            else
-            {
-                status = MembershipCreateStatus.DuplicateUserName;
-            }
-
 
             return null;
         }
@@ -575,51 +643,58 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override bool DeleteUser(string username, bool deleteAllRelatedData)
         {
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-            var query = Query.And(
-               Query.EQ("ApplicationName", pApplicationName),
-               Query.EQ("UsernameLowerCase", username.ToLower())
-            );
-
-            var sortBy = SortBy.Ascending("Username");
-
-
-            bool bSuccess = false;
-            
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                bSuccess = users.FindAndRemove(query, sortBy).Ok;
 
-                if (deleteAllRelatedData)
-                {
-                    // Process commands to delete all data for the user in the database.
-                }
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "DeleteUser");
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+
+                var query = Query.And(
+                   Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                   Query.EQ("UsernameLowerCase", username.ToLower())
+                );
+
+                var sortBy = SortBy.Ascending("Username");
+
+
+                bool bSuccess = false;
+
+                try
                 {
-                    throw e;
+                    bSuccess = users.FindAndRemove(query, sortBy).Ok;
+
+                    if (deleteAllRelatedData)
+                    {
+                        // Process commands to delete all data for the user in the database.
+                    }
                 }
-            }
-            finally
-            {
+                catch (ApplicationException e)
+                {
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "DeleteUser");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+                finally
+                {
+                }
+
+                if (bSuccess)
+                    return true;
             }
 
-            if (bSuccess)
-                return true;
 
             return false;
         }
@@ -637,45 +712,53 @@ namespace ASPNETProvidersForMongoDB
         {
             MembershipUserCollection usersCollection = new MembershipUserCollection();
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-            var query = Query.EQ("ApplicationName", ApplicationName);
-            var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
-            cursor.Skip = Math.Max(0, pageSize * (pageIndex - 1));
-            cursor.SetFields(new string[] {"PKID", "Username", "UsernameLowerCase", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
-            cursor.Limit = pageSize;
-
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                totalRecords = (int) cursor.Count();
 
-                if (totalRecords <= 0) { return usersCollection; }
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
-                foreach (var user in cursor)
-                {
-                    MembershipUser u = GetUserFromReader(user);
-                    usersCollection.Add(u);
-                }
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "GetAllUsers ");
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                var query = Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower());
+                var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
+                cursor.Skip = Math.Max(0, pageSize * (pageIndex - 1));
+                cursor.SetFields(new string[] { "PKID", "Username", "UsernameLowerCase", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
+                cursor.Limit = pageSize;
+
+                try
                 {
-                    throw e;
+                    totalRecords = (int)cursor.Count();
+
+                    if (totalRecords <= 0) { return usersCollection; }
+
+                    foreach (var user in cursor)
+                    {
+                        MembershipUser u = GetUserFromReader(user);
+                        usersCollection.Add(u);
+                    }
                 }
-            }
-            finally
-            {
+                catch (ApplicationException e)
+                {
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "GetAllUsers ");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+                finally
+                {
+                }
+
             }
 
             return usersCollection;
@@ -689,45 +772,54 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override int GetNumberOfUsersOnline()
         {
+int numOnline = 0;
 
-            TimeSpan onlineSpan = new TimeSpan(0, Membership.UserIsOnlineTimeWindow, 0);
-            DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
-
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-
-            int numOnline = 0;
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
+                TimeSpan onlineSpan = new TimeSpan(0, Membership.UserIsOnlineTimeWindow, 0);
+                DateTime compareTime = DateTime.Now.Subtract(onlineSpan);
 
-                var query = Query.And(
-                    Query.EQ("ApplicationName", pApplicationName),
-                    Query.GTE("LastActivityDate", compareTime)
-                );
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
 
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+
+
+
+                try
                 {
-                    WriteToEventLog(e, "GetNumberOfUsersOnline");
 
-                    throw new ProviderException(exceptionMessage);
+                    var query = Query.And(
+                        Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                        Query.GTE("LastActivityDate", compareTime)
+                    );
+
+
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw e;
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "GetNumberOfUsersOnline");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
+                finally
+                {
+                }
+
             }
-            finally
-            {
-            }
+
 
             return numOnline;
         }
@@ -742,84 +834,95 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override string GetPassword(string username, string answer)
         {
-
-            if (!EnablePasswordRetrieval)
-            {
-                throw new ProviderException("Password Retrieval Not Enabled.");
-            }
-
-            if (PasswordFormat == MembershipPasswordFormat.Hashed)
-            {
-                throw new ProviderException("Cannot retrieve Hashed passwords.");
-            }
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
             string password = "";
             string passwordAnswer = "";
-           
-            try
+
+
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
 
-                var query = Query.And(
-                    Query.EQ("ApplicationName", pApplicationName),
-                    // This regex makes the search for the username case insensitive.
-                     Query.EQ("UsernameLowerCase", username.ToLower())
-                );
 
-                var user = users.FindOne(query);
-               
-                
-                if (user != null)
+                if (!EnablePasswordRetrieval)
                 {
+                    throw new ProviderException("Password Retrieval Not Enabled.");
+                }
+
+                if (PasswordFormat == MembershipPasswordFormat.Hashed)
+                {
+                    throw new ProviderException("Cannot retrieve Hashed passwords.");
+                }
+
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+
+
+
+                try
+                {
+
+                    var query = Query.And(
+                        Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                         Query.EQ("UsernameLowerCase", username.ToLower())
+                    );
+
+                    var user = users.FindOne(query);
+
+
+                    if (user != null)
+                    {
                         if (user["sLockedOut"].AsBoolean)
                         {
                             throw new MembershipPasswordException("The supplied user is locked out.");
                         }
-                    
+
                         password = user["Password"].AsString;
                         passwordAnswer = user["Password"].AsString;
 
+                    }
+                    else
+                    {
+                        throw new MembershipPasswordException("The supplied user name is not found.");
+                    }
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw new MembershipPasswordException("The supplied user name is not found.");
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "GetPassword");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+                finally
                 {
-                    WriteToEventLog(e, "GetPassword");
-
-                    throw new ProviderException(exceptionMessage);
                 }
-                else
+
+
+                if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
                 {
-                    throw e;
+                    UpdateFailureCount(username, "passwordAnswer");
+
+                    throw new MembershipPasswordException("Incorrect password answer.");
+                }
+
+
+                if (PasswordFormat == MembershipPasswordFormat.Encrypted)
+                {
+                    password = UnEncodePassword(password);
                 }
             }
-            finally
-            {
-            }
 
-
-            if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
-            {
-                UpdateFailureCount(username, "passwordAnswer");
-
-                throw new MembershipPasswordException("Incorrect password answer.");
-            }
-
-
-            if (PasswordFormat == MembershipPasswordFormat.Encrypted)
-            {
-                password = UnEncodePassword(password);
-            }
 
             return password;
         }
@@ -836,72 +939,81 @@ namespace ASPNETProvidersForMongoDB
         /// <exception cref="ArgumentException">username contains a comma (,).</exception>
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
-            if (String.IsNullOrWhiteSpace(username) || username.IndexOf(',') > -1)
-                throw new ArgumentNullException("username cannot be null or white space");
-
-            if (username.IndexOf(',') > -1)
-                throw new ArgumentException("username cannot contain commas.");
-
-            MembershipUser u = null;
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-            try
+            MembershipUser membershipUser = null;
+            
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
 
-                var query = Query.And(
-                    Query.EQ("ApplicationName", ApplicationName),
-                    // This regex makes the search for the username case insensitive.
-                     Query.EQ("UsernameLowerCase", username.ToLower())
-                    );
+                if (String.IsNullOrWhiteSpace(username) || username.IndexOf(',') > -1)
+                    throw new ArgumentNullException("username cannot be null or white space");
 
-                var user = users.FindOne(query);
+                if (username.IndexOf(',') > -1)
+                    throw new ArgumentException("username cannot contain commas.");
 
-                if (user != null)
+
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+                try
                 {
-                    if (user["IsLockedOut"].AsBoolean)
-                    {
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-                    }
 
-                    u = GetUserFromReader(user);
-
-                    if (userIsOnline)
-                    {
-                        // Updates the lastactivitydate for the user.
-                        var updateQuery = Query.And(
-                            Query.EQ("ApplicationName", ApplicationName),
-                            // This regex makes the search for the username case insensitive.
-                            Query.EQ("UsernameLowerCase", username.ToLower())
+                    var query = Query.And(
+                        Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                         Query.EQ("UsernameLowerCase", username.ToLower())
                         );
 
-                        var update = Update.Set("LastActivityDate", DateTime.Now);
+                    var user = users.FindOne(query);
 
-                        users.Update(updateQuery, update);
+                    if (user != null)
+                    {
+                        if (user["IsLockedOut"].AsBoolean)
+                        {
+                            throw new MembershipPasswordException("The supplied user is locked out.");
+                        }
+
+                        membershipUser = GetUserFromReader(user);
+
+                        if (userIsOnline)
+                        {
+                            // Updates the lastactivitydate for the user.
+                            var updateQuery = Query.And(
+                                Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
+                                // This regex makes the search for the username case insensitive.
+                                Query.EQ("UsernameLowerCase", username.ToLower())
+                            );
+
+                            var update = Update.Set("LastActivityDate", DateTime.Now);
+
+                            users.Update(updateQuery, update);
+                        }
                     }
                 }
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+                catch (ApplicationException e)
                 {
-                    WriteToEventLog(e, "GetUser(String, Boolean)");
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "GetUser(String, Boolean)");
 
-                    throw new ProviderException(exceptionMessage);
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
-                else
+                finally
                 {
-                    throw e;
                 }
             }
-            finally
-            {
-            }
 
-            return u;
+
+            return membershipUser;
         }
 
         /// <summary>
@@ -915,58 +1027,64 @@ namespace ASPNETProvidersForMongoDB
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
 
-            MembershipUser u = null;
+            MembershipUser membershipUser = null;
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
-                var query = Query.EQ("PKID", BsonValue.Create(providerUserKey));
-
-                var user = users.FindOne(query);
-
-                if (user != null)
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+                try
                 {
-                    if (user["sLockedOut"].AsBoolean)
+
+                    var query = Query.EQ("PKID", BsonValue.Create(providerUserKey));
+
+                    var user = users.FindOne(query);
+
+                    if (user != null)
                     {
-                        throw new MembershipPasswordException("The supplied user is locked out.");
+                        if (user["sLockedOut"].AsBoolean)
+                        {
+                            throw new MembershipPasswordException("The supplied user is locked out.");
+                        }
+
+                        membershipUser = GetUserFromReader(user);
+
+                        if (userIsOnline)
+                        {
+                            // Updates the lastactivitydate for the user.
+                            var updateQuery = Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower());
+                            var update = Update.Set("LastActivityDate", DateTime.Now);
+
+                            users.Update(updateQuery, update);
+                        }
+
                     }
-
-                    u = GetUserFromReader(user);
-
-                    if (userIsOnline)
+                }
+                catch (ApplicationException e)
+                {
+                    if (WriteExceptionsToEventLog)
                     {
-                        // Updates the lastactivitydate for the user.
-                        var updateQuery = Query.EQ("ApplicationName", ApplicationName);
-                        var update = Update.Set("LastActivityDate", DateTime.Now);
+                        WriteToEventLog(e, "GetUser(Object, Boolean)");
 
-                        users.Update(updateQuery, update);
+                        throw new ProviderException(exceptionMessage);
                     }
-
+                    else
+                    {
+                        throw e;
+                    }
                 }
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+                finally
                 {
-                    WriteToEventLog(e, "GetUser(Object, Boolean)");
-
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
-                {
-                    throw e;
                 }
             }
-            finally
-            {
-            }
 
-            return u;
+            return membershipUser;
         }
 
         /// <summary>
@@ -984,11 +1102,11 @@ namespace ASPNETProvidersForMongoDB
 
             bool isApproved = doc["IsApproved"].AsBoolean;
             bool isLockedOut = doc["IsLockedOut"].AsBoolean;
-            DateTime creationDate = doc["CreationDate"].AsDateTime;
-            DateTime lastLoginDate = doc["LastLoginDate"].AsDateTime;
-            DateTime lastActivityDate = doc["LastActivityDate"].AsDateTime;
-            DateTime lastPasswordChangedDate = doc["LastPasswordChangedDate"].AsDateTime;
-            DateTime lastLockedOutDate = doc["LastLockedOutDate"].AsDateTime;
+            DateTime creationDate = doc["CreationDate"].ToUniversalTime();
+            DateTime lastLoginDate = doc["LastLoginDate"].ToUniversalTime();
+            DateTime lastActivityDate = doc["LastActivityDate"].ToUniversalTime();
+            DateTime lastPasswordChangedDate = doc["LastPasswordChangedDate"].ToUniversalTime();
+            DateTime lastLockedOutDate = doc["LastLockedOutDate"].ToUniversalTime();
 
             MembershipUser u = new MembershipUser(this.Name,
                                                   username,
@@ -1014,50 +1132,58 @@ namespace ASPNETProvidersForMongoDB
         /// <returns></returns>
         public override bool UnlockUser(string username)
         {
+bool bSuccess = false;
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-
-            bool bSuccess = false;
-
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
-                var updateQuery = Query.And(
-                    Query.EQ("ApplicationName", ApplicationName),
-                    // This regex makes the search for the username case insensitive.
-                    Query.EQ("UsernameLowerCase", username.ToLower())
-                    );
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
-            var update = Update.Set("IsLockedOut", false)
-                .Set("LastLockedOutDate", DateTime.Now);
 
-            bSuccess = users.Update(updateQuery, update).Ok;
 
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+
+                try
                 {
-                    WriteToEventLog(e, "UnlockUser");
 
-                    throw new ProviderException(exceptionMessage);
+                    var updateQuery = Query.And(
+                        Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                        Query.EQ("UsernameLowerCase", username.ToLower())
+                        );
+
+                    var update = Update.Set("IsLockedOut", false)
+                        .Set("LastLockedOutDate", DateTime.Now);
+
+                    bSuccess = users.Update(updateQuery, update).Ok;
+
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw e;
-                }
-            }
-            finally
-            {
-            }
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "UnlockUser");
 
-            if (bSuccess)
-                return true;
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+                finally
+                {
+                }
+
+                if (bSuccess)
+                    return true;
+
+            }
 
             return false;
         }
@@ -1071,48 +1197,55 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override string GetUserNameByEmail(string email)
         {
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-            string username = "";
-
-            try
+string username = "";
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                var query = Query.And(
-                Query.EQ("ApplicationName", ApplicationName),
-                // This regex makes the search for the username case insensitive.
-                Query.EQ("EmailLowerCase", email.ToLower())
-                );
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
-                var usr = users.FindOne(query);
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
-                if (usr != null)
-                    username = usr["Username"].AsString;
-                
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+
+
+                try
                 {
-                    WriteToEventLog(e, "GetUserNameByEmail");
+                    var query = Query.And(
+                    Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                    Query.EQ("EmailLowerCase", email.ToLower())
+                    );
 
-                    throw new ProviderException(exceptionMessage);
+                    var usr = users.FindOne(query);
+
+                    if (usr != null)
+                        username = usr["Username"].AsString;
+
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw e;
-                }
-            }
-            finally
-            {
-            }
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "GetUserNameByEmail");
 
-            if (username == null)
-                username = "";
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+                finally
+                {
+                }
+
+                if (username == null)
+                    username = "";
+
+            }
 
             return username;
         }
@@ -1127,101 +1260,113 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override string ResetPassword(string username, string answer)
         {
-            if (!EnablePasswordReset)
-            {
-                throw new NotSupportedException("Password reset is not enabled.");
-            }
-
-            if (answer == null && RequiresQuestionAndAnswer)
-            {
-                UpdateFailureCount(username, "passwordAnswer");
-
-                throw new ProviderException("Password answer required for password reset.");
-            }
-
-            string newPassword =
-              System.Web.Security.Membership.GeneratePassword(newPasswordLength, MinRequiredNonAlphanumericCharacters);
-
-
-            ValidatePasswordEventArgs args =
-              new ValidatePasswordEventArgs(username, newPassword, true);
-
-            OnValidatingPassword(args);
-
-            if (args.Cancel)
-                if (args.FailureInformation != null)
-                    throw args.FailureInformation;
-                else
-                    throw new MembershipPasswordException("Reset password canceled due to password validation failure.");
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-
+            string newPassword;
             string passwordAnswer = "";
             bool bSuccess = false;
 
-            try
+
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                var query = Query.And(
-                Query.EQ("ApplicationName", ApplicationName),
-                // This regex makes the search for the username case insensitive.
-                Query.EQ("UsernameLowerCase", username.ToLower())
-                );
 
-                var usr = users.FindOne(query);
-
-                if (usr != null)
+                if (!EnablePasswordReset)
                 {
-                    passwordAnswer = usr.Contains("PasswordAnswer") ? usr["PasswordAnswer"].AsString : null;
-
-                    bool isLockedOut = usr["IsLockedOut"].AsBoolean;
-
-                    if (isLockedOut)
-                        throw new MembershipPasswordException("The supplied user is locked out.");
-                }
-                else
-                {
-                    throw new MembershipPasswordException("The supplied user name is not found.");
+                    throw new NotSupportedException("Password reset is not enabled.");
                 }
 
-                if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
+                if (answer == null && RequiresQuestionAndAnswer)
                 {
                     UpdateFailureCount(username, "passwordAnswer");
 
-                    throw new MembershipPasswordException("Incorrect password answer.");
+                    throw new ProviderException("Password answer required for password reset.");
                 }
 
-                var query2 = Query.And(
-                Query.EQ("ApplicationName", ApplicationName),
-                // This regex makes the search for the username case insensitive.
-                Query.EQ("UsernameLowerCase", username.ToLower()),
-                Query.EQ("IsLockedOut", false));
-
-                var updateQuery = Update.Set("Password", EncodePassword(newPassword))
-                     .Set("LastPasswordChangedDate", DateTime.Now);
+                newPassword =
+                  System.Web.Security.Membership.GeneratePassword(newPasswordLength, MinRequiredNonAlphanumericCharacters);
 
 
-                bSuccess = users.Update(query2, updateQuery).Ok;
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+                ValidatePasswordEventArgs args =
+                  new ValidatePasswordEventArgs(username, newPassword, true);
+
+                OnValidatingPassword(args);
+
+                if (args.Cancel)
+                    if (args.FailureInformation != null)
+                        throw args.FailureInformation;
+                    else
+                        throw new MembershipPasswordException("Reset password canceled due to password validation failure.");
+
+                MongoClient client = new MongoClient(connectionString); // connect to the mongoDB url.
+                MongoServer server = client.GetServer();
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+
+
+
+
+                try
                 {
-                    WriteToEventLog(e, "ResetPassword");
+                    var query = Query.And(
+                    Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                    Query.EQ("UsernameLowerCase", username.ToLower())
+                    );
 
-                    throw new ProviderException(exceptionMessage);
+                    var usr = users.FindOne(query);
+
+                    if (usr != null)
+                    {
+                        passwordAnswer = usr.Contains("PasswordAnswer") ? usr["PasswordAnswer"].AsString : null;
+
+                        bool isLockedOut = usr["IsLockedOut"].AsBoolean;
+
+                        if (isLockedOut)
+                            throw new MembershipPasswordException("The supplied user is locked out.");
+                    }
+                    else
+                    {
+                        throw new MembershipPasswordException("The supplied user name is not found.");
+                    }
+
+                    if (RequiresQuestionAndAnswer && !CheckPassword(answer, passwordAnswer))
+                    {
+                        UpdateFailureCount(username, "passwordAnswer");
+
+                        throw new MembershipPasswordException("Incorrect password answer.");
+                    }
+
+                    var query2 = Query.And(
+                    Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                    Query.EQ("UsernameLowerCase", username.ToLower()),
+                    Query.EQ("IsLockedOut", false));
+
+                    var updateQuery = Update.Set("Password", EncodePassword(newPassword))
+                         .Set("LastPasswordChangedDate", DateTime.Now);
+
+
+                    bSuccess = users.Update(query2, updateQuery).Ok;
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw e;
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "ResetPassword");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
-            }
-            finally
-            {
+                finally
+                {
+                }
+
             }
 
             if (bSuccess)
@@ -1234,50 +1379,57 @@ namespace ASPNETProvidersForMongoDB
             }
         }
 
+
         /// <summary>
         /// Updates information about a user in the data source.
         /// </summary>
         /// <param name="user">A <see cref="T:System.Web.Security.MembershipUser"/> object that represents the user to update and the updated information for the user.</param>
         public override void UpdateUser(MembershipUser user)
         {
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
 
-                var query = Query.And(
-                    Query.EQ("ApplicationName", pApplicationName),
-                    // This regex makes the search for the username case insensitive.
-                    Query.EQ("UsernameLowerCase", user.UserName.ToLower())
-                    );
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
-                var updateQuery = Update.Set("Email", user.Email)
-                    .Set("Comment", user.Comment)
-                    .Set("IsApproved", user.IsApproved);
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
-                 users.Update(query, updateQuery);
-
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+                try
                 {
-                    WriteToEventLog(e, "UpdateUser");
 
-                    throw new ProviderException(exceptionMessage);
+                    var query = Query.And(
+                        Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                        Query.EQ("UsernameLowerCase", user.UserName.ToLower())
+                        );
+
+                    var updateQuery = Update.Set("Email", user.Email)
+                        .Set("Comment", user.Comment)
+                        .Set("IsApproved", user.IsApproved);
+
+                    users.Update(query, updateQuery);
+
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw e;
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "UpdateUser");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
-            }
-            finally
-            {
+                finally
+                {
+                }
             }
         }
 
@@ -1291,74 +1443,84 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override bool ValidateUser(string username, string password)
         {
+            if (String.IsNullOrWhiteSpace(username))
+                return false;
+
+
             bool isValid = false;
             bool isApproved = false;
             string pwd = "";
 
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                var query = Query.And(
-                    Query.EQ("ApplicationName", pApplicationName),
-                    // This regex makes the search for the username case insensitive.
-                    Query.EQ("UsernameLowerCase", username.ToLower()),
-                    Query.EQ("IsLockedOut", false));
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
-                var user = users.FindOne(query);
-                if (user != null)
-                {
-                    pwd = user["Password"].AsString;
-                    isApproved = user["IsApproved"].AsBoolean;
-                }
-                else
-                {
-                    return false;
-                }
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
-                if (CheckPassword(password, pwd))
+                try
                 {
-                    if (isApproved)
+                    var query = Query.And(
+                        Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                        Query.EQ("UsernameLowerCase", username.ToLower()),
+                        Query.EQ("IsLockedOut", false));
+
+                    var user = users.FindOne(query);
+                    if (user != null)
                     {
-                        var query2 = Query.And(
-                            Query.EQ("ApplicationName", pApplicationName),
-                            // This regex makes the search for the username case insensitive.
-                            Query.EQ("UsernameLowerCase", username.ToLower())
-                            );
+                        pwd = user["Password"].AsString;
+                        isApproved = user["IsApproved"].AsBoolean;
+                    }
+                    else
+                    {
+                        return false;
+                    }
 
-                        var updateQuery = Update.Set("LastLoginDate", DateTime.Now);
+                    if (CheckPassword(password, pwd))
+                    {
+                        if (isApproved)
+                        {
+                            var query2 = Query.And(
+                                Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                                // This regex makes the search for the username case insensitive.
+                                Query.EQ("UsernameLowerCase", username.ToLower())
+                                );
 
-                        users.Update(query2, updateQuery);
-                        
-                        isValid = true;
+                            var updateQuery = Update.Set("LastLoginDate", DateTime.Now);
+
+                            users.Update(query2, updateQuery);
+
+                            isValid = true;
+                        }
+                    }
+                    else
+                    {
+                        UpdateFailureCount(username, "password");
                     }
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    UpdateFailureCount(username, "password");
-                }
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "ValidateUser");
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "ValidateUser");
 
-                    throw new ProviderException(exceptionMessage);
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
-                else
+                finally
                 {
-                    throw e;
                 }
-            }
-            finally
-            {
-            }
 
+            }
             return isValid;
         }
 
@@ -1369,119 +1531,127 @@ namespace ASPNETProvidersForMongoDB
         /// <param name="failureType">Type of the failure.</param>
         private void UpdateFailureCount(string username, string failureType)
         {
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-            DateTime windowStart = new DateTime();
-            int failureCount = 0;
-
-            try
+           MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
 
-                var query = Query.And(
-                        Query.EQ("ApplicationName", pApplicationName),
+
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+
+                DateTime windowStart = new DateTime();
+                int failureCount = 0;
+
+                try
+                {
+
+                    var query = Query.And(
+                            Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                         // This regex makes the search for the username case insensitive.
-                        Query.EQ("UsernameLowerCase", username.ToLower())
-                        );
+                            Query.EQ("UsernameLowerCase", username.ToLower())
+                            );
 
-                var user = users.FindOne(query);
+                    var user = users.FindOne(query);
 
-                if (user != null)
-                {
-                    if (failureType == "password")
+                    if (user != null)
                     {
-                        failureCount = user["FailedPasswordAttemptCount"].AsInt32;
-                        windowStart = user["FailedPasswordAttemptWindowStart"].AsDateTime;
+                        if (failureType == "password")
+                        {
+                            failureCount = user["FailedPasswordAttemptCount"].AsInt32;
+                            windowStart = user["FailedPasswordAttemptWindowStart"].ToUniversalTime();
+                        }
+
+                        if (failureType == "passwordAnswer")
+                        {
+                            failureCount = user["FailedPasswordAnswerAttemptCount"].AsInt32;
+                            windowStart = user["FailedPasswordAnswerAttemptWindowStart"].ToUniversalTime();
+                        }
                     }
 
-                    if (failureType == "passwordAnswer")
+
+                    DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
+
+                    if (failureCount == 0 || DateTime.Now > windowEnd)
                     {
-                        failureCount = user["FailedPasswordAnswerAttemptCount"].AsInt32;
-                        windowStart = user["FailedPasswordAnswerAttemptWindowStart"].AsDateTime;
-                    }
-                }
-
-
-                DateTime windowEnd = windowStart.AddMinutes(PasswordAttemptWindow);
-
-                if (failureCount == 0 || DateTime.Now > windowEnd)
-                {
-                    // First password failure or outside of PasswordAttemptWindow. 
-                    // Start a new password failure count from 1 and a new window starting now.
-
-                    UpdateBuilder queryUpdate = null;
-                    if (failureType == "password")
-                    {
-                        queryUpdate = Update.Set("FailedPasswordAttemptCount", 1)
-                            .Set("FailedPasswordAttemptWindowStart", DateTime.Now);
-                    }
-                    if (failureType == "passwordAnswer")
-                    {
-                        queryUpdate = Update.Set("FailedPasswordAnswerAttemptCount", 1)
-                           .Set("FailedPasswordAnswerAttemptWindowStart", DateTime.Now);
-                    }
-
-                    bool bSuccess = users.Update(query, queryUpdate).Ok;
-                    
-                    if (!bSuccess)
-                        throw new ProviderException("Unable to update failure count and window start.");
-                }
-                else
-                {
-                    if (failureCount++ >= MaxInvalidPasswordAttempts)
-                    {
-                        // Password attempts have exceeded the failure threshold. Lock out
-                        // the user.
-
-                        UpdateBuilder queryUpdate = Update.Set("IsLockedOut", true)
-                            .Set("LastLockedOutDate", DateTime.Now);
-
-                        bool bSuccess = users.Update(query, queryUpdate).Ok;
-                        
-                        if (!bSuccess)
-                            throw new ProviderException("Unable to lock out user.");
-                    }
-                    else
-                    {
-                        // Password attempts have not exceeded the failure threshold. Update
-                        // the failure counts. Leave the window the same.
+                        // First password failure or outside of PasswordAttemptWindow. 
+                        // Start a new password failure count from 1 and a new window starting now.
 
                         UpdateBuilder queryUpdate = null;
                         if (failureType == "password")
                         {
-                            queryUpdate = Update.Set("FailedPasswordAttemptCount", failureCount);
+                            queryUpdate = Update.Set("FailedPasswordAttemptCount", 1)
+                                .Set("FailedPasswordAttemptWindowStart", DateTime.Now);
                         }
                         if (failureType == "passwordAnswer")
                         {
-                            queryUpdate = Update.Set("FailedPasswordAnswerAttemptCount", failureCount);
+                            queryUpdate = Update.Set("FailedPasswordAnswerAttemptCount", 1)
+                               .Set("FailedPasswordAnswerAttemptWindowStart", DateTime.Now);
                         }
 
                         bool bSuccess = users.Update(query, queryUpdate).Ok;
-                    
+
                         if (!bSuccess)
-                            throw new ProviderException("Unable to update failure count.");
+                            throw new ProviderException("Unable to update failure count and window start.");
+                    }
+                    else
+                    {
+                        if (failureCount++ >= MaxInvalidPasswordAttempts)
+                        {
+                            // Password attempts have exceeded the failure threshold. Lock out
+                            // the user.
+
+                            UpdateBuilder queryUpdate = Update.Set("IsLockedOut", true)
+                                .Set("LastLockedOutDate", DateTime.Now);
+
+                            bool bSuccess = users.Update(query, queryUpdate).Ok;
+
+                            if (!bSuccess)
+                                throw new ProviderException("Unable to lock out user.");
+                        }
+                        else
+                        {
+                            // Password attempts have not exceeded the failure threshold. Update
+                            // the failure counts. Leave the window the same.
+
+                            UpdateBuilder queryUpdate = null;
+                            if (failureType == "password")
+                            {
+                                queryUpdate = Update.Set("FailedPasswordAttemptCount", failureCount);
+                            }
+                            if (failureType == "passwordAnswer")
+                            {
+                                queryUpdate = Update.Set("FailedPasswordAnswerAttemptCount", failureCount);
+                            }
+
+                            bool bSuccess = users.Update(query, queryUpdate).Ok;
+
+                            if (!bSuccess)
+                                throw new ProviderException("Unable to update failure count.");
+                        }
                     }
                 }
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
+                catch (ApplicationException e)
                 {
-                    WriteToEventLog(e, "UpdateFailureCount");
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "UpdateFailureCount");
 
-                    throw new ProviderException(exceptionMessage);
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
-                else
+                finally
                 {
-                    throw e;
                 }
             }
-            finally
-            {
-            }
+
         }
 
         /// <summary>
@@ -1603,62 +1773,68 @@ namespace ASPNETProvidersForMongoDB
             MembershipUserCollection usersCollection = new MembershipUserCollection();
             totalRecords = 0;
 
-            // Return empty results if no usernameToMatch was passed.
-            if (String.IsNullOrWhiteSpace(usernameToMatch))
-                return usersCollection;
-
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                // Build this query to do a count, which is fast and is needed to return the total count.
-                var query = Query.And(
-                    Query.EQ("ApplicationName", pApplicationName),
-                    // This regex makes the search for the username case insensitive.
-                    Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.Trim().ToLower() + "*"))
-                    );
 
-                var cursor = users.Find(query);
-                totalRecords = (int) users.Count();
+                // Return empty results if no usernameToMatch was passed.
+                if (String.IsNullOrWhiteSpace(usernameToMatch))
+                    return usersCollection;
 
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+                
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
-                if (totalRecords == 0) { return usersCollection; }
-
-                var query1 = Query.And(Query.EQ("ApplicationName", ApplicationName),
-                    Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.Trim().ToLower() + "*"))
-                    );
-
-                var cursor1 = users.Find(query1).SetSortOrder(new string[] { "Username" });
-                cursor1.Skip = Math.Max(0, pageSize * (pageIndex - 1));
-                cursor1.SetFields(new string[] { "PKID", "Username", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
-                cursor1.Limit = pageSize;
-
-                foreach (var user in cursor1)
+                try
                 {
-                    MembershipUser u = GetUserFromReader(user);
-                    usersCollection.Add(u);
-                }
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "FindUsersByName");
+                    // Build this query to do a count, which is fast and is needed to return the total count.
+                    var query = Query.And(
+                        Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
+                        // This regex makes the search for the username case insensitive.
+                        Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.Trim().ToLower() + "*"))
+                        );
 
-                    throw new ProviderException(exceptionMessage);
+                    var cursor = users.Find(query);
+                    totalRecords = (int)users.Count();
+
+
+                    if (totalRecords == 0) { return usersCollection; }
+
+                    var query1 = Query.And(Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
+                        Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.Trim().ToLower() + "*"))
+                        );
+
+                    var cursor1 = users.Find(query1).SetSortOrder(new string[] { "Username" });
+                    cursor1.Skip = Math.Max(0, pageSize * (pageIndex - 1));
+                    cursor1.SetFields(new string[] { "PKID", "Username", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
+                    cursor1.Limit = pageSize;
+
+                    foreach (var user in cursor1)
+                    {
+                        MembershipUser u = GetUserFromReader(user);
+                        usersCollection.Add(u);
+                    }
                 }
-                else
+                catch (ApplicationException e)
                 {
-                    throw e;
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "FindUsersByName");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
                 }
-            }
-            finally
-            {
+                finally
+                {
+                }
             }
 
             return usersCollection;
@@ -1679,52 +1855,61 @@ namespace ASPNETProvidersForMongoDB
             MembershipUserCollection usersCollection = new MembershipUserCollection();
             totalRecords = 0;
 
-            // Return empty results if no emailToMatch was passed.
-            if (string.IsNullOrWhiteSpace(emailToMatch))
-                return usersCollection;
-
-            MongoServer server = MongoServer.Create(connectionString); // connect to the mongoDB url.
-            MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, SafeMode.True);
-
-            //Build a query to find the user id and then update with new password.
-            MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
-
-            totalRecords = 0;
-
-            try
+            MiniProfiler profiler = MiniProfiler.Current;
+            MethodBase currentMethod = MethodBase.GetCurrentMethod();
+            using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
-                var query = Query.And(
-                    Query.Matches("EmailLowerCase",new BsonRegularExpression(emailToMatch.ToLower() + "*")),
-                    Query.EQ("ApplicationName", pApplicationName)
-                    );
 
-                var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
-                cursor.Skip = Math.Max(0, pageSize * (pageIndex - 1));
-                cursor.SetFields(new string[] { "PKID", "Username", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
-                cursor.Limit = pageSize;
 
-                foreach (var user in cursor)
-                {
-                    MembershipUser u = GetUserFromReader(user);
-                    usersCollection.Add(u);
-                }
-                
-            }
-            catch (ApplicationException e)
-            {
-                if (WriteExceptionsToEventLog)
-                {
-                    WriteToEventLog(e, "FindUsersByEmail");
 
-                    throw new ProviderException(exceptionMessage);
-                }
-                else
+                // Return empty results if no emailToMatch was passed.
+                if (string.IsNullOrWhiteSpace(emailToMatch))
+                    return usersCollection;
+                MongoClient client = new MongoClient(connectionString);
+                MongoServer server = client.GetServer(); // connect to the mongoDB url.
+                MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
+
+                //Build a query to find the user id and then update with new password.
+                MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
+
+                totalRecords = 0;
+
+                try
                 {
-                    throw e;
+                    var query = Query.And(
+                        Query.Matches("EmailLowerCase", new BsonRegularExpression(emailToMatch.ToLower() + "*")),
+                        Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower())
+                        );
+
+                    var cursor = users.Find(query).SetSortOrder(new string[] { "Username" });
+                    cursor.Skip = Math.Max(0, pageSize * (pageIndex - 1));
+                    cursor.SetFields(new string[] { "PKID", "Username", "Email", "PasswordQuestion", "Comment", "IsApproved", "IsLockedOut", "CreationDate", "LastLoginDate", "LastActivityDate", "LastPasswordChangedDate", "LastLockedOutDate" });
+                    cursor.Limit = pageSize;
+
+                    foreach (var user in cursor)
+                    {
+                        MembershipUser u = GetUserFromReader(user);
+                        usersCollection.Add(u);
+                    }
+
                 }
-            }
-            finally
-            {
+                catch (ApplicationException e)
+                {
+                    if (WriteExceptionsToEventLog)
+                    {
+                        WriteToEventLog(e, "FindUsersByEmail");
+
+                        throw new ProviderException(exceptionMessage);
+                    }
+                    else
+                    {
+                        throw e;
+                    }
+                }
+                finally
+                {
+                }
+
             }
 
             return usersCollection;

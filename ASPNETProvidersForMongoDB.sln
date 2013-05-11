@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNETProvidersForMongoDB", "ASPNETProvidersForMongoDB\ASPNETProvidersForMongoDB.csproj", "{0972DFF9-1BEB-4599-99DB-5931D2EE950A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectForMongoDBASPNETProviders", "TestProjectForMongoDBASPNETProviders\TestProjectForMongoDBASPNETProviders.csproj", "{531BB7B6-0BCE-4206-9A67-7B31188B2095}"
@@ -8,6 +8,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87C3FE29-46FC-4A67-BD9E-D546A015A6E0}"
 	ProjectSection(SolutionItems) = preProject
 		ASPNETProvidersForMongoDB.vsmdi = ASPNETProvidersForMongoDB.vsmdi
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D0E796AC-FC0C-4783-B6FA-8802D74018D6}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
 Global
