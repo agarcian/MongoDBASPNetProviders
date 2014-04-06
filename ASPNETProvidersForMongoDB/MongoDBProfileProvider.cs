@@ -643,6 +643,10 @@ namespace ASPNETProvidersForMongoDB
                                 break;
                             case BsonType.Undefined:
                                 throw new ProviderException("Unsupported Property");
+                                break;
+                            case BsonType.ObjectId:
+                                returnValue = obj.AsObjectId.ToString();
+                                break;
                             default:
                                 goto case BsonType.Undefined;
                         }

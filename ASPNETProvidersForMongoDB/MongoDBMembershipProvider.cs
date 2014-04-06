@@ -165,7 +165,7 @@ namespace ASPNETProvidersForMongoDB
         {
             get { return pPasswordStrengthRegularExpression; }
         }
-        
+
         /// <summary>
         /// Gets the name of the Mongo database used to store the Provider data.
         /// </summary>
@@ -388,7 +388,7 @@ namespace ASPNETProvidersForMongoDB
                 MongoClient client = new MongoClient(connectionString);
                 MongoServer server = client.GetServer(); // connect to the mongoDB url.
                 MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
- 
+
                 //Build a query to find the user id and then update with new password.
                 MongoCollection<BsonDocument> usersCollection = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
@@ -776,7 +776,7 @@ namespace ASPNETProvidersForMongoDB
         /// </returns>
         public override int GetNumberOfUsersOnline()
         {
-int numOnline = 0;
+            int numOnline = 0;
 
             MiniProfiler profiler = MiniProfiler.Current;
             MethodBase currentMethod = MethodBase.GetCurrentMethod();
@@ -944,7 +944,7 @@ int numOnline = 0;
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
             MembershipUser membershipUser = null;
-            
+
             MiniProfiler profiler = MiniProfiler.Current;
             MethodBase currentMethod = MethodBase.GetCurrentMethod();
             using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
@@ -976,10 +976,10 @@ int numOnline = 0;
 
                     if (user != null)
                     {
-                        if (user["IsLockedOut"].AsBoolean)
+                        /*if (user["IsLockedOut"].AsBoolean)
                         {
                             throw new MembershipPasswordException("The supplied user is locked out.");
-                        }
+                        }*/
 
                         membershipUser = GetUserFromReader(user);
 
@@ -1098,7 +1098,7 @@ int numOnline = 0;
         /// <returns></returns>
         private MembershipUser GetUserFromReader(BsonDocument doc)
         {
-            object providerUserKey = Guid.Parse(doc["PKID"].AsString);
+            object providerUserKey = doc.Contains("PKID") ? Guid.Parse(doc["PKID"].AsString) : Guid.NewGuid();
             string username = doc["Username"].AsString;
             string email = doc["Email"].AsString; ;
             string passwordQuestion = doc.Contains("PasswordQuestion") ? doc["PasswordQuestion"].AsString : null;
@@ -1107,10 +1107,10 @@ int numOnline = 0;
             bool isApproved = doc["IsApproved"].AsBoolean;
             bool isLockedOut = doc["IsLockedOut"].AsBoolean;
             DateTime creationDate = doc["CreationDate"].ToUniversalTime();
-            DateTime lastLoginDate = doc["LastLoginDate"].ToUniversalTime();
-            DateTime lastActivityDate = doc["LastActivityDate"].ToUniversalTime();
-            DateTime lastPasswordChangedDate = doc["LastPasswordChangedDate"].ToUniversalTime();
-            DateTime lastLockedOutDate = doc["LastLockedOutDate"].ToUniversalTime();
+            DateTime lastLoginDate = doc.Contains("LastLoginDate") ? doc["LastLoginDate"].ToUniversalTime() : DateTime.MinValue;
+            DateTime lastActivityDate = doc.Contains("LastActivityDate") ? doc["LastActivityDate"].ToUniversalTime() : DateTime.MinValue;
+            DateTime lastPasswordChangedDate = doc.Contains("LastPasswordChangedDate") ? doc["LastPasswordChangedDate"].ToUniversalTime() : DateTime.MinValue;
+            DateTime lastLockedOutDate = doc.Contains("LastLockedOutDate") ? doc["LastLockedOutDate"].ToUniversalTime() : DateTime.MinValue;
 
             MembershipUser u = new MembershipUser(this.Name,
                                                   username,
@@ -1136,7 +1136,7 @@ int numOnline = 0;
         /// <returns></returns>
         public override bool UnlockUser(string username)
         {
-bool bSuccess = false;
+            bool bSuccess = false;
 
             MiniProfiler profiler = MiniProfiler.Current;
             MethodBase currentMethod = MethodBase.GetCurrentMethod();
@@ -1201,7 +1201,7 @@ bool bSuccess = false;
         /// </returns>
         public override string GetUserNameByEmail(string email)
         {
-string username = "";
+            string username = String.Empty;
             MiniProfiler profiler = MiniProfiler.Current;
             MethodBase currentMethod = MethodBase.GetCurrentMethod();
             using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
@@ -1383,7 +1383,6 @@ string username = "";
             }
         }
 
-
         /// <summary>
         /// Updates information about a user in the data source.
         /// </summary>
@@ -1412,8 +1411,11 @@ string username = "";
                         );
 
                     var updateQuery = Update.Set("Email", user.Email)
-                        .Set("Comment", user.Comment)
+                        .Set("EmailLowerCase", user.Email.ToLower())
                         .Set("IsApproved", user.IsApproved);
+
+                    if (!string.IsNullOrEmpty(user.Comment))
+                        updateQuery.Set("Comment", user.Comment);
 
                     users.Update(query, updateQuery);
 
@@ -1535,7 +1537,7 @@ string username = "";
         /// <param name="failureType">Type of the failure.</param>
         private void UpdateFailureCount(string username, string failureType)
         {
-           MiniProfiler profiler = MiniProfiler.Current;
+            MiniProfiler profiler = MiniProfiler.Current;
             MethodBase currentMethod = MethodBase.GetCurrentMethod();
             using (profiler.Step(String.Format("{0} : {1}", currentMethod.DeclaringType.Name, currentMethod.Name)))
             {
@@ -1697,8 +1699,8 @@ string username = "";
         private string EncodePassword(string password)
         {
             if (String.IsNullOrEmpty(password))
-                return null; 
-            
+                return null;
+
             string encodedPassword = password;
 
             switch (PasswordFormat)
@@ -1789,7 +1791,7 @@ string username = "";
                 MongoClient client = new MongoClient(connectionString);
                 MongoServer server = client.GetServer(); // connect to the mongoDB url.
                 MongoDatabase ProviderDB = server.GetDatabase(pMongoProviderDatabaseName, WriteConcern.Acknowledged);
-                
+
                 //Build a query to find the user id and then update with new password.
                 MongoCollection<BsonDocument> users = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
@@ -1799,7 +1801,7 @@ string username = "";
                     var query = Query.And(
                         Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                         // This regex makes the search for the username case insensitive.
-                        Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.Trim().ToLower() + "*"))
+                        Query.Matches("UsernameLowerCase", new BsonRegularExpression("^" + usernameToMatch.Trim().ToLower()))
                         );
 
                     var cursor = users.Find(query);
@@ -1808,8 +1810,9 @@ string username = "";
 
                     if (totalRecords == 0) { return usersCollection; }
 
-                    var query1 = Query.And(Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
-                        Query.Matches("UsernameLowerCase", new BsonRegularExpression(usernameToMatch.Trim().ToLower() + "*"))
+                    var query1 = Query.And(
+                        Query.EQ("ApplicationNameLowerCase", ApplicationName.ToLower()),
+                        Query.Matches("UsernameLowerCase", new BsonRegularExpression("^" + usernameToMatch.Trim().ToLower()))
                         );
 
                     var cursor1 = users.Find(query1).SetSortOrder(new string[] { "Username" });
@@ -1881,7 +1884,7 @@ string username = "";
                 try
                 {
                     var query = Query.And(
-                        Query.Matches("EmailLowerCase", new BsonRegularExpression(emailToMatch.ToLower() + "*")),
+                        Query.Matches("EmailLowerCase", new BsonRegularExpression("^" + emailToMatch.ToLower())),
                         Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower())
                         );
 

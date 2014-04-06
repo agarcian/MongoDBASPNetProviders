@@ -599,7 +599,7 @@ namespace ASPNETProvidersForMongoDB
 
             foreach (string rolename in roleNames)
             {
-                if (rolename == null || rolename == "")
+                if (String.IsNullOrWhiteSpace(rolename))
                     throw new ProviderException("Role name cannot be empty or null.");
                 if (!RoleExists(rolename))
                     throw new ProviderException("Role name not found.");
@@ -607,7 +607,7 @@ namespace ASPNETProvidersForMongoDB
 
             foreach (string username in usernames)
             {
-                if (username == null || username == "")
+                if (String.IsNullOrWhiteSpace(username))
                     throw new ProviderException("User name cannot be empty or null.");
 
                 foreach (string rolename in roleNames)
@@ -626,7 +626,7 @@ namespace ASPNETProvidersForMongoDB
                     {
                         var query = Query.And(Query.EQ("ApplicationNameLowerCase", pApplicationName.ToLower()),
                             Query.EQ("UsernameLowerCase", username.ToLower()),
-                            Query.EQ("RolenameLowerCase", rolename),
+                            Query.EQ("RolenameLowerCase", rolename.ToLower()),
                             Query.EQ("RecordType", RecordType.RoleToUser.ToString()));
 
                        bool bSuccess = roles.Remove(query).Ok;
