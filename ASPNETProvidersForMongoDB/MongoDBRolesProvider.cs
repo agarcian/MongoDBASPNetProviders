@@ -307,7 +307,10 @@ namespace ASPNETProvidersForMongoDB
                     Query.EQ("RolenameLowerCase", rolename.ToLower()),
                     Query.EQ("RecordType", RecordType.RoleDefinition.ToString()));
 
-                bSuccess = roles.FindAndRemove(query, SortBy.Null).Ok;
+                FindAndRemoveArgs args = new FindAndRemoveArgs();
+                args.Query = query;
+                args.SortBy = SortBy.Null;
+                bSuccess = roles.FindAndRemove(args).Ok;
 
                 if (bSuccess)
                 {
