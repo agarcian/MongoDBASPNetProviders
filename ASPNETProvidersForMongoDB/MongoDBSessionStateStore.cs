@@ -96,6 +96,9 @@ namespace ASPNETProvidersForMongoDB
             get { return pApplicationName; }
         }
 
+        /// <summary>
+        /// Gets the timeout.
+        /// </summary>
         public TimeSpan Timeout
         {
             get
@@ -205,7 +208,7 @@ namespace ASPNETProvidersForMongoDB
                 MongoCollection<BsonDocument> usersCollection = ProviderDB.GetCollection(pmongoProviderCollectionName);
 
                 // Ensure Indices for ApplicationSpaces Collection.
-                usersCollection.EnsureIndex(IndexKeys.Ascending("_id", "ApplicationName"), IndexOptions.SetUnique(true));
+                usersCollection.CreateIndex(IndexKeys.Ascending("_id", "ApplicationName"), IndexOptions.SetUnique(true));
 
 
             }
@@ -581,7 +584,7 @@ namespace ASPNETProvidersForMongoDB
             {
                 sessionCollection.Update(query, update, WriteConcern.Acknowledged);
             }
-            catch (Exception e)
+            catch (Exception exc)
             {
                 throw new ProviderException(exceptionMessage);
             }
