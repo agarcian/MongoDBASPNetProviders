@@ -170,8 +170,7 @@ namespace ASPNETProvidersForMongoDB
            
             // Ensure index.
             MongoCollection<BsonDocument> profiles = ProviderDB.GetCollection(pMongoProviderProfileCollectionName);
-            profiles.EnsureIndex("UsernameLowerCase");
-
+            profiles.CreateIndex("UsernameLowerCase");
 
         }
 
