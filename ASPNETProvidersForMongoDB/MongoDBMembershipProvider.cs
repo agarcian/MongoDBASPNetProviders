@@ -393,18 +393,18 @@ namespace ASPNETProvidersForMongoDB
                 MongoCollection<BsonDocument> usersCollection = ProviderDB.GetCollection(pmongoProviderMembershipCollectionName);
 
                 // Ensure Indices for ApplicationSpaces Collection.
-                usersCollection.EnsureIndex(IndexKeys.Ascending("UsernameLowerCase", "ApplicationNameLowerCase"), IndexOptions.SetUnique(true));
-                usersCollection.EnsureIndex(IndexKeys.Ascending("EmailLowerCase", "ApplicationNameLowerCase"), IndexOptions.SetUnique(true));
+                usersCollection.CreateIndex(IndexKeys.Ascending("UsernameLowerCase", "ApplicationNameLowerCase"), IndexOptions.SetUnique(true));
+                usersCollection.CreateIndex(IndexKeys.Ascending("EmailLowerCase", "ApplicationNameLowerCase"), IndexOptions.SetUnique(true));
                 
 
             }
             catch (MongoAuthenticationException exc)
             {
-                
+                throw;
             }
             catch (Exception exc)
             {
-                
+                throw;
             }
         }
         #endregion
@@ -667,7 +667,11 @@ namespace ASPNETProvidersForMongoDB
 
                 try
                 {
-                    bSuccess = users.FindAndRemove(query, sortBy).Ok;
+
+                    FindAndRemoveArgs args = new FindAndRemoveArgs();
+                    args.Query = query;
+                    args.SortBy = SortBy.Null;
+                    bSuccess = users.FindAndRemove(args).Ok;
 
                     if (deleteAllRelatedData)
                     {
