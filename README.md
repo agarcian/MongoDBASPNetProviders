@@ -4,12 +4,18 @@ This project is an implementation of the ASPNet Providers for __Membership__, __
 
 ##Instructions
 
-This Visual Studio 2010 solution contains the implementation of the Membership, Roles, and Profile providers.
+This Visual Studio 2013 solution contains the implementation of the Membership, Roles, and Profile providers.
 
 Download the solution and compile to use in your own project.
 
 - __ASPNetProvidersForMongoDB__: This project contains the actual implementation in addition to a ProfileCommon implementation that you will need for the Membership provider.
 - __TestProjectForMongoDBASPNETProviders__: This project is an incomplete suite of tests against the project. 
+
+###Installing MongoDB Locally to run the tests
+1. Download mongo
+1. Install mongo  (http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/)
+1. Setup to run mongo as a Service
+
 
 
 In order to run the application you need to:
