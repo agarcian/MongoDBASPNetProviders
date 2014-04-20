@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Configuration;
+using System.Web.Profile;
+using System.Web.Security;
 using ASPNETProvidersForMongoDB;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,10 +11,14 @@ namespace TestProjectForMongoDBASPNETProviders
     [TestClass]
     public class MongoDBProfileProviderTest
     {
+
+        static string usernameKey = "username";
+        static int numberOfUsers = 100;
+
+
+
         static string mongoDBConnString = ConfigurationManager.ConnectionStrings["MongoProvidersDBConnStr"].ConnectionString;
         static MongoDBMembershipProvider mongoProvider = new MongoDBMembershipProvider();
-
-        static string[] commonUsernamesUsedInTests = new string[] { "usernamexyz" };
 
         /// <summary>
         /// Runs once before any test in this class runs and prepopulates the database with some values to be used in the tests.
@@ -23,16 +29,10 @@ namespace TestProjectForMongoDBASPNETProviders
         [ClassInitialize]
         public static void InitializeTestClass(TestContext context)
         {
-            
-            // Clean up common usernames used accross the different tests.
-            foreach (string username in commonUsernamesUsedInTests)
+            // Removes from the database the 10 sample users.
+            for (int i = 1; i <= numberOfUsers; i++)
             {
-                ProfileCommon profile = ProfileCommon.GetProfile(username);
-
-                if (profile != null)
-                {
-                    System.Web.Profile.ProfileManager.DeleteProfile(username);
-                }
+                ProfileManager.DeleteProfile(usernameKey + i);
             }
         }
 
@@ -43,9 +43,9 @@ namespace TestProjectForMongoDBASPNETProviders
         public static void CleanupTestClass()
         {
             // Removes from the database the 10 sample users.
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= numberOfUsers; i++)
             {
-                System.Web.Profile.ProfileManager.DeleteProfile("username" + i);
+                ProfileManager.DeleteProfile(usernameKey + i);
             }
         }
 
@@ -58,11 +58,7 @@ namespace TestProjectForMongoDBASPNETProviders
         [TestInitialize]
         public void InitializeTest()
         {
-            // Initializes the database with 10 sample users.
-            for (int i = 1; i <= 10; i++)
-            {
-                ProfileCommon.Create("username" + i, true);
-            }
+            
         }
 
         /// <summary>
@@ -71,27 +67,73 @@ namespace TestProjectForMongoDBASPNETProviders
         [TestCleanup]
         public void CleanupTest()
         {
-            foreach (string username in commonUsernamesUsedInTests)
+            // Clear the values of the profiles.  There is no Delete in the ProfileCommon class.
+            for (int i = 1; i <= numberOfUsers; i++)
             {
-                if (!String.IsNullOrWhiteSpace(username))
-                {
-                    System.Web.Profile.ProfileManager.DeleteProfile(username);
-                }
+                ProfileManager.DeleteProfile(usernameKey + i);
             }
         }
 
         [TestMethod]
-        public void MyTest()
+        public void CreateProfileTest()
         {
-            DateTime startTest = DateTime.Now;
+            string username;
+            ProfileCommon profile;
+
+            for (int i = 0; i < numberOfUsers; i++)
+            {
+                username = usernameKey + i;
+                profile = ProfileCommon.Create(username) as ProfileCommon;
+                profile.FirstName = "FirstName" + i;
+                profile.LastName = "LastName" + i;
+
+                profile.Save();
+            }
+
+            for (int i = 0; i < numberOfUsers; i++)
+            {
+                username = usernameKey + i;
+                profile = ProfileCommon.GetProfile(username) as ProfileCommon;
+                Assert.AreEqual("FirstName" + i, profile.FirstName);
+                Assert.AreEqual("LastName" + i, profile.LastName);
+
+                // To Do: Test all the other properties.
+            }
 
 
-
-
-            double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
-            Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
 
 
+        [TestMethod]
+        public void DeleteProfileTest()
+        {
+            string username;
+            ProfileCommon profile;
+
+            for (int i = 0; i < numberOfUsers; i++)
+            {
+                username = usernameKey + i;
+                profile = ProfileCommon.Create(username) as ProfileCommon;
+                profile.FirstName = "FirstName" + i;
+                profile.LastName = "LastName" + i;
+
+                profile.Save();
+            }
+
+            for (int i = 0; i < numberOfUsers; i++)
+            {
+                username = usernameKey + i;
+
+                ProfileManager.DeleteProfile(username);
+      
+                profile = ProfileCommon.GetProfile(username) as ProfileCommon;
+                Assert.AreEqual(String.Empty, profile.FirstName);
+                Assert.AreEqual(String.Empty, profile.LastName);
+
+                // To Do: Test all the other properties.
+            }
+
+
+        }
     }
 }
