@@ -1,14 +1,21 @@
-﻿using System.Web.Profile;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using System.Web.Profile;
+
 
 namespace ASPNETProvidersForMongoDB
 {
+
     /// <summary>
-    /// Used to handle the custom Profile Provider.  
-    /// MVC does not automatically generate the code as regular ASP.NET, 
-    /// so it needs to be generated manually.
+    /// Used to handle the custom Profile Provider.  MVC does not automatically generate the code as regular ASP.NET, so it needs to be generated manually.
     /// </summary>
     public class ProfileCommon : ProfileBase
     {
+
+        #region Custom properties
+
         /// <summary>
         /// Gets or sets the first name.
         /// </summary>
@@ -73,42 +80,82 @@ namespace ASPNETProvidersForMongoDB
         /// </value>
         [SettingsAllowAnonymous(false)]
         public string Country { get { return base["Country"] as string; } set { base["Country"] = value; } }
-        
-        // Add as many properties you want for your application.
-
-
-        /*
         /// <summary>
-        /// Creates the specified ProfileCommon based on the given username.
+        /// Gets or sets the SampleListString
         /// </summary>
-        /// <param name="username">The username.</param>
-        /// <returns>An instance of <see cref="ProfileCommon"/></returns>
-        public static ProfileCommon Create(string username)
+        [SettingsAllowAnonymous(false)]
+        public List<String> SampleListString { get { return base["SampleListString"] as List<String>; } set { base["SampleListString"] = value; } }
+        #endregion
+
+        public static new ProfileCommon Create(string applicationSpace, string groupId, string username)
         {
-            return ProfileBase.Create(username) as ProfileCommon;
+            // Check if the profile exists in the database.
+
+            ProfileProvider profileProvider = System.Web.Profile.ProfileManager.Provider;
+            if (profileProvider != null)
+            {
+                // defaults isAuthenticated to true.
+                return Create(applicationSpace, groupId, username, true);
+            }
+            else
+            {
+                return ProfileBase.Create(username) as ProfileCommon;
+            }
         }
 
-        /// <summary>
-        /// Creates a profile based on the specified username.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="isAuthenticated">if set to <c>true</c> indicates that the user is authenticated.</param>
-        /// <returns>An instance of <see cref="ProfileCommon"/></returns>
-        public static ProfileCommon Create(string username, bool isAuthenticated)
+        public static new ProfileCommon Create(string applicationSpace, string groupId, string username, bool isAuthenticated)
         {
-            return ProfileBase.Create(username, isAuthenticated) as ProfileCommon;
+            ProfileProvider profileProvider = System.Web.Profile.ProfileManager.Provider;
+            if (profileProvider != null)
+            {
+                ProfileCommon profileCommon = new ProfileCommon();
+                profileCommon.Initialize(username, isAuthenticated);
+
+                SettingsContext settingsContext = new SettingsContext();
+                settingsContext.Add("UserName", username);
+                settingsContext.Add("IsAuthenticated", isAuthenticated);
+
+                SettingsPropertyValueCollection pvc = profileProvider.GetPropertyValues(settingsContext, ProfileCommon.Properties);
+
+                foreach (SettingsPropertyValue pv in pvc)
+                {
+                    //Only basic types and a List<String> are supported.
+                    if (pv.PropertyValue != null && pv.Property.PropertyType == typeof(List<String>))
+                    {
+                        if (pv.PropertyValue is IEnumerable<String>)
+                        {
+                            profileCommon.SetPropertyValue(pv.Property.Name, new List<String>((IEnumerable<String>)pv.PropertyValue));
+                        }
+                        else
+                        {
+                            // Write an event. Assume a trace source 
+                            new TraceSource("Default").TraceEvent(TraceEventType.Warning, -1, "Could not parse the property '{0}' in the ProfileCommon object.", pv.Property.Name);
+
+                            // Something went wrong while setting this property.
+                            System.Diagnostics.Debugger.Break();
+                        }
+                    }
+                    else
+                    {
+                        profileCommon.SetPropertyValue(pv.Property.Name, pv.PropertyValue);
+                    }
+                }
+
+                return profileCommon;
+            }
+            else
+            {
+                return ProfileBase.Create(username, isAuthenticated) as ProfileCommon;
+            }
         }
-        */
 
-
-        /// <summary>
-        /// Gets the profile.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <returns>An instance of <see cref="ProfileCommon"/></returns>
         public static ProfileCommon GetProfile(string username)
         {
+            // casts the result to ProfileCommon
             return Create(username) as ProfileCommon;
+
         }
+
     }
 }
+
