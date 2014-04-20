@@ -33,9 +33,6 @@ namespace TestProjectForMongoDBASPNETProviders
             // Use the App.config to set the properties of the MongoDB database.
             mongoProvider = (MongoDBMembershipProvider)Membership.Provider;
 
-
-            
-
             // Clean up common usernames used accross the different tests.
             foreach (string username in commonUsernamesUsedInTests)
             {
@@ -112,8 +109,6 @@ namespace TestProjectForMongoDBASPNETProviders
         [TestMethod]
         public void CreateUserTest()
         {
-            DateTime startTest = DateTime.Now;
-
             string username = "usernamexyz";
             string upperCaseUsername = "UsernameXYZ";
             string email = "userxyz@example.com";
@@ -167,21 +162,11 @@ namespace TestProjectForMongoDBASPNETProviders
             Assert.IsNull(user, "No user should have been created since the email is already taken");
             Assert.AreEqual(status, MembershipCreateStatus.DuplicateEmail, "Expecting DuplicateEmail status");
 
-
-
-
-
-
-
-
-            double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
-            Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
 
         [TestMethod]
         public void DeleteUserTest()
         {
-            DateTime startTest = DateTime.Now;
             bool success;
             MembershipUser user;
 
@@ -220,17 +205,11 @@ namespace TestProjectForMongoDBASPNETProviders
 
             ///// Delete an existing user /////////////////////////////////////////////////////////////////////
             
-
-
-            double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
-            Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
 
         [TestMethod]
         public void ManipulateQuestionAndAnswerTest()
         {
-            DateTime startTest = DateTime.Now;
-
             string username = "usernamexyz";
             string uppercaseUsername = "usernamexyz";
             string email = "userxyz@example.com";
@@ -271,17 +250,11 @@ namespace TestProjectForMongoDBASPNETProviders
             user = mongoProvider.GetUser(uppercaseUsername, true);
             Assert.AreEqual(newQuestion, user.PasswordQuestion, "Question property does not coincide");
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
-            Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
 
         [TestMethod]
         public void PasswordRetrievalTest()
         {
-            DateTime startTest = DateTime.Now;
-
             string username = "usernamexyz";
             string uppercaseUsername = "usernamexyz";
             string email = "userxyz@example.com";
@@ -300,7 +273,7 @@ namespace TestProjectForMongoDBASPNETProviders
             Assert.AreEqual(status, MembershipCreateStatus.Success, "The creation should have been successful");
             Assert.AreEqual(question, user.PasswordQuestion, "Question property does not coincide");
 
-            
+
             /// Validate that the password cannot be retrieved with the answer //////////////////////////////////////
 
             string retrievedPassword;
@@ -337,26 +310,11 @@ namespace TestProjectForMongoDBASPNETProviders
                     Assert.AreEqual(password, retrievedPassword);
                 }
             }
-            
-           
-
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-            double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
-            Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
 
         [TestMethod]
         public void PasswordChangeTest()
         {
-            DateTime startTest = DateTime.Now;
 
             MembershipUser user;
             MembershipCreateStatus status;
@@ -418,24 +376,11 @@ namespace TestProjectForMongoDBASPNETProviders
             success = mongoProvider.ValidateUser(username, newPassword.ToUpper());
             Assert.IsFalse(success, "Should not have been successful");
 
-            //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-            double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
-            Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
         
         [TestMethod]
         public void GetAllUsersTest()
         {
-            DateTime startTest = DateTime.Now;
-            
             // All defined users are expected ...
             int totalRecords = 0;
             MembershipUserCollection users = mongoProvider.GetAllUsers(1, 5, out totalRecords);
@@ -445,9 +390,6 @@ namespace TestProjectForMongoDBASPNETProviders
             users = mongoProvider.GetAllUsers(2, 7, out totalRecords);
             Assert.AreEqual(10, totalRecords);
             Assert.AreEqual(3, users.Count, "Expecting the reminder of records if pagesize is 7 and retrieving 2nd page.");
-
-            double durationMiliseconds = DateTime.Now.Subtract(startTest).TotalMilliseconds;
-            Console.WriteLine(String.Format("Test Duration: {0} miliseconds.", durationMiliseconds));
         }
 
 
